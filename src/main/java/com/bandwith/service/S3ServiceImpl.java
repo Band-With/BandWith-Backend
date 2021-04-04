@@ -7,6 +7,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.UUID;
 
 
@@ -47,11 +50,12 @@ public class S3ServiceImpl implements S3Service {
                 .build();
     }
 
+    // 파일 업로드
     @Override
-    public void fileUpload(String uploadPath, MultipartFile file) {
+    public void fileUpload(String path, MultipartFile file) {
 
         UUID uid = UUID.randomUUID();
-        String key = uploadPath + uid + "-" + file.getOriginalFilename().replace('/', '-');
+        String key = path + uid + "-" + file.getOriginalFilename().replace('/', '-');
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
@@ -73,5 +77,32 @@ public class S3ServiceImpl implements S3Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 파일 삭제
+    @Override
+    public void fileDelete(String path) {
+
+        try {
+            // delete the file
+            s3Client.deleteObject(bucket, path);
+            System.out.println("deletion complete: " + path);
+        } catch (AmazonServiceException ase) {
+            ase.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 파일 URL
+    @Override
+    public String getFileURL(String path) {
+        return s3Client.generatePresignedUrl(new GeneratePresignedUrlRequest(bucket, path)).toString();
+    }
+
+    // 폴더 생성
+    @Override
+    public void createFolder(String folderName) {
+        s3Client.putObject(bucket, folderName + "/", new ByteArrayInputStream(new byte[0]), new ObjectMetadata());
     }
 }

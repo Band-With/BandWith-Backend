@@ -13,8 +13,9 @@ public class S3Controller {
     @Autowired
     private S3Service s3Service;
 
-    @RequestMapping(path = "/upload", method = RequestMethod.POST)
-    public String recordUpload(@RequestParam("file") MultipartFile file) {
+    @RequestMapping(path = "/members/{memberId}/records", method = RequestMethod.POST)
+    public String recordUpload(@RequestParam("file") MultipartFile file,
+                               @PathVariable int memberId) {
 
         try {
             // TODO change upload path
@@ -40,8 +41,30 @@ public class S3Controller {
 //        return certificatePath;
 //    }
 
-    @RequestMapping("/upload")
+    @RequestMapping(path = "/member/{memberId}/records", method = RequestMethod.DELETE)
+    public String recordDelete(@RequestParam("fileName") String fileName,
+                               @PathVariable int memberId) {
+
+        try {
+            String filePath = "records/" + fileName;
+            s3Service.fileDelete(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "/";
+    }
+
+    @RequestMapping(path = "/records/{recordId}", method = RequestMethod.POST)
+    public String moveFileUrl(@RequestParam("fileName") String fileName,
+                              @PathVariable int recordId) throws Exception {
+
+        String filePath = "records/" + fileName;
+        System.out.println(s3Service.getFileURL(filePath));
+        return "redirect:" + s3Service.getFileURL(filePath);
+    }
+
+    @RequestMapping("/record/test")
     public String uploadFile() throws Exception {
-        return "upload";
+        return "recordTest";
     }
 }
