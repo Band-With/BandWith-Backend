@@ -19,4 +19,9 @@ public class MemberDaoImpl implements MemberDao {
     public void insertMember(Member member) {
         sqlSession.insert("MemberMapper.insertMember", member);
     }
+
+    @Override
+    public void deleteMember(String username) {
+        sqlSession.delete("MemberMapper.deleteMember", username);
+    }
 }

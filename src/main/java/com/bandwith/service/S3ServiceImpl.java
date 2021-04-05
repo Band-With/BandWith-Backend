@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.util.UUID;
 
 
@@ -52,10 +51,11 @@ public class S3ServiceImpl implements S3Service {
 
     // 파일 업로드
     @Override
-    public void fileUpload(String path, MultipartFile file) {
+    public String[] fileUpload(String path, MultipartFile file) {
 
-        UUID uid = UUID.randomUUID();
-        String key = path + uid + "-" + file.getOriginalFilename().replace('/', '-');
+        String uid = UUID.randomUUID().toString();
+        String fileName = file.getOriginalFilename().replace('/', '-'); // TODO : exception handling on the front-end for the file name to be uploaded
+        String key = path + uid + "-" + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
@@ -64,6 +64,8 @@ public class S3ServiceImpl implements S3Service {
         try {
             // upload the file
             s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
+            String[] fileInfo = {uid, fileName};
+            return fileInfo;
         } catch (AmazonServiceException ase) {
             logger.info("Caught an AmazonServiceException from PUT requests, rejected reasons: ");
             logger.info("Error Message:    " + ase.getMessage());
@@ -77,6 +79,7 @@ public class S3ServiceImpl implements S3Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     // 파일 삭제
@@ -86,7 +89,7 @@ public class S3ServiceImpl implements S3Service {
         try {
             // delete the file
             s3Client.deleteObject(bucket, path);
-            System.out.println("deletion complete: " + path);
+            System.out.println("delete s3 service: " + path);
         } catch (AmazonServiceException ase) {
             ase.printStackTrace();
         } catch (Exception e) {

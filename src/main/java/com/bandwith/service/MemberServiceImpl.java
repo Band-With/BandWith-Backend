@@ -16,8 +16,8 @@ public class MemberServiceImpl implements MemberService {
         this.memberDao = memberDao;
     }
 
-    public void signUp(String id, String pw, String fName, String lName, String profileImg) {
-        Member member = new Member(id, pw, fName + lName, profileImg);
+    public void signUp(String username, String pw, String fName, String lName, String profileImg) {
+        Member member = new Member(username, pw, fName + lName, profileImg);
         memberDao.insertMember(member);
     }
 }

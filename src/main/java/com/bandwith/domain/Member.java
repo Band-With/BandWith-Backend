@@ -11,12 +11,10 @@ public class Member {
     private Date regDate;
 
     public Member(String username, String pwd, String name, String profileImg) {
-        this.id = id;
         this.username = username;
         this.pwd = pwd;
         this.name = name;
         this.profileImg = profileImg;
-        this.regDate = regDate;
     }
 
     public Member(int id, String username, String pwd, String name, String profileImg, Date regDate) {
