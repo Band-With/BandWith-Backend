@@ -2,6 +2,7 @@ package com.bandwith.service;
 
 import com.bandwith.dao.MemberDao;
 import com.bandwith.domain.Member;
+import com.bandwith.dto.member.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,14 @@ public class MemberServiceImpl implements MemberService {
         this.memberDao = memberDao;
     }
 
-    public void signUp(String id, String pw, String fName, String lName, String profileImg) {
-        Member member = new Member(id, pw, fName + lName, profileImg);
+    public void signUp(MemberDto newMember) {
+/*        if(newMember.getProfileImg() == null)
+            newMember.setProfileImg();*/
+        Member member = Member.of(newMember, "www.test.com");
         memberDao.insertMember(member);
+    }
+
+    public void signIn(){
+
     }
 }

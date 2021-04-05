@@ -6,6 +6,6 @@
 <mapper namespace="MemberMapper">
     <insert id="insertMember">
         INSERT INTO member (username, pwd, name, profile_img)
-        VALUES (#{username}, #{pwd}, #{name}, #{profileImg})
+        VALUES (#{username}, #{pwd}, #{name}, #{profileImgUrl})
     </insert>
 </mapper>

@@ -27,14 +27,4 @@ public class MemberController {
     public String mainPage(){
         return "index";
     }
-
-    @RequestMapping(path="/join")
-    public String join(String id, String pw, String fName, String lName, String profileImg) {
-        if(id != null && !id.equals("")) {
-            memberService.signUp(id, pw, fName, lName, profileImg);
-            return "login";
-        }
-
-        return "join";
-    }
 }

@@ -1,5 +1,7 @@
 package com.bandwith.domain;
 
+import com.bandwith.dto.member.MemberDto;
+
 import java.util.Date;
 
 public class Member {
@@ -7,25 +9,30 @@ public class Member {
     private String username;
     private String pwd;
     private String name;
-    private String profileImg;
+    private String profileImgUrl;
     private Date regDate;
 
-    public Member(String username, String pwd, String name, String profileImg) {
+    public Member() {
+    }
+
+    public Member(String username, String pwd, String name, String profileImgUrl) {
+        this.username = username;
+        this.pwd = pwd;
+        this.name = name;
+        this.profileImgUrl = profileImgUrl;
+    }
+
+    public Member(int id, String username, String pwd, String name, String profileImgUrl, Date regDate) {
         this.id = id;
         this.username = username;
         this.pwd = pwd;
         this.name = name;
-        this.profileImg = profileImg;
+        this.profileImgUrl = profileImgUrl;
         this.regDate = regDate;
     }
 
-    public Member(int id, String username, String pwd, String name, String profileImg, Date regDate) {
-        this.id = id;
-        this.username = username;
-        this.pwd = pwd;
-        this.name = name;
-        this.profileImg = profileImg;
-        this.regDate = regDate;
+    public static Member of(MemberDto memberDto, String profileImgUrl){
+        return new Member(memberDto.getUsername(), memberDto.getPwd(), memberDto.getName(), profileImgUrl);
     }
 
     public int getId() {
@@ -60,12 +67,12 @@ public class Member {
         this.name = name;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getProfileImgUrl() {
+        return profileImgUrl;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void setProfileImgUrl(String profileImgUrl) {
+        this.profileImgUrl = profileImgUrl;
     }
 
     public Date getRegDate() {
