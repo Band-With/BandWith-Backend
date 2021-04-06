@@ -19,4 +19,8 @@ public class MemberDaoImpl implements MemberDao {
     public void insertMember(Member member) {
         sqlSession.insert("MemberMapper.insertMember", member);
     }
+
+    public int login(Member member) {
+        return sqlSession.selectOne("MemberMapper.login", member);
+    }
 }

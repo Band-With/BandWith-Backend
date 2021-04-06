@@ -8,4 +8,9 @@
         INSERT INTO member (username, pwd, name, profile_img)
         VALUES (#{username}, #{pwd}, #{name}, #{profileImgUrl})
     </insert>
+
+
+    <select id="login" resultType="int">
+        SELECT count(*) from member WHERE USERNAME = #{username} AND PWD = #{pwd}
+    </select>
 </mapper>

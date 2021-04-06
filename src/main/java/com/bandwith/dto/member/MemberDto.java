@@ -1,5 +1,7 @@
 package com.bandwith.dto.member;
 
+import com.bandwith.domain.Member;
+
 import java.util.Date;
 
 public class MemberDto {
@@ -25,6 +27,10 @@ public class MemberDto {
         this.name = name;
         this.profileImg = profileImg;
         this.regDate = regDate;
+    }
+
+    public static MemberDto of(Member member){
+        return new MemberDto(member.getUsername(), member.getPwd(), member.getName());
     }
 
     public int getId() {

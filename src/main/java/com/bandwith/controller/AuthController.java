@@ -1,5 +1,6 @@
 package com.bandwith.controller;
 
+import com.bandwith.domain.Member;
 import com.bandwith.dto.member.MemberDto;
 import com.bandwith.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -29,7 +33,17 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signin")
-    public ResponseEntity<String> signIn(){
-        return ResponseEntity.status(HttpStatus.OK).body("signin");
+    public ResponseEntity<MemberDto> signIn(@RequestBody String filterJSON) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        MemberDto memberDto = mapper.readValue(filterJSON, MemberDto.class);
+        System.out.println("test");
+        int count = memberService.signIn(Member.of(memberDto, ""));
+
+        if(count == 0)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(memberDto);
     }
 }

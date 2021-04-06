@@ -24,7 +24,8 @@ public class MemberServiceImpl implements MemberService {
         memberDao.insertMember(member);
     }
 
-    public void signIn(){
-
+    public int signIn(Member member){
+        int count = memberDao.login(member);
+        return count;
     }
 }
