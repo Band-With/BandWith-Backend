@@ -9,8 +9,16 @@
         VALUES (#{username}, #{pwd}, #{name}, #{profileImgUrl})
     </insert>
 
-
     <select id="login" resultType="int">
         SELECT count(*) from member WHERE USERNAME = #{username} AND PWD = #{pwd}
     </select>
+
+    <select id="countFollower" resultType="int">
+        SELECT count(*) from follow WHERE MEMBER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
+    </select>
+
+    <select id="countFollowing" resultType="int">
+        SELECT count(*) from follow WHERE FOLLOWER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
+    </select>
+
 </mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BandMapper">
+    <select id="selectBands" resultType="com.bandwith.domain.Band">
+        SELECT b.BAND_ID,
+               b.BAND_NAME,
+               b.CREATED_AT
+        FROM Band b
+                 INNER JOIN member_band mb ON b.BAND_ID = mb.BAND_ID
+                 INNER JOIN member m ON m.MEMBER_ID = mb.MEMBER_ID
+        WHERE m.USERNAME = #{username}
+    </select>
+</mapper>

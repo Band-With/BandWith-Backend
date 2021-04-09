@@ -1,5 +1,6 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.member.MyPageDto;
 import com.bandwith.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,11 @@ public class MemberController {
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService){
         this.memberService = memberService;
+    }
+
+    @GetMapping("/myPage")
+    public MyPageDto myPage(String username){
+        return memberService.getMyPage(username);
     }
 
     @GetMapping("/testAPI")

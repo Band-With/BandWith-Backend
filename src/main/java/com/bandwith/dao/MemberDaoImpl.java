@@ -23,4 +23,8 @@ public class MemberDaoImpl implements MemberDao {
     public int login(Member member) {
         return sqlSession.selectOne("MemberMapper.login", member);
     }
+
+    public int countFollower(String username){ return sqlSession.selectOne("MemberMapper.countFollower", username); }
+
+    public int countFollowing(String username){ return sqlSession.selectOne("MemberMapper.countFollowing", username); }
 }
