@@ -9,7 +9,7 @@ public class MemberDto {
     private String username;
     private String pwd;
     private String name;
-    private byte profileImg;
+    private byte[] profileImg;
     private Date regDate;
 
     public MemberDto(){}
@@ -20,7 +20,7 @@ public class MemberDto {
         this.name = name;
     }
 
-    public MemberDto(int id, String username, String pwd, String name, byte profileImg, Date regDate) {
+    public MemberDto(int id, String username, String pwd, String name, byte[] profileImg, Date regDate) {
         this.id = id;
         this.username = username;
         this.pwd = pwd;
@@ -65,11 +65,11 @@ public class MemberDto {
         this.name = name;
     }
 
-    public byte getProfileImg() {
+    public byte[] getProfileImg() {
         return profileImg;
     }
 
-    public void setProfileImg(byte profileImg) {
+    public void setProfileImg(byte[] profileImg) {
         this.profileImg = profileImg;
     }
 

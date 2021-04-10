@@ -1,4 +1,6 @@
-package com.bandwith.dto.member;
+package com.bandwith.dto;
+
+import com.bandwith.dto.band.BandDto;
 
 import java.util.List;
 

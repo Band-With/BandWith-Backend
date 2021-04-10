@@ -1,22 +1,22 @@
 package com.bandwith.dao;
 
-import com.bandwith.domain.Band;
+import com.bandwith.domain.Record;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("bandDaoBean")
-public class BandDaoImpl implements BandDao{
+@Repository("recordDaoBean")
+public class RecordDaoImpl implements RecordDao{
     private final SqlSession sqlSession;
 
     @Autowired
-    public BandDaoImpl(SqlSession sqlSession) {
+    public RecordDaoImpl(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
     }
 
-    public List<Band> selectBands(String username) {
-        return sqlSession.selectList("BandMapper.selectBands", username);
+    public List<Record> selectRecords(String username) {
+        return sqlSession.selectList("RecordMapper.selectRecords", username);
     }
 }

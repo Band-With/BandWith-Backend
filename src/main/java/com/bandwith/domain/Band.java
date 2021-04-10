@@ -5,19 +5,29 @@ import java.util.Date;
 public class Band {
     private int band_id;
     private String band_name;
+    private byte[] img;
     private Date created_at;
 
     public Band() {
     }
 
-    public Band(int band_id, String band_name, Date created_at) {
+    public Band(int band_id, String band_name, byte[] img, Date created_at) {
         this.band_id = band_id;
         this.band_name = band_name;
+        this.img = img;
         this.created_at = created_at;
     }
 
     public int getBand_id() {
         return band_id;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     public void setBand_id(int band_id) {

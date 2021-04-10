@@ -2,10 +2,11 @@ package com.bandwith.service;
 
 import com.bandwith.dao.BandDao;
 import com.bandwith.dao.MemberDao;
+import com.bandwith.domain.Band;
 import com.bandwith.domain.Member;
-import com.bandwith.dto.member.BandDto;
+import com.bandwith.dto.band.BandDto;
 import com.bandwith.dto.member.MemberDto;
-import com.bandwith.dto.member.MyPageDto;
+import com.bandwith.dto.MyPageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public MyPageDto getMyPage(String username){
-        List<BandDto> newBands = bandDao.selectBands(username);
+        List<Band> newBands = bandDao.selectBands(username); //modify bandDto to band
+        List<BandDto> newBandsDto = BandDto.of(newBands);
+
         int followers = memberDao.countFollower(username);
         int followings = memberDao.countFollowing(username);
 
-        System.out.println(newBands);
-
-        MyPageDto myPageDto = new MyPageDto(followers, followings, newBands);
+        MyPageDto myPageDto = new MyPageDto(followers, followings, newBandsDto);
 
         return myPageDto;
     }
