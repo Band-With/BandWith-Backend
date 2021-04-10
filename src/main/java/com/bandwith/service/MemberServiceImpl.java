@@ -16,13 +16,10 @@ import java.util.List;
 @Service("memberServiceBean")
 public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
-    private BandDao bandDao;
 
     @Autowired
-    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao,
-                             @Qualifier("bandDaoBean") BandDao bandDao) {
+    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao) {
         this.memberDao = memberDao;
-        this.bandDao = bandDao;
     }
 
     public void signUp(MemberDto newMember) {
@@ -35,17 +32,5 @@ public class MemberServiceImpl implements MemberService {
     public int signIn(Member member){
         int count = memberDao.login(member);
         return count;
-    }
-
-    public MyPageDto getMyPage(String username){
-        List<Band> newBands = bandDao.selectBands(username); //modify bandDto to band
-        List<BandDto> newBandsDto = BandDto.of(newBands);
-
-        int followers = memberDao.countFollower(username);
-        int followings = memberDao.countFollowing(username);
-
-        MyPageDto myPageDto = new MyPageDto(followers, followings, newBandsDto);
-
-        return myPageDto;
     }
 }
