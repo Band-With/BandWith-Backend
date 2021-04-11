@@ -39,7 +39,7 @@ public class MyPageServiceImpl implements MyPageService {
     }
 
     public MyPageDto getMyPage(String username){
-        List<Band> newBands = bandDao.selectBands(username); //modify bandDto to band
+        List<Band> newBands = bandDao.selectBands(username);
         List<BandDto> newBandsDto = BandDto.of(newBands);
 
         int followers = memberDao.countFollower(username);

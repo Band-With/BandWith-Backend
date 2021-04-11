@@ -4,6 +4,7 @@ import com.bandwith.domain.Band;
 import com.bandwith.domain.Music;
 import com.bandwith.dto.band.BandDto;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,9 @@ public class MusicDto {
     private String title;
     private String singer;
     private String composer;
-    private byte[] img;
+    private String img;
 
-    public MusicDto(String title, String singer, String composer, byte[] img) {
+    public MusicDto(String title, String singer, String composer, String img) {
         this.title = title;
         this.singer = singer;
         this.composer = composer;
@@ -21,7 +22,14 @@ public class MusicDto {
     }
 
     public static MusicDto of(Music music){
-        return new MusicDto(music.getTitle(), music.getSinger(), music.getComposer(), music.getProfile_img());
+        String photo = null;
+        if(music.getProfile_img() != null) {
+            photo = new String(music.getProfile_img(), StandardCharsets.UTF_8);
+            if( photo.startsWith("\uFEFF") ) {
+                photo = photo.substring(1);
+            }
+        }
+        return new MusicDto(music.getTitle(), music.getSinger(), music.getComposer(), photo);
     }
     public static List<MusicDto> of(List<Music> musics){
         List<MusicDto> musicsDto = new ArrayList<MusicDto>();
@@ -54,11 +62,11 @@ public class MusicDto {
         this.composer = composer;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 }

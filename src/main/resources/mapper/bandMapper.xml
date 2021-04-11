@@ -7,7 +7,8 @@
     <select id="selectBands" resultType="com.bandwith.domain.Band">
         SELECT b.BAND_ID,
                b.BAND_NAME,
-               b.CREATED_AT
+               b.CREATED_AT,
+               b.IMG
         FROM Band b
                  INNER JOIN member_band mb ON b.BAND_ID = mb.BAND_ID
                  INNER JOIN member m ON m.MEMBER_ID = mb.MEMBER_ID

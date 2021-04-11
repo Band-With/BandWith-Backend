@@ -2,22 +2,30 @@ package com.bandwith.dto.band;
 
 import com.bandwith.domain.Band;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BandDto {
     private int band_id;
     private String band_name;
-    private byte[] image;
+    private String img;
 
-    public BandDto(int band_id, String band_name, byte[] image) {
+    public BandDto(int band_id, String band_name, String img) {
         this.band_id = band_id;
         this.band_name = band_name;
-        this.image = image;
+        this.img = img;
     }
 
     public static BandDto of(Band band){
-        return new BandDto(band.getBand_id(), band.getBand_name(), band.getImg());
+        String photo = null;
+        if(band.getImg() != null) {
+            photo = new String(band.getImg(), StandardCharsets.UTF_8);
+            if( photo.startsWith("\uFEFF") ) {
+                photo = photo.substring(1);
+            }
+        }
+        return new BandDto(band.getBand_id(), band.getBand_name(), photo);
     }
 
     public static List<BandDto> of(List<Band> bands){
@@ -43,11 +51,11 @@ public class BandDto {
         this.band_name = band_name;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImg() {
+        return img;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImg(String img) {
+        this.img = img;
     }
 }

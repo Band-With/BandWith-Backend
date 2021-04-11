@@ -9,20 +9,19 @@ public class Member {
     private String username;
     private String pwd;
     private String name;
-    private String profileImgUrl;
+    private byte[] profileImgUrl;
     private Date regDate;
 
     public Member() {
     }
 
-    public Member(String username, String pwd, String name, String profileImgUrl) {
+    public Member(String username, String pwd, String name) {
         this.username = username;
         this.pwd = pwd;
         this.name = name;
-        this.profileImgUrl = profileImgUrl;
     }
 
-    public Member(int id, String username, String pwd, String name, String profileImgUrl, Date regDate) {
+    public Member(int id, String username, String pwd, String name, byte[] profileImgUrl, Date regDate) {
         this.id = id;
         this.username = username;
         this.pwd = pwd;
@@ -31,8 +30,8 @@ public class Member {
         this.regDate = regDate;
     }
 
-    public static Member of(MemberDto memberDto, String profileImgUrl){
-        return new Member(memberDto.getUsername(), memberDto.getPwd(), memberDto.getName(), profileImgUrl);
+    public static Member of(MemberDto memberDto){
+        return new Member(memberDto.getUsername(), memberDto.getPwd(), memberDto.getName());
     }
 
     public int getId() {
@@ -67,11 +66,11 @@ public class Member {
         this.name = name;
     }
 
-    public String getProfileImgUrl() {
+    public byte[] getProfileImgUrl() {
         return profileImgUrl;
     }
 
-    public void setProfileImgUrl(String profileImgUrl) {
+    public void setProfileImgUrl(byte[] profileImgUrl) {
         this.profileImgUrl = profileImgUrl;
     }
 

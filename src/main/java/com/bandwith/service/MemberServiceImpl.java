@@ -25,11 +25,12 @@ public class MemberServiceImpl implements MemberService {
     public void signUp(MemberDto newMember) {
 /*        if(newMember.getProfileImg() == null)
             newMember.setProfileImg();*/
-        Member member = Member.of(newMember, "www.test.com");
+        Member member = Member.of(newMember);
         memberDao.insertMember(member);
     }
 
-    public int signIn(Member member){
+    public int signIn(MemberDto memberDto){
+        Member member = Member.of(memberDto);
         int count = memberDao.login(member);
         return count;
     }
