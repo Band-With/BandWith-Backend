@@ -38,7 +38,7 @@ public class MemberController {
     }
 
     @GetMapping("/bookmark")
-    public BookmarkDto bookmark(String username){
+    public List<BookmarkDto> bookmark(String username){
         return myPageService.getBookmarks(username);
     }
 
