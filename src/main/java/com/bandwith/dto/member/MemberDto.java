@@ -2,6 +2,7 @@ package com.bandwith.dto.member;
 
 import com.bandwith.domain.Member;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 public class MemberDto {
@@ -9,18 +10,19 @@ public class MemberDto {
     private String username;
     private String pwd;
     private String name;
-    private byte[] profileImg;
+    private String profileImg;
     private Date regDate;
 
     public MemberDto(){}
 
-    public MemberDto(String username, String pwd, String name) {
+    public MemberDto(String username, String pwd, String name, String profileImg) {
         this.username = username;
         this.pwd = pwd;
         this.name = name;
+        this.profileImg = profileImg;
     }
 
-    public MemberDto(int id, String username, String pwd, String name, byte[] profileImg, Date regDate) {
+    public MemberDto(int id, String username, String pwd, String name, String profileImg, Date regDate) {
         this.id = id;
         this.username = username;
         this.pwd = pwd;
@@ -30,7 +32,14 @@ public class MemberDto {
     }
 
     public static MemberDto of(Member member){
-        return new MemberDto(member.getUsername(), member.getPwd(), member.getName());
+        String photo = null;
+        if(member.getProfile_img() != null) {
+            photo = new String(member.getProfile_img(), StandardCharsets.UTF_8);
+            if( photo.startsWith("\uFEFF") ) {
+                photo = photo.substring(1);
+            }
+        }
+        return new MemberDto(member.getUsername(), member.getPwd(), member.getName(), photo);
     }
 
     public int getId() {
@@ -65,11 +74,11 @@ public class MemberDto {
         this.name = name;
     }
 
-    public byte[] getProfileImg() {
+    public String getProfileImg() {
         return profileImg;
     }
 
-    public void setProfileImg(byte[] profileImg) {
+    public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
 

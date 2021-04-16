@@ -20,7 +20,7 @@ public class MemberDaoImpl implements MemberDao {
         sqlSession.insert("MemberMapper.insertMember", member);
     }
 
-    public int login(Member member) {
+    public Member login(Member member) {
         return sqlSession.selectOne("MemberMapper.login", member);
     }
 
