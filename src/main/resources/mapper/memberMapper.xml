@@ -21,4 +21,12 @@
         SELECT count(*) from follow WHERE FOLLOWER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
     </select>
 
+    <select id="selectWithBookmark" resultType="com.bandwith.domain.Member">
+        SELECT m.*
+        FROM bookmark b
+            INNER JOIN record_bookmark rb ON b.BOOKMARK_ID = rb.BOOKMARK_ID
+            INNER JOIN member m ON m.MEMBER_ID = rb.MEMBER_ID
+        WHERE b.BOOKMARK_ID = #{bookmark_id}
+    </select>
+
 </mapper>

@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("memberDaoBean")
 public class MemberDaoImpl implements MemberDao {
 
@@ -24,7 +26,15 @@ public class MemberDaoImpl implements MemberDao {
         return sqlSession.selectOne("MemberMapper.login", member);
     }
 
-    public int countFollower(String username){ return sqlSession.selectOne("MemberMapper.countFollower", username); }
+    public int countFollower(String username){
+        return sqlSession.selectOne("MemberMapper.countFollower", username);
+    }
 
-    public int countFollowing(String username){ return sqlSession.selectOne("MemberMapper.countFollowing", username); }
+    public int countFollowing(String username){
+        return sqlSession.selectOne("MemberMapper.countFollowing", username);
+    }
+
+    public List<Member> selectMemberWithBookmark(int bookmark_id){
+        return sqlSession.selectList("MemberMapper.selectWithBookmark", bookmark_id);
+    }
 }

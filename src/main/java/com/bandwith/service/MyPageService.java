@@ -9,5 +9,5 @@ import java.util.List;
 public interface MyPageService {
     List<PlaylistDto> getMyRecord(String username);
     MyPageDto getMyPage(String username);
-    BookmarkDto getBookmarks(String username);
+    List<BookmarkDto> getBookmarks(String username);
 }
