@@ -29,4 +29,9 @@
         WHERE b.BOOKMARK_ID = #{bookmark_id}
     </select>
 
+    <delete id="deleteMember">
+        DELETE
+        FROM member
+        WHERE username = #{username}
+    </delete>
 </mapper>

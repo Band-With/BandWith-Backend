@@ -10,4 +10,5 @@ public interface MemberDao {
     int countFollower(String username);
     int countFollowing(String username);
     List<Member> selectMemberWithBookmark(int bookmark_id);
+    void deleteMember(String username);
 }

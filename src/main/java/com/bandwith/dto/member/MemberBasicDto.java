@@ -22,8 +22,8 @@ public class MemberBasicDto {
 
     public static MemberBasicDto of(Member member){
         String photo = null;
-        if(member.getProfileImgUrl() != null) {
-            photo = new String(member.getProfileImgUrl(), StandardCharsets.UTF_8);
+        if(member.getProfile_img() != null) {
+            photo = new String(member.getProfile_img(), StandardCharsets.UTF_8);
             if( photo.startsWith("\uFEFF") ) {
                 photo = photo.substring(1);
             }

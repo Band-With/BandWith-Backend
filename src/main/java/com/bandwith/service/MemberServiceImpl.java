@@ -17,8 +17,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public void signUp(MemberDto newMember) {
-/*        if(newMember.getProfileImg() == null)
-            newMember.setProfileImg();*/
         Member member = Member.of(newMember);
         memberDao.insertMember(member);
     }

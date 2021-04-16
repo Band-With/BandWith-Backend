@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("recordServiceBean")
+@Service("myPageServiceBean")
 public class MyPageServiceImpl implements MyPageService {
     private RecordDao recordDao;
     private MusicDao musicDao;

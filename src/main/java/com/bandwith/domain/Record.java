@@ -1,54 +1,61 @@
 package com.bandwith.domain;
-
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Record {
-    private int record_id;
-    private int music_id;
-    private int member_id;
-    private String instrument;
-    private Boolean searchable;
-    private Boolean access;
-    private String uuid;
-    private String file_name;
-    private Date created_at;
+    int recordId;
+    int musicId;
+    int memberId;
+    String instrument;
+    boolean searchable;
+    boolean access;
+    Timestamp createdAt;
+    String uuid;
+    String fileName;
 
-    public Record(){}
+    public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName) {
+        this.recordId = recordId;
+        this.musicId = musicId;
+        this.memberId = memberId;
+        this.instrument = instrument;
+        this.searchable = searchable;
+        this.access = access;
+        this.createdAt = createdAt;
+        this.uuid = uuid;
+        this.fileName = fileName;
+    }
 
-    public Record(int record_id, int music_id, int member_id, String instrument, Boolean searchable, Boolean access, String uuid, String file_name, Date created_at) {
-        this.record_id = record_id;
-        this.music_id = music_id;
-        this.member_id = member_id;
+    public Record(int musicId, int memberId, String instrument, boolean searchable, boolean access, String uuid, String fileName) {
+        this.musicId = musicId;
+        this.memberId = memberId;
         this.instrument = instrument;
         this.searchable = searchable;
         this.access = access;
         this.uuid = uuid;
-        this.file_name = file_name;
-        this.created_at = created_at;
+        this.fileName = fileName;
     }
 
-    public int getRecord_id() {
-        return record_id;
+    public int getRecordId() {
+        return recordId;
     }
 
-    public void setRecord_id(int record_id) {
-        this.record_id = record_id;
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
     }
 
-    public int getMusic_id() {
-        return music_id;
+    public int getMusicId() {
+        return musicId;
     }
 
-    public void setMusic_id(int music_id) {
-        this.music_id = music_id;
+    public void setMusicId(int musicId) {
+        this.musicId = musicId;
     }
 
-    public int getMember_id() {
-        return member_id;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getInstrument() {
@@ -83,19 +90,19 @@ public class Record {
         this.uuid = uuid;
     }
 
-    public String getFile_name() {
-        return file_name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFile_name(String file_name) {
-        this.file_name = file_name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }
