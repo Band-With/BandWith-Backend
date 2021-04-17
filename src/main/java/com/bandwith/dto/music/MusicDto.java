@@ -1,8 +1,6 @@
 package com.bandwith.dto.music;
 
-import com.bandwith.domain.Band;
 import com.bandwith.domain.Music;
-import com.bandwith.dto.band.BandDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

@@ -5,11 +5,11 @@ import com.bandwith.dto.member.MemberDto;
 import java.util.Date;
 
 public class Member {
-    private int id;
+    private int member_id;
     private String username;
     private String pwd;
     private String name;
-    private byte[] profileImgUrl;
+    private byte[] profile_img;
     private Date regDate;
 
     public Member() {
@@ -21,12 +21,12 @@ public class Member {
         this.name = name;
     }
 
-    public Member(int id, String username, String pwd, String name, byte[] profileImgUrl, Date regDate) {
-        this.id = id;
+    public Member(int member_id, String username, String pwd, String name, byte[] profile_img, Date regDate) {
+        this.member_id = member_id;
         this.username = username;
         this.pwd = pwd;
         this.name = name;
-        this.profileImgUrl = profileImgUrl;
+        this.profile_img = profile_img;
         this.regDate = regDate;
     }
 
@@ -34,12 +34,12 @@ public class Member {
         return new Member(memberDto.getUsername(), memberDto.getPwd(), memberDto.getName());
     }
 
-    public int getId() {
-        return id;
+    public int getMember_id() {
+        return member_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMember_id(int member_id) {
+        this.member_id = member_id;
     }
 
     public String getUsername() {
@@ -66,12 +66,12 @@ public class Member {
         this.name = name;
     }
 
-    public byte[] getProfileImgUrl() {
-        return profileImgUrl;
+    public byte[] getProfile_img() {
+        return profile_img;
     }
 
-    public void setProfileImgUrl(byte[] profileImgUrl) {
-        this.profileImgUrl = profileImgUrl;
+    public void setProfile_img(byte[] profile_img) {
+        this.profile_img = profile_img;
     }
 
     public Date getRegDate() {

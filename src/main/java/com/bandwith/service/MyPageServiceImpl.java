@@ -8,7 +8,6 @@ import com.bandwith.dto.PlaylistDto;
 import com.bandwith.dto.band.BandDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.member.MemberBasicDto;
-import com.bandwith.dto.member.MemberDto;
 import com.bandwith.dto.music.MusicDto;
 import com.bandwith.dto.record.RecordDto;
 import org.springframework.beans.factory.annotation.Autowired;

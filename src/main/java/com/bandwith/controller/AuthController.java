@@ -1,6 +1,5 @@
 package com.bandwith.controller;
 
-import com.bandwith.domain.Member;
 import com.bandwith.dto.member.MemberDto;
 import com.bandwith.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,9 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
