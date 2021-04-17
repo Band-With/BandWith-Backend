@@ -29,4 +29,8 @@
         WHERE b.BOOKMARK_ID = #{bookmark_id}
     </select>
 
+    <select id="selectWithUsername" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member WHERE member.username = #{username}
+    </select>
+
 </mapper>

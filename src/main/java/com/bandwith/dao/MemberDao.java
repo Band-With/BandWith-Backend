@@ -9,5 +9,6 @@ public interface MemberDao {
     int login(Member member);
     int countFollower(String username);
     int countFollowing(String username);
+    Member selectMemberWithUsername(String username);
     List<Member> selectMemberWithBookmark(int bookmark_id);
 }

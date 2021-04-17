@@ -42,12 +42,17 @@ public class MyPageServiceImpl implements MyPageService {
         List<Band> newBands = bandDao.selectBands(username);
         List<BandDto> newBandsDto = BandDto.of(newBands);
 
+        Member member = memberDao.selectMemberWithUsername(username);
+
+        if (member == null)
+            return null;
+
+        MemberBasicDto memberBasicDto = MemberBasicDto.of(member);
+
         int followers = memberDao.countFollower(username);
         int followings = memberDao.countFollowing(username);
 
-        MyPageDto myPageDto = new MyPageDto(followers, followings, newBandsDto);
-
-        return myPageDto;
+        return new MyPageDto(memberBasicDto, followers, followings, newBandsDto);
     }
 
     public List<PlaylistDto> getMyRecord(String username) {
