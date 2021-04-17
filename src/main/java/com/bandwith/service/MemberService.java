@@ -7,5 +7,5 @@ import com.bandwith.dto.MyPageDto;
 
 public interface MemberService {
     void signUp(MemberDto newMember);
-    int signIn(MemberDto memberDto);
+    MemberDto signIn(MemberDto memberDto);
 }

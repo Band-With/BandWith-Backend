@@ -2,6 +2,7 @@ package com.bandwith.domain;
 
 import com.bandwith.dto.member.MemberDto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Member {
@@ -10,24 +11,24 @@ public class Member {
     private String pwd;
     private String name;
     private byte[] profile_img;
-    private Date regDate;
+    private Timestamp reg_date;
 
     public Member() {
+    }
+
+    public Member(int member_id, String username, String pwd, String name, byte[] profile_img, Timestamp reg_date) {
+        this.member_id = member_id;
+        this.username = username;
+        this.pwd = pwd;
+        this.name = name;
+        this.profile_img = profile_img;
+        this.reg_date = reg_date;
     }
 
     public Member(String username, String pwd, String name) {
         this.username = username;
         this.pwd = pwd;
         this.name = name;
-    }
-
-    public Member(int member_id, String username, String pwd, String name, byte[] profile_img, Date regDate) {
-        this.member_id = member_id;
-        this.username = username;
-        this.pwd = pwd;
-        this.name = name;
-        this.profile_img = profile_img;
-        this.regDate = regDate;
     }
 
     public static Member of(MemberDto memberDto){
@@ -74,11 +75,11 @@ public class Member {
         this.profile_img = profile_img;
     }
 
-    public Date getRegDate() {
-        return regDate;
+    public Timestamp getReg_date() {
+        return reg_date;
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
+    public void setReg_date(Timestamp reg_date) {
+        this.reg_date = reg_date;
     }
 }

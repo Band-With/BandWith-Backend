@@ -21,7 +21,7 @@ public class RecordDto {
     }
 
     public static RecordDto of(Record record){
-        return new RecordDto(record.getRecord_id(), record.getMusic_id(), record.getSearchable(), record.getAccess(), record.getFile_name());
+        return new RecordDto(record.getRecordId(), record.getMusicId(), record.getSearchable(), record.getAccess(), record.getFileName());
     }
 
     public static List<RecordDto> of(List<Record> records){

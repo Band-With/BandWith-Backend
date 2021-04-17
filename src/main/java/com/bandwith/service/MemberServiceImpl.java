@@ -17,15 +17,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public void signUp(MemberDto newMember) {
-/*        if(newMember.getProfileImg() == null)
-            newMember.setProfileImg();*/
         Member member = Member.of(newMember);
         memberDao.insertMember(member);
     }
 
-    public int signIn(MemberDto memberDto){
+    public MemberDto signIn(MemberDto memberDto){
         Member member = Member.of(memberDto);
-        int count = memberDao.login(member);
-        return count;
+        Member loginMember = memberDao.login(member);
+
+        MemberDto loginMemberDto = null;
+        if(loginMember != null)
+            loginMemberDto = MemberDto.of(loginMember);
+        return loginMemberDto;
     }
 }

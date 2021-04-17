@@ -24,7 +24,7 @@ public class MemberController {
 
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService,
-                            @Qualifier("recordServiceBean") MyPageService myPageService){
+                            @Qualifier("myPageServiceBean") MyPageService myPageService){
         this.memberService = memberService;
         this.myPageService = myPageService;
     }

@@ -32,12 +32,11 @@ public class AuthController {
     public ResponseEntity<MemberDto> signIn(@RequestBody String filterJSON) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         MemberDto memberDto = mapper.readValue(filterJSON, MemberDto.class);
-        int count = memberService.signIn(memberDto);
+        MemberDto loginMember = memberService.signIn(memberDto);
 
-        if(count == 0)
+        if(loginMember == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 
-
-        return ResponseEntity.status(HttpStatus.OK).body(memberDto);
+        return ResponseEntity.status(HttpStatus.OK).body(loginMember);
     }
 }

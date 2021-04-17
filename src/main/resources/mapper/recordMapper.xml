@@ -9,4 +9,21 @@
         FROM record
         WHERE record.MEMBER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username})
     </select>
+
+    <select id="getRecordName" resultType="com.bandwith.dto.record.RecordNameDto">
+        SELECT uuid, file_name as fileName
+        FROM record
+        WHERE record_id = #{recordId}
+    </select>
+
+    <insert id="insertRecord">
+        INSERT INTO record (music_id, member_id, instrument, searchable, access, uuid, file_name)
+        VALUES (#{musicId}, #{memberId}, #{instrument}, #{searchable}, #{access}, #{uuid}, #{fileName})
+    </insert>
+
+    <delete id="deleteRecord">
+        DELETE
+        FROM record
+        WHERE record_id = #{recordId}
+    </delete>
 </mapper>

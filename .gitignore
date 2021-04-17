@@ -30,3 +30,4 @@ out/
 
 ## Secret Key ##
 src/main/resources/jdbc.properties
+src/main/resources/s3.properties

@@ -9,8 +9,8 @@
         VALUES (#{username}, #{pwd}, #{name}, #{profileImgUrl})
     </insert>
 
-    <select id="login" resultType="int">
-        SELECT count(*) from member WHERE USERNAME = #{username} AND PWD = #{pwd}
+    <select id="login" resultType="com.bandwith.domain.Member">
+        SELECT * from member WHERE USERNAME = #{username} AND PWD = #{pwd}
     </select>
 
     <select id="countFollower" resultType="int">
@@ -33,4 +33,9 @@
         SELECT * FROM member WHERE member.username = #{username}
     </select>
 
+    <delete id="deleteMember">
+        DELETE
+        FROM member
+        WHERE username = #{username}
+    </delete>
 </mapper>
