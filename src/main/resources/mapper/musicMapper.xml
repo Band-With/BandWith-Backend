@@ -9,4 +9,20 @@
         FROM music
         WHERE music.MUSIC_ID = #{music_id}
     </select>
+
+    <select id="selectMyPage" resultType="com.bandwith.domain.Music">
+        SELECT DISTINCT mu.*
+        FROM member m
+            INNER JOIN record r ON m.member_id = r.member_id
+            INNER JOIN music mu ON r.music_id = mu.music_id
+        WHERE m.username = #{username}
+    </select>
+
+    <select id="selectOthersPage" resultType="com.bandwith.domain.Music">
+        SELECT DISTINCT mu.*
+        FROM member m
+                 INNER JOIN record r ON m.member_id = r.member_id
+                 INNER JOIN music mu ON r.music_id = mu.music_id
+        WHERE m.username = #{username} AND r.access = true
+    </select>
 </mapper>

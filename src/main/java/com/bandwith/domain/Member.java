@@ -2,17 +2,27 @@ package com.bandwith.domain;
 
 import com.bandwith.dto.member.MemberDto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Member {
-    private int id;
+    private int member_id;
     private String username;
     private String pwd;
     private String name;
-    private byte[] profileImgUrl;
-    private Date regDate;
+    private byte[] profile_img;
+    private Timestamp reg_date;
 
     public Member() {
+    }
+
+    public Member(int member_id, String username, String pwd, String name, byte[] profile_img, Timestamp reg_date) {
+        this.member_id = member_id;
+        this.username = username;
+        this.pwd = pwd;
+        this.name = name;
+        this.profile_img = profile_img;
+        this.reg_date = reg_date;
     }
 
     public Member(String username, String pwd, String name) {
@@ -21,25 +31,16 @@ public class Member {
         this.name = name;
     }
 
-    public Member(int id, String username, String pwd, String name, byte[] profileImgUrl, Date regDate) {
-        this.id = id;
-        this.username = username;
-        this.pwd = pwd;
-        this.name = name;
-        this.profileImgUrl = profileImgUrl;
-        this.regDate = regDate;
-    }
-
     public static Member of(MemberDto memberDto){
         return new Member(memberDto.getUsername(), memberDto.getPwd(), memberDto.getName());
     }
 
-    public int getId() {
-        return id;
+    public int getMember_id() {
+        return member_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMember_id(int member_id) {
+        this.member_id = member_id;
     }
 
     public String getUsername() {
@@ -66,19 +67,19 @@ public class Member {
         this.name = name;
     }
 
-    public byte[] getProfileImgUrl() {
-        return profileImgUrl;
+    public byte[] getProfile_img() {
+        return profile_img;
     }
 
-    public void setProfileImgUrl(byte[] profileImgUrl) {
-        this.profileImgUrl = profileImgUrl;
+    public void setProfile_img(byte[] profile_img) {
+        this.profile_img = profile_img;
     }
 
-    public Date getRegDate() {
-        return regDate;
+    public Timestamp getReg_date() {
+        return reg_date;
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
+    public void setReg_date(Timestamp reg_date) {
+        this.reg_date = reg_date;
     }
 }

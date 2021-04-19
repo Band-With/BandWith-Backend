@@ -2,15 +2,11 @@ package com.bandwith.service;
 
 import com.bandwith.dao.*;
 import com.bandwith.domain.*;
-import com.bandwith.domain.Record;
 import com.bandwith.dto.MyPageDto;
-import com.bandwith.dto.PlaylistDto;
 import com.bandwith.dto.band.BandDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.member.MemberBasicDto;
-import com.bandwith.dto.member.MemberDto;
 import com.bandwith.dto.music.MusicDto;
-import com.bandwith.dto.record.RecordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("recordServiceBean")
+@Service("myPageServiceBean")
 public class MyPageServiceImpl implements MyPageService {
     private RecordDao recordDao;
     private MusicDao musicDao;
@@ -43,27 +39,27 @@ public class MyPageServiceImpl implements MyPageService {
         List<Band> newBands = bandDao.selectBands(username);
         List<BandDto> newBandsDto = BandDto.of(newBands);
 
+        Member member = memberDao.selectMemberWithUsername(username);
+
+        if (member == null)
+            return null;
+
+        MemberBasicDto memberBasicDto = MemberBasicDto.of(member);
+
         int followers = memberDao.countFollower(username);
         int followings = memberDao.countFollowing(username);
 
-        MyPageDto myPageDto = new MyPageDto(followers, followings, newBandsDto);
-
-        return myPageDto;
+        return new MyPageDto(memberBasicDto, followers, followings, newBandsDto);
     }
 
-    public List<PlaylistDto> getMyRecord(String username) {
-        List<Record> records = recordDao.selectRecords(username);
-        List<RecordDto> recordsDto = RecordDto.of(records);
-
-        List<PlaylistDto> playlistsDto = new ArrayList<>();
-        for (int i=0; i < records.size(); i++){
-            int music_id = recordsDto.get(i).getMusic_id();
-            Music music = musicDao.selectMusic(music_id);
-            MusicDto musicDto = MusicDto.of(music);
-            playlistsDto.add(new PlaylistDto(recordsDto.get(i), musicDto));
-        }
-
-        return playlistsDto;
+    public List<MusicDto> getMyRecord(String username, Boolean condition) {
+        List<Music> musicList = new ArrayList<>();
+        List<MusicDto> musicDtoList = new ArrayList<>();
+        if(condition)
+            musicList = musicDao.selectMusicMyPage(username);
+        else
+            musicList = musicDao.selectMusicOthersPage(username);
+        return MusicDto.of(musicList);
     }
 
     public List<BookmarkDto> getBookmarks(String username) {

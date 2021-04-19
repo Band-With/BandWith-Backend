@@ -1,17 +1,11 @@
 package com.bandwith.service;
 
-import com.bandwith.dao.BandDao;
 import com.bandwith.dao.MemberDao;
-import com.bandwith.domain.Band;
 import com.bandwith.domain.Member;
-import com.bandwith.dto.band.BandDto;
 import com.bandwith.dto.member.MemberDto;
-import com.bandwith.dto.MyPageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service("memberServiceBean")
 public class MemberServiceImpl implements MemberService {
@@ -23,15 +17,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public void signUp(MemberDto newMember) {
-/*        if(newMember.getProfileImg() == null)
-            newMember.setProfileImg();*/
         Member member = Member.of(newMember);
         memberDao.insertMember(member);
     }
 
-    public int signIn(MemberDto memberDto){
+    public MemberDto signIn(MemberDto memberDto){
         Member member = Member.of(memberDto);
-        int count = memberDao.login(member);
-        return count;
+        Member loginMember = memberDao.login(member);
+
+        MemberDto loginMemberDto = null;
+        if(loginMember != null)
+            loginMemberDto = MemberDto.of(loginMember);
+        return loginMemberDto;
     }
 }

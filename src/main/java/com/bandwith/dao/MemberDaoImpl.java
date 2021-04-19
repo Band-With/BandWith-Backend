@@ -22,7 +22,11 @@ public class MemberDaoImpl implements MemberDao {
         sqlSession.insert("MemberMapper.insertMember", member);
     }
 
-    public int login(Member member) {
+    public Member selectMemberWithUsername(String username){
+        return sqlSession.selectOne("MemberMapper.selectWithUsername", username);
+    }
+
+    public Member login(Member member) {
         return sqlSession.selectOne("MemberMapper.login", member);
     }
 
@@ -34,7 +38,10 @@ public class MemberDaoImpl implements MemberDao {
         return sqlSession.selectOne("MemberMapper.countFollowing", username);
     }
 
-    public List<Member> selectMemberWithBookmark(int bookmark_id){
+    public List<Member> selectMemberWithBookmark(int bookmark_id) {
         return sqlSession.selectList("MemberMapper.selectWithBookmark", bookmark_id);
+    }
+    public void deleteMember(String username) {
+        sqlSession.delete("MemberMapper.deleteMember", username);
     }
 }
