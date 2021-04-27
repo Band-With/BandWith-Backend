@@ -7,17 +7,19 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 
@@ -51,61 +53,49 @@ public class S3ServiceImpl implements S3Service {
 
     // 파일 업로드
     @Override
-    public String[] fileUpload(String path, MultipartFile file) {
+    public String[] fileUpload(String path, MultipartFile file) throws AmazonClientException, IOException {
 
         String uid = UUID.randomUUID().toString();
-        String fileName = file.getOriginalFilename().replace('/', '-'); // TODO : exception handling on the front-end for the file name to be uploaded
+        String fileName = file.getOriginalFilename().replace('/', '-');
         String key = path + uid + "-" + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
         metadata.setContentLength(file.getSize());
 
-        try {
-            // upload the file
-            s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
-            String[] fileInfo = {uid, fileName};
-            return fileInfo;
-        } catch (AmazonServiceException ase) {
-            logger.info("Caught an AmazonServiceException from PUT requests, rejected reasons: ");
-            logger.info("Error Message:    " + ase.getMessage());
-            logger.info("HTTP Status Code: " + ase.getStatusCode());
-            logger.info("AWS Error Code:   " + ase.getErrorCode());
-            logger.info("Error Type:       " + ase.getErrorType());
-            logger.info("Request ID:       " + ase.getRequestId());
-        } catch (AmazonClientException ace) {
-            logger.info("Caught an AmazonClientException: ");
-            logger.info("Error Message: " + ace.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
+        String[] fileInfo = {uid, fileName};
+        return fileInfo;
     }
+
+    // 파일 다운로드
+    @Override
+    public Resource fileDownload(String key) throws AmazonServiceException, IOException {
+        S3Object o = s3Client.getObject(bucket, key);
+        S3ObjectInputStream s3is = o.getObjectContent();
+        byte[] bytes = IOUtils.toByteArray(s3is);
+
+        Resource resource = new ByteArrayResource(bytes);
+        return resource;
+    }
+
 
     // 파일 삭제
     @Override
-    public void fileDelete(String path) {
-
-        try {
-            // delete the file
-            s3Client.deleteObject(bucket, path);
-            System.out.println("delete s3 service: " + path);
-        } catch (AmazonServiceException ase) {
-            ase.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void fileDelete(String path) throws AmazonServiceException {
+        s3Client.deleteObject(bucket, path);
+        System.out.println("delete s3 service: " + path);
     }
 
     // 파일 URL
     @Override
-    public String getFileURL(String path) {
+    public String getFileURL(String path) throws AmazonServiceException {
         return s3Client.generatePresignedUrl(new GeneratePresignedUrlRequest(bucket, path)).toString();
     }
 
     // 폴더 생성
     @Override
-    public void createFolder(String folderName) {
+    public void createFolder(String folderName) throws AmazonServiceException {
         s3Client.putObject(bucket, folderName + "/", new ByteArrayInputStream(new byte[0]), new ObjectMetadata());
     }
 }

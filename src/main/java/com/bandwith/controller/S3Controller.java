@@ -5,6 +5,11 @@ import com.bandwith.service.RecordService;
 import com.bandwith.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,17 +45,24 @@ public class S3Controller {
         return "";
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-//    public String uploadAjaxCertificate(MultipartFile file) throws Exception {
-//
-//        String uploadPath = "records/";
-//
-//        ResponseEntity<String> img_path = new ResponseEntity<>(uploadPath + fileName, HttpStatus.CREATED);
-//        String certificatePath = img_path.getBody();
-//
-//        return certificatePath;
-//    }
+    @RequestMapping(path = "/members/{memberId}/records/{recordId}", method = RequestMethod.GET)
+    public ResponseEntity recordDownload(@PathVariable int recordId) {
+        try {
+            RecordNameDto fileName = recordService.getRecordName(recordId);
+            String key = "records/" + fileName.getUuid() + "-" + fileName.getFileName();
+            Resource resource = s3Service.fileDownload(key);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(resource.contentLength())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName.getFileName())
+                    .body(resource);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @RequestMapping(path = "/members/{memberId}/records/{recordId}", method = RequestMethod.DELETE)
     public String recordDelete(@PathVariable int memberId, @PathVariable int recordId) {
@@ -68,7 +80,7 @@ public class S3Controller {
     }
 
     @RequestMapping(path = "/records/{recordId}/url", method = RequestMethod.POST)
-    public String moveFileUrl(@PathVariable int recordId) throws Exception {
+    public String moveFileUrl(@PathVariable int recordId) {
 
         RecordNameDto fileName = recordService.getRecordName(recordId);
         String key = "records/" + fileName.getUuid() + "-" + fileName.getFileName();
@@ -76,7 +88,7 @@ public class S3Controller {
     }
 
     @RequestMapping("/records/test")
-    public String uploadFile() throws Exception {
+    public String uploadFile() {
         return "recordTest";
     }
 }
