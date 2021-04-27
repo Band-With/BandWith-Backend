@@ -5,8 +5,7 @@ import com.bandwith.domain.Record;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordDto {
-    private int recordId;
+public class RecordCreateDto {
     private int memberId;
     private int musicId;
     private String instrument;
@@ -15,8 +14,7 @@ public class RecordDto {
     private String uuid;
     private String fileName;
 
-    public RecordDto(int recordId, int memberId, int musicId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName) {
-        this.recordId = recordId;
+    public RecordCreateDto(int memberId, int musicId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName) {
         this.memberId = memberId;
         this.musicId = musicId;
         this.instrument = instrument;
@@ -26,9 +24,8 @@ public class RecordDto {
         this.fileName = fileName;
     }
 
-    public static RecordDto of(Record record){
-        return new RecordDto(
-                record.getRecordId(),
+    public static RecordCreateDto of(Record record){
+        return new RecordCreateDto(
                 record.getMemberId(),
                 record.getMusicId(),
                 record.getInstrument(),
@@ -38,19 +35,11 @@ public class RecordDto {
                 record.getFileName());
     }
 
-    public static List<RecordDto> of(List<Record> records){
-        List<RecordDto> recordsDto = new ArrayList();
+    public static List<RecordCreateDto> of(List<Record> records){
+        List<RecordCreateDto> recordsDto = new ArrayList();
         for(Record record: records)
-            recordsDto.add(RecordDto.of(record));
+            recordsDto.add(RecordCreateDto.of(record));
         return recordsDto;
-    }
-
-    public int getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(int recordId) {
-        this.recordId = recordId;
     }
 
     public int getMemberId() {

@@ -10,11 +10,14 @@
         <input type="submit" name="submit" value="업로드"/>
     </form>
     <br>
-    <form name="fileDelete" method="post" action="/members/1/records/1">
+    <form name="fileDelete" method="post" action="/members/1/records/22">
         <input type="hidden" name="_method" value="delete" />
         <label>파일 삭제 테스트</label>
         <input type="submit" name="submit" value="삭제"/>
     </form>
+    <br>
+    <a href="/members/1/records/22" >파일 다운로드</a>
+    <br>
     <br>
     <form name="fileUrl" method="post" action="/records/1/url">
         <label>파일 URL 이동 테스트</label>

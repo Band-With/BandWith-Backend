@@ -1,6 +1,7 @@
 package com.bandwith.dao;
 
 import com.bandwith.domain.Record;
+import com.bandwith.dto.record.RecordCreateDto;
 import com.bandwith.dto.record.RecordNameDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public void insertRecord(Record record) {
-        sqlSession.insert("RecordMapper.insertRecord", record);
+    public void insertRecord(RecordCreateDto recordDto) {
+        sqlSession.insert("RecordMapper.insertRecord", recordDto);
     }
 
     @Override
