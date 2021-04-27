@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
+@RestController
 public class MusicController {
     private MusicService musicService;
 
@@ -19,11 +23,11 @@ public class MusicController {
         this.musicService = musicService;
     }
 
-    @PostMapping("/musics")
-    public ResponseEntity<String> signUp(@RequestBody String filterJSON) throws JsonProcessingException {
+    @PostMapping("/musics/insert")
+    public ResponseEntity<String> insertMusic(@RequestBody String filterJSON) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         MusicDto newmusic = mapper.readValue(filterJSON, MusicDto.class);
-        musicService.registerMusic(newmusic);
+        musicService.insertMusic(newmusic);
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
 

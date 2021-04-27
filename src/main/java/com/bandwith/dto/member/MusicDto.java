@@ -6,16 +6,17 @@ import java.util.Date;
 public class MusicDto {
     private int music_id;
     private String title;
-    private byte musicProfileImage;
+    private byte musicProfileImage=0;
     private String singer;
     private String composer;
 
-    public MusicDto(int music_id, String title, byte musicProfileImage, String singer, String composer) {
-        this.music_id = music_id;
+    public MusicDto(String title, String singer, String composer) {
         this.title = title;
-        this.musicProfileImage = musicProfileImage;
         this.singer = singer;
         this.composer = composer;
+    }
+
+    public MusicDto() {
     }
 
     public int getMusic_id() {

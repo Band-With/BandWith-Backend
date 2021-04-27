@@ -25,7 +25,7 @@ public class MusicServiceImpl implements MusicService {
 
     }
 
-    public void registerMusic(MusicDto newMusic){
+    public void insertMusic(MusicDto newMusic){
         Music music = Music.of(newMusic);
         musicDao.insertMusic(music);
     }

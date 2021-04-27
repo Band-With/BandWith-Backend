@@ -21,6 +21,7 @@ public class MusicDaoImpl implements MusicDao {
 
     @Override
     public void insertMusic(Music music) {
+        System.out.println("hi");
         sqlSession.insert("MemberMapper.insertMusic", music);
     }
 
