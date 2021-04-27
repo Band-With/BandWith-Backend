@@ -1,5 +1,7 @@
 package com.bandwith.domain;
 
+import com.bandwith.dto.music.MusicDto;
+
 public class Music {
     private int music_id;
     private String title;
@@ -13,6 +15,11 @@ public class Music {
         this.singer = singer;
         this.composer = composer;
         this.profile_img = profile_img;
+    }
+
+    public static Music of(MusicDto newMusic) {
+        return new Music(newMusic.getMusic_id(),newMusic.getTitle(), newMusic.getSinger(), newMusic.getComposer(),null);
+
     }
 
     public int getMusic_id() {

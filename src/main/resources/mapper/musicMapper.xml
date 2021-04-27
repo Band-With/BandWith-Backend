@@ -25,4 +25,8 @@
                  INNER JOIN music mu ON r.music_id = mu.music_id
         WHERE m.username = #{username} AND r.access = true
     </select>
+    <insert id="insertMusic">
+        INSERT INTO music (music_id, title, profile_img, singer, composer)
+        VALUES (#{music_id}, #{title}, #{profileImgUrl}, #{singer},#{composer})
+    </insert>
 </mapper>
