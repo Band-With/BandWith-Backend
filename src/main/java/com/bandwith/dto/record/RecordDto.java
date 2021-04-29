@@ -2,26 +2,30 @@ package com.bandwith.dto.record;
 
 import com.bandwith.domain.Record;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecordDto {
     private int record_id;
     private int music_id;
+    private Timestamp created_at;
     private Boolean searchable;
     private Boolean access;
     private String file_name; //modify to real file
 
-    public RecordDto(int record_id, int music_id, Boolean searchable, Boolean access, String file_name) {
+    public RecordDto(int record_id, int music_id, Boolean searchable, Boolean access, Timestamp created_at, String file_name) {
         this.record_id = record_id;
         this.music_id = music_id;
         this.searchable = searchable;
         this.access = access;
+        this.created_at = created_at;
         this.file_name = file_name;
     }
 
     public static RecordDto of(Record record){
-        return new RecordDto(record.getRecordId(), record.getMusicId(), record.getSearchable(), record.getAccess(), record.getFileName());
+        return new RecordDto(record.getRecordId(), record.getMusicId(), record.getSearchable(), record.getAccess(),
+                record.getCreatedAt(), record.getFileName());
     }
 
     public static List<RecordDto> of(List<Record> records){
@@ -61,6 +65,14 @@ public class RecordDto {
 
     public void setAccess(Boolean access) {
         this.access = access;
+    }
+
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
     public String getFile_name() {

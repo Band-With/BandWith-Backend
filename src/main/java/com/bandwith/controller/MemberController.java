@@ -1,10 +1,12 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.PracDetailDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.MyPageDto;
 import com.bandwith.dto.music.MusicDto;
 import com.bandwith.service.MemberService;
 import com.bandwith.service.MyPageService;
+import com.bandwith.service.PracDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -19,12 +21,15 @@ import java.util.List;
 public class MemberController {
     private MemberService memberService;
     private MyPageService myPageService;
+    private PracDetailService pracDetailService;
 
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService,
-                            @Qualifier("myPageServiceBean") MyPageService myPageService){
+                            @Qualifier("myPageServiceBean") MyPageService myPageService,
+                            @Qualifier("pracDetailServiceBean") PracDetailService pracDetailService){
         this.memberService = memberService;
         this.myPageService = myPageService;
+        this.pracDetailService = pracDetailService;
     }
 
     @GetMapping("")
@@ -43,6 +48,15 @@ public class MemberController {
     @GetMapping("/bookmarks")
     public List<BookmarkDto> bookmark(@PathVariable String username){
         return myPageService.getBookmarks(username);
+    }
+
+    @GetMapping("/records/{title}")
+    public ResponseEntity<PracDetailDto> pracDetail(@PathVariable String username, @PathVariable String title, Boolean condition){
+        PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, title, condition);
+
+        if (pracDetailDto.getRecords().size() == 0)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(pracDetailDto);
     }
 
     @GetMapping("/testAPI")
