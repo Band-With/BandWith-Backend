@@ -37,4 +37,8 @@ public class RecordDaoImpl implements RecordDao {
     public List<Record> selectRecordsByTitle(HashMap<String, Object> params) {
         return sqlSession.selectList("RecordMapper.selectRecordsByTitle", params);
     }
+
+    public void updateAttributes(HashMap<String, Object> params){
+        sqlSession.update("RecordMapper.updateAttributes", params);
+    }
 }

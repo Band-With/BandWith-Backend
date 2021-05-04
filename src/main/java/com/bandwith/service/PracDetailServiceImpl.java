@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("pracDetailServiceBean")
 public class PracDetailServiceImpl implements PracDetailService {
@@ -59,5 +60,13 @@ public class PracDetailServiceImpl implements PracDetailService {
         }
         return new PracDetailDto(MusicDto.of(musicDao.selectMusicByTitle(title)), details);
     };
+
+    public void patchRecordAttributes(int recordId, Boolean access, Boolean searchable){
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("recordId", recordId);
+        params.put("access", access);
+        params.put("searchable", searchable);
+        recordDao.updateAttributes(params);
+    }
 
 }

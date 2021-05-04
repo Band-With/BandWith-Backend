@@ -6,20 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PracDetailDto {
-    private MusicDto musicDto;
+    private MusicDto music;
     private List<HashMap<String, Object>> records;
 
-    public PracDetailDto(MusicDto musicDto, List<HashMap<String, Object>> records){
-        this.musicDto = musicDto;
+    public PracDetailDto(MusicDto music, List<HashMap<String, Object>> records){
+        this.music = music;
         this.records = records;
     }
 
-    public MusicDto getMusicDto() {
-        return musicDto;
+    public MusicDto getMusic() {
+        return music;
     }
 
-    public void setMusicDto(MusicDto musicDto) {
-        this.musicDto = musicDto;
+    public void setMusic(MusicDto music) {
+        this.music = music;
     }
 
     public List<HashMap<String, Object>> getRecords() {

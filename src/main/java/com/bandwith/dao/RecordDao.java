@@ -12,4 +12,5 @@ public interface RecordDao {
     RecordNameDto getRecordName(int recordId);
     void insertRecord(Record record);
     void deleteRecord(int recordId);
+    void updateAttributes(HashMap<String, Object> params);
 }

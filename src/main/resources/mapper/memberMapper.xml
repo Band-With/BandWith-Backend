@@ -33,6 +33,10 @@
         SELECT * FROM member WHERE member.username = #{username}
     </select>
 
+    <select id="select" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member WHERE member_id = #{member_id}
+    </select>
+
     <delete id="deleteMember">
         DELETE
         FROM member

@@ -36,4 +36,9 @@
         FROM record
         WHERE record_id = #{recordId}
     </delete>
+
+    <update id="updateAttributes">
+        UPDATE record set access = #{access}, searchable = #{searchable}
+        WHERE record_id = #{recordId}
+    </update>
 </mapper>

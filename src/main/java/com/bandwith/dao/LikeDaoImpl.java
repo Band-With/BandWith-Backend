@@ -14,7 +14,6 @@ public class LikeDaoImpl implements LikeDao{
     }
 
     public int countLike(int record_id){
-        System.out.println(record_id);
         return sqlSession.selectOne("LikeMapper.countLike", record_id);
     }
 }

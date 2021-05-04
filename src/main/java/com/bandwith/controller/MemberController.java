@@ -1,12 +1,17 @@
 package com.bandwith.controller;
 
+import com.amazonaws.Response;
+import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.PracDetailDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.MyPageDto;
+import com.bandwith.dto.comment.CommentDto;
 import com.bandwith.dto.music.MusicDto;
+import com.bandwith.service.CommentService;
 import com.bandwith.service.MemberService;
 import com.bandwith.service.MyPageService;
 import com.bandwith.service.PracDetailService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -22,14 +27,17 @@ public class MemberController {
     private MemberService memberService;
     private MyPageService myPageService;
     private PracDetailService pracDetailService;
+    private CommentService commentService;
 
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService,
                             @Qualifier("myPageServiceBean") MyPageService myPageService,
-                            @Qualifier("pracDetailServiceBean") PracDetailService pracDetailService){
+                            @Qualifier("pracDetailServiceBean") PracDetailService pracDetailService,
+                            @Qualifier("commentServiceBean") CommentService commentService){
         this.memberService = memberService;
         this.myPageService = myPageService;
         this.pracDetailService = pracDetailService;
+        this.commentService = commentService;
     }
 
     @GetMapping("")
@@ -41,13 +49,13 @@ public class MemberController {
     }
 
     @GetMapping("/records")
-    public List<MusicDto> record(@PathVariable String username, Boolean condition){
-        return myPageService.getMyRecord(username, condition);
+    public ResponseEntity<List<MusicDto>> record(@PathVariable String username, Boolean condition){
+        return ResponseEntity.status(HttpStatus.OK).body(myPageService.getMyRecord(username, condition));
     }
 
     @GetMapping("/bookmarks")
-    public List<BookmarkDto> bookmark(@PathVariable String username){
-        return myPageService.getBookmarks(username);
+    public ResponseEntity<List<BookmarkDto>> bookmark(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(myPageService.getBookmarks(username));
     }
 
     @GetMapping("/records/{title}")
@@ -57,6 +65,19 @@ public class MemberController {
         if (pracDetailDto.getRecords().size() == 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(pracDetailDto);
+    }
+
+    @GetMapping("/records/{recordId}/comments")
+    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId){
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
+    }
+
+    @PatchMapping("/records/{recordId}")
+    public ResponseEntity<?> patchRecordAttribute(@PathVariable int recordId, @RequestBody JSONObject jsonObject){
+        Boolean access = (Boolean)jsonObject.get("access");
+        Boolean searchable = (Boolean)jsonObject.get("searchable");
+        pracDetailService.patchRecordAttributes(recordId, access, searchable);
+        return ResponseEntity.ok("resource patched");
     }
 
     @GetMapping("/testAPI")
