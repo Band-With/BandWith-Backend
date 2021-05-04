@@ -10,6 +10,12 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
+    <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE music.title = #{title}
+    </select>
+
     <select id="selectMyPage" resultType="com.bandwith.domain.Music">
         SELECT DISTINCT mu.*
         FROM member m
