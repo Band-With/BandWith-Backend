@@ -29,7 +29,7 @@ public class RecordDto {
     }
 
     public static List<RecordDto> of(List<Record> records){
-        List<RecordDto> recordsDto = new ArrayList<RecordDto>();
+        List<RecordDto> recordsDto = new ArrayList();
         for(Record record: records)
             recordsDto.add(RecordDto.of(record));
         return recordsDto;
@@ -51,6 +51,14 @@ public class RecordDto {
         this.music_id = music_id;
     }
 
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+
     public Boolean getSearchable() {
         return searchable;
     }
@@ -65,14 +73,6 @@ public class RecordDto {
 
     public void setAccess(Boolean access) {
         this.access = access;
-    }
-
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
     }
 
     public String getFile_name() {

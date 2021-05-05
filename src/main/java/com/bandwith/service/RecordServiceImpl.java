@@ -1,7 +1,7 @@
 package com.bandwith.service;
 
 import com.bandwith.dao.RecordDao;
-import com.bandwith.domain.Record;
+import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,9 +23,8 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public void uploadRecord(int musicId, int memberId, String instrument, boolean searchable, boolean access, String uuid, String fileName) {
-        Record record = new Record(musicId, memberId, instrument, searchable, access, uuid, fileName);
-        recordDao.insertRecord(record);
+    public void uploadRecord(RecordInsertDto recordDto) {
+        recordDao.insertRecord(recordDto);
         System.out.println("upload record service");
     }
 

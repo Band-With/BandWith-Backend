@@ -19,27 +19,37 @@ public class MusicDaoImpl implements MusicDao{
         this.sqlSession = sqlSession;
     }
 
+    @Override
     public Music selectMusic(int music_id){
         return sqlSession.selectOne("MusicMapper.selectMusic", music_id);
     }
+
+    @Override
     public Music selectMusicByTitle(String title){
         return sqlSession.selectOne("MusicMapper.selectMusicByTitle", title);
     }
 
+    @Override
     public List<Music> selectMusicOthersPage(String username) {
         return sqlSession.selectList("MusicMapper.selectOthersPage", username);
     }
+
+    @Override
     public List<Music> selectMusicMyPage(String username) {
-        return sqlSession.selectList("MusicMapper.selectMyPage", username);}
+        return sqlSession.selectList("MusicMapper.selectMyPage", username);
+    }
+
     @Override
     public void insertMusic(Music music) {
         System.out.println("hi");
         sqlSession.insert("MemberMapper.insertMusic", music);
     }
+
     @Override
     public void deleteMusic(Music music) {
         sqlSession.delete("MemberMapper.deleteMusic", music);
     }
+
     @Override
     public void searchMusic(Music music) {
         List<Music> list = sqlSession.selectList("music.selectList");

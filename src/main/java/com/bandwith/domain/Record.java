@@ -23,16 +23,16 @@ public class Record {
         this.uuid = uuid;
         this.fileName = fileName;
     }
-
-    public Record(int musicId, int memberId, String instrument, boolean searchable, boolean access, String uuid, String fileName) {
-        this.musicId = musicId;
-        this.memberId = memberId;
-        this.instrument = instrument;
-        this.searchable = searchable;
-        this.access = access;
-        this.uuid = uuid;
-        this.fileName = fileName;
-    }
+//
+//    public Record(int musicId, int memberId, String instrument, boolean searchable, boolean access, String uuid, String fileName) {
+//        this.musicId = musicId;
+//        this.memberId = memberId;
+//        this.instrument = instrument;
+//        this.searchable = searchable;
+//        this.access = access;
+//        this.uuid = uuid;
+//        this.fileName = fileName;
+//    }
 
     public int getRecordId() {
         return recordId;
