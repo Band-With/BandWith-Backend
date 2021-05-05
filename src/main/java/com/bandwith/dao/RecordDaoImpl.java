@@ -45,6 +45,11 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
+    public List<Record> selectRecordsByFilter(HashMap<String, Object> params) {
+        return sqlSession.selectList("RecordMapper.selectRecordsByFilter", params);
+    }
+
+    @Override
     public void updateAttributes(HashMap<String, Object> params){
         sqlSession.update("RecordMapper.updateAttributes", params);
     }

@@ -2,52 +2,39 @@ package com.bandwith.dto.record;
 
 import com.bandwith.domain.Record;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RecordInsertDto {
-    private int memberId;
     private int musicId;
+    private int memberId;
     private String instrument;
     private Boolean searchable;
     private Boolean access;
     private String uuid;
     private String fileName;
+    private String fileUrl;
 
-    public RecordInsertDto(int memberId, int musicId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName) {
-        this.memberId = memberId;
+    public RecordInsertDto(int musicId, int memberId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName, String fileUrl) {
         this.musicId = musicId;
+        this.memberId = memberId;
         this.instrument = instrument;
         this.searchable = searchable;
         this.access = access;
         this.uuid = uuid;
         this.fileName = fileName;
+        this.fileUrl = fileUrl;
     }
 
     public static RecordInsertDto of(Record record){
         return new RecordInsertDto(
-                record.getMemberId(),
                 record.getMusicId(),
+                record.getMemberId(),
                 record.getInstrument(),
-                record.getSearchable(),
-                record.getAccess(),
+                record.isSearchable(),
+                record.isAccess(),
                 record.getUuid(),
-                record.getFileName());
-    }
-
-    public static List<RecordInsertDto> of(List<Record> records){
-        List<RecordInsertDto> recordsDto = new ArrayList();
-        for(Record record: records)
-            recordsDto.add(RecordInsertDto.of(record));
-        return recordsDto;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+                record.getFileName(),
+                record.getFileUrl()
+        );
     }
 
     public int getMusicId() {
@@ -56,6 +43,14 @@ public class RecordInsertDto {
 
     public void setMusicId(int musicId) {
         this.musicId = musicId;
+    }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getInstrument() {
@@ -96,5 +91,13 @@ public class RecordInsertDto {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }
