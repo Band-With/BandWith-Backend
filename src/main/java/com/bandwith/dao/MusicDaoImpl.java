@@ -3,14 +3,12 @@ package com.bandwith.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.bandwith.domain.Member;
-import com.bandwith.domain.Music;
-import org.apache.ibatis.session.ResultHandler;
-import java.util.List;
 import com.bandwith.domain.Music;
 
+import java.util.List;
+
 @Repository("musicDaoBean")
-public class MusicDaoImpl implements MusicDao{
+public class MusicDaoImpl implements MusicDao {
 
     private final SqlSession sqlSession;
 
@@ -20,12 +18,12 @@ public class MusicDaoImpl implements MusicDao{
     }
 
     @Override
-    public Music selectMusic(int music_id){
+    public Music selectMusic(int music_id) {
         return sqlSession.selectOne("MusicMapper.selectMusic", music_id);
     }
 
     @Override
-    public Music selectMusicByTitle(String title){
+    public Music selectMusicByTitle(String title) {
         return sqlSession.selectOne("MusicMapper.selectMusicByTitle", title);
     }
 
@@ -41,7 +39,6 @@ public class MusicDaoImpl implements MusicDao{
 
     @Override
     public void insertMusic(Music music) {
-        System.out.println("hi");
         sqlSession.insert("MemberMapper.insertMusic", music);
     }
 

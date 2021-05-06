@@ -53,13 +53,21 @@ public class S3ServiceImpl implements S3Service {
 
     // 파일 업로드
     @Override
-    public void uploadFile(String key, MultipartFile file) throws AmazonClientException, IOException {
+    public String[] uploadFile(String path, MultipartFile file) throws AmazonClientException, IOException {
+
+        String uid = UUID.randomUUID().toString();
+        String fileName = file.getOriginalFilename().replace('/', '-');
+        String key = path + uid + "-" + fileName;
+
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
         metadata.setContentLength(file.getSize());
 
         s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
+        String[] fileInfo = {uid, fileName, key};
+        return fileInfo;
     }
+
 
     // 파일 다운로드
     @Override

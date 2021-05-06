@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RecordService {
     RecordNameDto getRecordName(int recordId);
-    void uploadRecord(RecordInsertDto recordDto);
+    void insertRecord(RecordInsertDto recordDto);
     void deleteRecord(int recordId);
     List<SearchRecordDto> getRecords(int musicId, String filter);
 }

@@ -1,10 +1,13 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.SearchRecordDto;
 import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
+import com.bandwith.service.CommentService;
 import com.bandwith.service.RecordService;
 import com.bandwith.service.S3Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 
 
 @CrossOrigin
@@ -25,33 +27,37 @@ public class RecordController {
 
     private S3Service s3Service;
     private RecordService recordService;
+    private CommentService commentService;
 
     @Autowired
     public RecordController(@Qualifier("s3Service") S3Service s3Service,
-                            @Qualifier("recordServiceBean") RecordService recordService) {
+                            @Qualifier("recordServiceBean") RecordService recordService,
+                            @Qualifier("commentServiceBean") CommentService commentService) {
         this.s3Service = s3Service;
         this.recordService = recordService;
+        this.commentService = commentService;
     }
 
     // 사용자 녹음 파일 저장
     @RequestMapping(path = "members/{memberId}/records", method = RequestMethod.POST)
-    public ResponseEntity recordUpload(@RequestBody String filterJSON,
-                                       @RequestParam("file") MultipartFile file,
+    public ResponseEntity recordUpload(@RequestPart("json") String filterJSON,
+                                       @RequestPart("file") MultipartFile file,
                                        @PathVariable int memberId) {
         try {
+            // S3에 저장
             String uploadPath = "records/";
-            String uuid = UUID.randomUUID().toString();
-            String fileName = file.getOriginalFilename().replace('/', '-');
-            String key = uploadPath + uuid + "-" + fileName;
+            String[] fileInfo = s3Service.uploadFile(uploadPath, file); // fileInfo = {uuid, fileName, key}
+            String url = s3Service.getFileURL(fileInfo[2]);
 
-            s3Service.uploadFile(key, file);
-            String url = s3Service.getFileURL(key);
+            // DB에 저장
+            ObjectMapper mapper = new ObjectMapper();
+            RecordInsertDto recordInsertDto = mapper.readValue(filterJSON, RecordInsertDto.class);
+            recordInsertDto.setUuid(fileInfo[0]);
+            recordInsertDto.setFileName(fileInfo[1]);
+            recordInsertDto.setFileUrl(fileInfo[2]);
+            recordService.insertRecord(recordInsertDto);
 
-            // TODO : @RequestBody String filterJSON
-            RecordInsertDto record = new RecordInsertDto(1, memberId, "기타", false, false, uuid, fileName, url);
-            recordService.uploadRecord(record);
-
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body("insert complete");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,11 +67,10 @@ public class RecordController {
 
     // 음악에 대한 녹음 파일 가져오기 (필터 적용)
     @GetMapping("/musics/{musicId}/records")
-    public ResponseEntity<List<SearchRecordDto>> getRecords(@PathVariable int musicId, String filter){
+    public ResponseEntity<List<SearchRecordDto>> getRecords(@PathVariable int musicId, String filter) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(recordService.getRecords(musicId, filter));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -121,5 +126,11 @@ public class RecordController {
         String url = s3Service.getFileURL(key);
 
         return ResponseEntity.status(HttpStatus.OK).body(url);
+    }
+
+    // 녹음 파일의 댓글 가져오기
+    @GetMapping("/records/{recordId}/comments")
+    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId) {
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
     }
 }
