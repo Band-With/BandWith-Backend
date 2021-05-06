@@ -1,22 +1,22 @@
 package com.bandwith.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.bandwith.service.AudioService;
+import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/test")
+import java.util.ArrayList;
+
+@CrossOrigin
+@RequestMapping("/test")
 @RestController
 public class TestController {
-    @GetMapping("/permit-all")
-    public Object getTest() throws Exception {
-        return "good";
-    }
+    @GetMapping("/mix")
+    public void getTest() throws Exception {
+        ArrayList<String> files = new ArrayList<>();
 
-    @GetMapping("/auth")
-    public Object getTest2() throws Exception {
-        return "bad";
-    }
+        files.add("https://bucket-band-with.s3.ap-northeast-2.amazonaws.com/records/dong_1.wav");
+        files.add("https://bucket-band-with.s3.ap-northeast-2.amazonaws.com/records/dong_2.wav");
+        files.add("https://bucket-band-with.s3.ap-northeast-2.amazonaws.com/records/sample2.wav");
 
+        AudioService.mixTest(files);
+    }
 }

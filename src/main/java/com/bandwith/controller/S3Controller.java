@@ -51,7 +51,7 @@ public class S3Controller {
         }
     }
 
-    @RequestMapping(path = "/records/{recordId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/records/recordId", method = RequestMethod.GET)
     public ResponseEntity recordDownload(@PathVariable int recordId) {
 
         try {
