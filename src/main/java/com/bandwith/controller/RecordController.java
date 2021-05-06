@@ -2,12 +2,15 @@ package com.bandwith.controller;
 
 import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.SearchRecordDto;
+import com.bandwith.dto.like.LikeOnRecordDto;
 import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
 import com.bandwith.service.CommentService;
+import com.bandwith.service.LikeService;
 import com.bandwith.service.RecordService;
 import com.bandwith.service.S3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
@@ -28,14 +31,17 @@ public class RecordController {
     private S3Service s3Service;
     private RecordService recordService;
     private CommentService commentService;
+    private LikeService likeService;
 
     @Autowired
     public RecordController(@Qualifier("s3Service") S3Service s3Service,
                             @Qualifier("recordServiceBean") RecordService recordService,
-                            @Qualifier("commentServiceBean") CommentService commentService) {
+                            @Qualifier("commentServiceBean") CommentService commentService,
+                            @Qualifier("likeServiceBean") LikeService likeService) {
         this.s3Service = s3Service;
         this.recordService = recordService;
         this.commentService = commentService;
+        this.likeService = likeService;
     }
 
     // 사용자 녹음 파일 저장
@@ -117,20 +123,50 @@ public class RecordController {
         }
     }
 
-    // 녹음 파일 URL로 이동
-    @RequestMapping(path = "/records/{recordId}/url", method = RequestMethod.POST)
-    public ResponseEntity<String> getFileUrl(@PathVariable int recordId) {
-
-        RecordNameDto fileName = recordService.getRecordName(recordId);
-        String key = "records/" + fileName.getUuid() + "-" + fileName.getFileName();
-        String url = s3Service.getFileURL(key);
-
-        return ResponseEntity.status(HttpStatus.OK).body(url);
-    }
-
     // 녹음 파일의 댓글 가져오기
     @GetMapping("/records/{recordId}/comments")
     public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // 녹음 파일에 좋아요 누르기
+    @PostMapping("/records/{recordId}/likes")
+    public ResponseEntity insertLike(@PathVariable int recordId,
+                                     @RequestBody String filterJSON) {
+        try {
+//            int memberId = (int)jsonObject.get("memberId");
+//            int recordId = (int)jsonObject.get("recordId");
+
+            ObjectMapper mapper = new ObjectMapper();
+            LikeOnRecordDto likeOnRecordDto = mapper.readValue(filterJSON, LikeOnRecordDto.class);
+
+            likeService.insertLikeOnRecord(likeOnRecordDto);
+
+            return ResponseEntity.status(HttpStatus.OK).body("insert complete");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // 녹음 파일에 좋아요 취소하기
+    @DeleteMapping("/records/{recordId}/likes")
+    public ResponseEntity deleteLike(@PathVariable int recordId,
+                                     @RequestBody String filterJSON) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            LikeOnRecordDto likeOnRecordDto = mapper.readValue(filterJSON, LikeOnRecordDto.class);
+
+            likeService.deleteLikeOnRecord(likeOnRecordDto);
+
+            return ResponseEntity.status(HttpStatus.OK).body("delete complete");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }
