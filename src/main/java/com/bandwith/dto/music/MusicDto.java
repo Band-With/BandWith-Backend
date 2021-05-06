@@ -1,6 +1,8 @@
 package com.bandwith.dto.music;
 
 import com.bandwith.domain.Music;
+import lombok.Builder;
+import org.apache.ibatis.javassist.bytecode.ByteArray;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -11,9 +13,10 @@ public class MusicDto {
     private String title;
     private String singer;
     private String composer;
-    private String img;
+    private byte[] img;
 
-    public MusicDto(int music_id, String title, String singer, String composer, String img) {
+    @Builder
+    public MusicDto(int music_id, String title, String singer, String composer, byte[] img) {
         this.music_id = music_id;
         this.title = title;
         this.singer = singer;
@@ -22,14 +25,17 @@ public class MusicDto {
     }
 
     public static MusicDto of(Music music){
-        String photo = null;
+        byte[] photobyte = null;
+        String photo = new String(photobyte); //변환
+
+
         if(music.getProfile_img() != null) {
             photo = new String(music.getProfile_img(), StandardCharsets.UTF_8);
             if( photo.startsWith("\uFEFF") ) {
                 photo = photo.substring(1);
             }
         }
-        return new MusicDto(music.getMusic_id(), music.getTitle(), music.getSinger(), music.getComposer(), photo);
+        return new MusicDto(music.getMusic_id(), music.getTitle(), music.getSinger(), music.getComposer(), photobyte);
     }
     public static List<MusicDto> of(List<Music> musics){
         List<MusicDto> musicsDto = new ArrayList<MusicDto>();
@@ -37,6 +43,7 @@ public class MusicDto {
             musicsDto.add(MusicDto.of(music));
         return musicsDto;
     }
+
 
     public int getMusic_id() {
         return music_id;
@@ -70,11 +77,11 @@ public class MusicDto {
         this.composer = composer;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
     }
 }

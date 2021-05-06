@@ -1,6 +1,8 @@
 package com.bandwith.dto.record;
 
 import com.bandwith.domain.Record;
+import com.bandwith.dto.music.MusicDto;
+import lombok.Builder;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class RecordDto {
     private Boolean access;
     private String file_name; //modify to real file
 
+    @Builder
     public RecordDto(int record_id, int music_id, Boolean searchable, Boolean access, Timestamp created_at, String file_name) {
         this.record_id = record_id;
         this.music_id = music_id;

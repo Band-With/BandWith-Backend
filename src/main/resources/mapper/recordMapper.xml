@@ -41,4 +41,15 @@
         UPDATE record set access = #{access}, searchable = #{searchable}
         WHERE record_id = #{recordId}
     </update>
+
+
+
+    <select id="selectByMusicId" resultType="com.bandwith.domain.Record">
+        SELECT *
+        FROM record
+        WHERE record.music_id = #{music_id}
+    </select>
+
+
+
 </mapper>

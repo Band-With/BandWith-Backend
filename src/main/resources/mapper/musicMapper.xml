@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="MusicMapper">
-    <select id="selectMusic" resultType="com.bandwith.domain.Music">
+    <select id="select" resultType="com.bandwith.domain.Music">
         SELECT *
         FROM music
         WHERE music.MUSIC_ID = #{music_id}
@@ -13,7 +13,8 @@
     <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
         SELECT *
         FROM music
-        WHERE music.title = #{title}
+        WHERE music.title
+        LIKE '%${title}%'
     </select>
 
     <select id="selectMyPage" resultType="com.bandwith.domain.Music">

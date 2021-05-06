@@ -11,6 +11,6 @@ public interface MusicDao {
     List<Music> selectMusicMyPage(String username);
     void insertMusic(Music music);
     void deleteMusic(Music music);
-    void searchMusic(Music music);
+    List<Music> searchMusic(String title);
 
 }

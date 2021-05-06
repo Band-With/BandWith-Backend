@@ -1,5 +1,6 @@
 package com.bandwith.dao;
 
+import com.bandwith.domain.Music;
 import com.bandwith.domain.Record;
 import com.bandwith.dto.record.RecordNameDto;
 import org.apache.ibatis.session.SqlSession;
@@ -40,5 +41,12 @@ public class RecordDaoImpl implements RecordDao {
 
     public void updateAttributes(HashMap<String, Object> params){
         sqlSession.update("RecordMapper.updateAttributes", params);
+    }
+
+    @Override
+    public List<Record> selectRecords(int music_id) {
+        List<Record> list = sqlSession.selectList("RecordMapper.selectByMusicId", music_id);
+
+        return list;
     }
 }

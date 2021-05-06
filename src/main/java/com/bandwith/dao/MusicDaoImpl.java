@@ -29,20 +29,26 @@ public class MusicDaoImpl implements MusicDao{
     public List<Music> selectMusicOthersPage(String username) {
         return sqlSession.selectList("MusicMapper.selectOthersPage", username);
     }
+
     public List<Music> selectMusicMyPage(String username) {
         return sqlSession.selectList("MusicMapper.selectMyPage", username);}
+
     @Override
     public void insertMusic(Music music) {
-        System.out.println("hi");
-        sqlSession.insert("MemberMapper.insertMusic", music);
+
     }
+
     @Override
     public void deleteMusic(Music music) {
         sqlSession.delete("MemberMapper.deleteMusic", music);
     }
+
+
     @Override
-    public void searchMusic(Music music) {
-        List<Music> list = sqlSession.selectList("music.selectList");
+    public List<Music> searchMusic(String title) {
+        List<Music> list = sqlSession.selectList("MusicMapper.selectMusicByTitle", title);
+
+        return list;
     }
 
 }

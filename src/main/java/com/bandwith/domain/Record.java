@@ -11,6 +11,20 @@ public class Record {
     Timestamp createdAt;
     String uuid;
     String fileName;
+    String fileUrl;
+
+    public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName, String fileUrl) {
+        this.recordId = recordId;
+        this.musicId = musicId;
+        this.memberId = memberId;
+        this.instrument = instrument;
+        this.searchable = searchable;
+        this.access = access;
+        this.createdAt = createdAt;
+        this.uuid = uuid;
+        this.fileName = fileName;
+        this.fileUrl = fileUrl;
+    }
 
     public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName) {
         this.recordId = recordId;

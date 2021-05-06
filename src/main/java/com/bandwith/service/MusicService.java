@@ -1,8 +1,11 @@
 package com.bandwith.service;
 
+import com.bandwith.dto.member.MemberDto;
 import com.bandwith.dto.music.MusicDto;
 
+import java.util.List;
+
 public interface MusicService {
-    void find(MusicDto music);
-    void insertMusic(MusicDto newMusic);
+
+    List<MusicDto> search(String title);
 }
