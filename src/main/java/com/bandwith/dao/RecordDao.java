@@ -10,6 +10,7 @@ import java.util.List;
 public interface RecordDao {
     List<Record> selectRecords(String username);
     List<Record> selectRecordsByTitle(HashMap<String, Object> params);
+    List<Record> selectRecordsByFilter(HashMap<String, Object> params);
     RecordNameDto getRecordName(int recordId);
     void insertRecord(RecordInsertDto recordDto);
     void deleteRecord(int recordId);

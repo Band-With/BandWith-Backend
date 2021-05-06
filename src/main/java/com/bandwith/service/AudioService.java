@@ -2,8 +2,6 @@ package com.bandwith.service;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.List;
 import static java.util.Arrays.copyOf;
 
 public class AudioService {
-    public static InputStream mixTest (List<String> fileUrls) throws IOException {
+    public static InputStream mixAudioFiles (List<String> fileUrls) throws IOException {
         InputStream[] isList = new InputStream[fileUrls.size()];
         byte[] output;
         ArrayList<byte[]> byteBuffers = new ArrayList<>();

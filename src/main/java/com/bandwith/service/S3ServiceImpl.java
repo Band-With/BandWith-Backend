@@ -53,7 +53,7 @@ public class S3ServiceImpl implements S3Service {
 
     // 파일 업로드
     @Override
-    public String[] fileUpload(String path, MultipartFile file) throws AmazonClientException, IOException {
+    public String[] uploadFile(String path, MultipartFile file) throws AmazonClientException, IOException {
 
         String uid = UUID.randomUUID().toString();
         String fileName = file.getOriginalFilename().replace('/', '-');
@@ -64,13 +64,14 @@ public class S3ServiceImpl implements S3Service {
         metadata.setContentLength(file.getSize());
 
         s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
-        String[] fileInfo = {uid, fileName};
+        String[] fileInfo = {uid, fileName, key};
         return fileInfo;
     }
 
+
     // 파일 다운로드
     @Override
-    public Resource fileDownload(String key) throws AmazonServiceException, IOException {
+    public Resource downloadFile(String key) throws AmazonServiceException, IOException {
         S3Object o = s3Client.getObject(bucket, key);
         S3ObjectInputStream s3is = o.getObjectContent();
         byte[] bytes = IOUtils.toByteArray(s3is);
@@ -82,7 +83,7 @@ public class S3ServiceImpl implements S3Service {
 
     // 파일 삭제
     @Override
-    public void fileDelete(String path) throws AmazonServiceException {
+    public void deleteFile(String path) throws AmazonServiceException {
         s3Client.deleteObject(bucket, path);
         System.out.println("delete s3 service: " + path);
     }

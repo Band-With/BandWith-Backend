@@ -1,18 +1,20 @@
 package com.bandwith.domain;
+
 import java.sql.Timestamp;
 
 public class Record {
-    int recordId;
-    int musicId;
-    int memberId;
-    String instrument;
-    boolean searchable;
-    boolean access;
-    Timestamp createdAt;
-    String uuid;
-    String fileName;
+    private int recordId;
+    private int musicId;
+    private int memberId;
+    private String instrument;
+    private boolean searchable;
+    private boolean access;
+    private Timestamp createdAt;
+    private String uuid;
+    private String fileName;
+    private String fileUrl;
 
-    public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName) {
+    public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName, String fileUrl) {
         this.recordId = recordId;
         this.musicId = musicId;
         this.memberId = memberId;
@@ -22,17 +24,8 @@ public class Record {
         this.createdAt = createdAt;
         this.uuid = uuid;
         this.fileName = fileName;
+        this.fileUrl = fileUrl;
     }
-//
-//    public Record(int musicId, int memberId, String instrument, boolean searchable, boolean access, String uuid, String fileName) {
-//        this.musicId = musicId;
-//        this.memberId = memberId;
-//        this.instrument = instrument;
-//        this.searchable = searchable;
-//        this.access = access;
-//        this.uuid = uuid;
-//        this.fileName = fileName;
-//    }
 
     public int getRecordId() {
         return recordId;
@@ -66,20 +59,28 @@ public class Record {
         this.instrument = instrument;
     }
 
-    public Boolean getSearchable() {
+    public boolean isSearchable() {
         return searchable;
     }
 
-    public void setSearchable(Boolean searchable) {
+    public void setSearchable(boolean searchable) {
         this.searchable = searchable;
     }
 
-    public Boolean getAccess() {
+    public boolean isAccess() {
         return access;
     }
 
-    public void setAccess(Boolean access) {
+    public void setAccess(boolean access) {
         this.access = access;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getUuid() {
@@ -98,11 +99,11 @@ public class Record {
         this.fileName = fileName;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

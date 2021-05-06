@@ -7,6 +7,30 @@
     <select id="selectBookmarks" resultType="com.bandwith.domain.Bookmark">
         SELECT *
         FROM bookmark
-        WHERE bookmark.MEMBER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username})
+        WHERE bookmark.MEMBER_ID = (SELECT MEMBER_ID from member WHERE USERNAME = #{username})
     </select>
+
+    <insert id="insertBookmark" parameterType="com.bandwith.dto.bookmark.BookmarkInsertDto"
+            useGeneratedKeys="true" keyProperty="bookmarkId">
+        -- insert 후 bookmark id를 DTO에 넣음
+        INSERT INTO bookmark (member_id, music_id, title, file_url)
+        VALUES (#{memberId}, #{musicId}, #{title}, #{fileUrl})
+    </insert>
+
+    <insert id="insertRecordBookmark">
+        INSERT INTO record_bookmark (bookmark_id, member_id)
+        VALUES (#{bookmarkId}, #{memberId})
+    </insert>
+
+    <delete id="deleteBookmark">
+        DELETE
+        FROM bookmark
+        WHERE bookmark_id = #{bookmarkId}
+    </delete>
+
+    <delete id="deleteRecordBookmark">
+        DELETE
+        FROM record_bookmark
+        WHERE bookmark_id = #{bookmarkId}
+    </delete>
 </mapper>
