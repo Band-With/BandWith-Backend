@@ -2,6 +2,7 @@ package com.bandwith.dao;
 
 import com.bandwith.domain.Music;
 import com.bandwith.domain.Record;
+import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +20,47 @@ public class RecordDaoImpl implements RecordDao {
         this.sqlSession = sqlSession;
     }
 
-    public List<Record> selectRecords(String username) {
-        return sqlSession.selectList("RecordMapper.selectRecords", username);
-    }
 
+
+    @Override
     public RecordNameDto getRecordName(int recordId) {
         return sqlSession.selectOne("RecordMapper.getRecordName", recordId);
     }
 
-    public void insertRecord(Record record) {
-        sqlSession.insert("RecordMapper.insertRecord", record);
+    @Override
+    public void insertRecord(RecordInsertDto recordDto) {
+        sqlSession.insert("RecordMapper.insertRecord", recordDto);
     }
 
+    @Override
     public void deleteRecord(int recordId) {
         sqlSession.delete("RecordMapper.deleteRecord", recordId);
     }
 
+    @Override
     public List<Record> selectRecordsByTitle(HashMap<String, Object> params) {
         return sqlSession.selectList("RecordMapper.selectRecordsByTitle", params);
     }
 
+    @Override
+    public List<Record> selectRecordsByFilter(HashMap<String, Object> params) {
+        return sqlSession.selectList("RecordMapper.selectRecordsByFilter", params);
+    }
+
+    @Override
     public void updateAttributes(HashMap<String, Object> params){
         sqlSession.update("RecordMapper.updateAttributes", params);
     }
 
     @Override
-    public List<Record> selectRecords(int music_id) {
+    public List<Record> selectRecordsById(int music_id) {
         List<Record> list = sqlSession.selectList("RecordMapper.selectByMusicId", music_id);
 
         return list;
     }
+    @Override
+    public List<Record> selectRecordsByUserName(String username) {
+        return sqlSession.selectList("RecordMapper.selectRecords", username);
+    }
+
 }

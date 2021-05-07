@@ -1,39 +1,40 @@
-package com.bandwith.domain;
+package com.bandwith.dto.record;
 
-import java.sql.Timestamp;
+import com.bandwith.domain.Record;
 
-public class Record {
 
-    private int recordId;
+public class RecordInsertDto {
     private int musicId;
     private int memberId;
     private String instrument;
-    private boolean searchable;
-    private boolean access;
-    private Timestamp createdAt;
+    private Boolean searchable;
+    private Boolean access;
     private String uuid;
     private String fileName;
     private String fileUrl;
 
-    public Record(int recordId, int musicId, int memberId, String instrument, boolean searchable, boolean access, Timestamp createdAt, String uuid, String fileName, String fileUrl) {
-        this.recordId = recordId;
+    public RecordInsertDto(int musicId, int memberId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName, String fileUrl) {
         this.musicId = musicId;
         this.memberId = memberId;
         this.instrument = instrument;
         this.searchable = searchable;
         this.access = access;
-        this.createdAt = createdAt;
         this.uuid = uuid;
         this.fileName = fileName;
         this.fileUrl = fileUrl;
     }
 
-    public int getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(int recordId) {
-        this.recordId = recordId;
+    public static RecordInsertDto of(Record record){
+        return new RecordInsertDto(
+                record.getMusicId(),
+                record.getMemberId(),
+                record.getInstrument(),
+                record.isSearchable(),
+                record.isAccess(),
+                record.getUuid(),
+                record.getFileName(),
+                record.getFileUrl()
+        );
     }
 
     public int getMusicId() {
@@ -60,28 +61,20 @@ public class Record {
         this.instrument = instrument;
     }
 
-    public boolean isSearchable() {
+    public Boolean getSearchable() {
         return searchable;
     }
 
-    public void setSearchable(boolean searchable) {
+    public void setSearchable(Boolean searchable) {
         this.searchable = searchable;
     }
 
-    public boolean isAccess() {
+    public Boolean getAccess() {
         return access;
     }
 
-    public void setAccess(boolean access) {
+    public void setAccess(Boolean access) {
         this.access = access;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getUuid() {

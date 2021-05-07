@@ -20,6 +20,13 @@
         ORDER BY r.created_at desc
     </select>
 
+    <select id="selectRecordsByFilter" resultType="com.bandwith.domain.Record">
+        SELECT r.*
+        FROM record r
+        WHERE r.music_id = #{musicId}
+--      TODO 필터 추가해야함
+    </select>
+
     <select id="getRecordName" resultType="com.bandwith.dto.record.RecordNameDto">
         SELECT uuid, file_name as fileName
         FROM record
@@ -27,8 +34,8 @@
     </select>
 
     <insert id="insertRecord">
-        INSERT INTO record (music_id, member_id, instrument, searchable, access, uuid, file_name)
-        VALUES (#{musicId}, #{memberId}, #{instrument}, #{searchable}, #{access}, #{uuid}, #{fileName})
+        INSERT INTO record (music_id, member_id, instrument, searchable, access, uuid, file_name, file_url)
+        VALUES (#{musicId}, #{memberId}, #{instrument}, #{searchable}, #{access}, #{uuid}, #{file_name}, #{file_url})
     </insert>
 
     <delete id="deleteRecord">

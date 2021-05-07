@@ -5,6 +5,26 @@
 
 <mapper namespace="LikeMapper">
     <select id="countLike" resultType="int">
-        SELECT count(*) from likes WHERE RECORD_ID = #{record_id}
+        SELECT count(*) FROM likes WHERE RECORD_ID = #{record_id}
     </select>
+
+    <insert id="insertLikeOnRecord">
+        INSERT INTO likes (member_id, record_id, band_music_id)
+        VALUES (#{memberId}, #{recordId}, null)
+    </insert>
+
+    <insert id="insertLikeOnBandMusic">
+        INSERT INTO likes (member_id, record_id, band_music_id)
+        VALUES (#{memberId}, null, #{bandMusicId})
+    </insert>
+
+    <delete id="deleteLikeOnRecord">
+        DELETE FROM likes
+        WHERE member_id = #{memberId} AND record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteLikeOnBandMusic">
+        DELETE FROM likes
+        WHERE member_id = #{memberId} AND band_music_id = #{bandMusicId}
+    </delete>
 </mapper>

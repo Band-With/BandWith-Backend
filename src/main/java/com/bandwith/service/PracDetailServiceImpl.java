@@ -7,6 +7,7 @@ import com.bandwith.dao.RecordDao;
 import com.bandwith.dto.PracDetailDto;
 import com.bandwith.dto.music.MusicDto;
 import com.bandwith.dto.record.RecordDto;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,6 @@ public class PracDetailServiceImpl implements PracDetailService {
     public PracDetailDto getPracDetail(String username, String title, Boolean condition){
         List<HashMap<String, Object>> details = new ArrayList<>();
         List<RecordDto> recordDtoList;
-
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);

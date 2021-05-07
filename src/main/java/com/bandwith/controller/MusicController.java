@@ -40,13 +40,5 @@ public class MusicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(musicList);
     }
 
-    @GetMapping("/musics/{music_id}/records")
-    public ResponseEntity<List<RecordDto>> musicDetail(@PathVariable(value="music_id") Integer music_id, Model model) {
 
-        List<RecordDto> recordList = recordService.search(music_id);
-
-        model.addAttribute("recordList",recordList);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(recordList);
-    }
 }
