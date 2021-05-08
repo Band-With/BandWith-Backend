@@ -12,7 +12,7 @@ import static java.util.Arrays.copyOf;
 
 public class AudioService {
     // 오디오 파일 합치기
-    public static InputStream mixAudioFiles(List<String> fileUrls) throws IOException {
+    public static byte[] mixAudioFiles(List<String> fileUrls) throws IOException {
         InputStream[] isList = new InputStream[fileUrls.size()];
         byte[] output;
         ArrayList<byte[]> byteBuffers = new ArrayList<>();
@@ -34,7 +34,7 @@ public class AudioService {
             }
         }
 
-        return new ByteArrayInputStream(output);
+        return output;
     }
 
     private static byte[] mixBuffers(ArrayList<byte[]> sources) {
@@ -91,7 +91,7 @@ public class AudioService {
         System.out.println("finish denoise");
     }
 
-    public static void buildProcess(String[] args) throws IOException, InterruptedException {
+    private static void buildProcess(String[] args) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(args[0], args[1], args[2], args[3], args[4], args[5]);
         Process p = pb.start();
 

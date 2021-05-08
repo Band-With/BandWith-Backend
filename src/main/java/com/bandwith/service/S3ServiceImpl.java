@@ -18,8 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 
@@ -54,20 +53,36 @@ public class S3ServiceImpl implements S3Service {
     // 파일 업로드
     @Override
     public String[] uploadFile(String path, MultipartFile file) throws AmazonClientException, IOException {
-
-        String uid = UUID.randomUUID().toString();
-        String fileName = file.getOriginalFilename().replace('/', '-');
-        String key = path + uid + "-" + fileName;
+        String[] fileInfo = getFileInfo(path, file.getOriginalFilename());   // fileInfo = {uid, fileName, key}
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
         metadata.setContentLength(file.getSize());
 
-        s3Client.putObject(new PutObjectRequest(bucket, key, file.getInputStream(), metadata));
-        String[] fileInfo = {uid, fileName, key};
+        s3Client.putObject(new PutObjectRequest(bucket, fileInfo[2], file.getInputStream(), metadata));
         return fileInfo;
     }
 
+    @Override
+    public String[] uploadFile(String path, String title, byte[] bfile) throws AmazonClientException, IOException {
+        String[] fileInfo = getFileInfo(path, title);   // fileInfo = {uid, fileName, key}
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType("audio/wav");
+        metadata.setContentLength(bfile.length);
+
+        s3Client.putObject(new PutObjectRequest(bucket, fileInfo[2], new ByteArrayInputStream(bfile), metadata));
+
+        return fileInfo;
+    }
+
+    private String[] getFileInfo(String path, String fileName) {
+        String uid = UUID.randomUUID().toString();
+        fileName = fileName.replace('/', '-');
+        String key = path + uid + "-" + fileName;
+
+        return new String[]{uid, fileName, key};
+    }
 
     // 파일 다운로드
     @Override
