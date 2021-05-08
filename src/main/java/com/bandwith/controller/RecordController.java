@@ -5,13 +5,12 @@ import com.bandwith.dto.SearchRecordDto;
 import com.bandwith.dto.like.LikeOnRecordDto;
 import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
-import com.bandwith.service.CommentService;
-import com.bandwith.service.LikeService;
-import com.bandwith.service.RecordService;
-import com.bandwith.service.S3Service;
+import com.bandwith.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.List;
 
 
@@ -166,6 +166,39 @@ public class RecordController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // 녹음 잡음 제거
+    @PostMapping("/record/denoise")
+    public ResponseEntity denoiseFile(@RequestPart("file") MultipartFile file) {
+
+        String path = "c:/band-with/";
+        String fileName = file.getOriginalFilename().replace('/', '-');
+
+        // 받은 파일 다운로드
+        try {
+            AudioService.downloadFile(path, file);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("file save error");
+        }
+
+        try {
+            AudioService.denoiser(path, fileName);  // 잡음 제거
+
+            FileInputStream fis = new FileInputStream(path + "denoise-" + fileName);
+            Resource resource = new ByteArrayResource(IOUtils.toByteArray(fis));
+            fis.close();
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(resource.contentLength())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=denoise-" + fileName)
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("denoise file error");
         }
     }
 }
