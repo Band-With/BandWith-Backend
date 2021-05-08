@@ -23,5 +23,10 @@
         <label>파일 URL 이동 테스트</label>
 <%--        <input type="submit" name="submit" value="이동"/>--%>
     </form>
+    <form name="denoiseFile" method="post" action="/record/denoise" enctype="multipart/form-data">
+        <label>잡음 제거 테스트</label> <br><br>
+        <input type="file" name="file"/>
+        <input type="submit" name="submit" value="잡음 제거"/>
+    </form>
 </body>
 </html>
