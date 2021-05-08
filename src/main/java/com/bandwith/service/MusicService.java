@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MusicService {
 
-    List<MusicDto> search(String title);
+    List<MusicDto> search(String title, String filter);
 }

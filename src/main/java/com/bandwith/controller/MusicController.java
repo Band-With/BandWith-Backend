@@ -27,10 +27,10 @@ public class MusicController {
     }
 
     @GetMapping("/musics")
-    public ResponseEntity<List<MusicDto>> searchMusic(@RequestParam(value="title") String title, Model model) {
+    public ResponseEntity<List<MusicDto>> searchMusic(@RequestParam(value="title") String title, String filter, Model model) {
         System.out.println("1"+title);
 
-        List<MusicDto> musicList = musicService.search(title);
+        List<MusicDto> musicList = musicService.search(title, filter);
         System.out.println("2"+title);
 
         model.addAttribute("musicList",musicList);

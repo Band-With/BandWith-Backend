@@ -29,6 +29,7 @@ public class RecordDaoImpl implements RecordDao {
 
     @Override
     public void insertRecord(RecordInsertDto recordDto) {
+
         sqlSession.insert("RecordMapper.insertRecord", recordDto);
     }
 

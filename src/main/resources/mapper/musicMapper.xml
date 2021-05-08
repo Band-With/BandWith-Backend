@@ -37,4 +37,12 @@
         INSERT INTO music (music_id, title, profile_img, singer, composer)
         VALUES (#{music_id}, #{title}, #{profileImgUrl}, #{singer},#{composer})
     </insert>
+
+    <select id="sort" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE music.MUSIC_ID = #{filter}
+    </select>
+
+
 </mapper>

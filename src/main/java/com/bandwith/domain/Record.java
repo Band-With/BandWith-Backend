@@ -107,4 +107,7 @@ public class Record {
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
+
+
+
 }

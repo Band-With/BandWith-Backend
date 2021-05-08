@@ -25,10 +25,10 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     @Transactional
-    public List<MusicDto> search(String title) {
+    public List<MusicDto> search(String title, String filter) {
         System.out.println("a"+title);
 
-        List<Music> musics = musicDao.searchMusic(title);
+        List<Music> musics = musicDao.searchMusic(title, filter);
         System.out.println("b"+title);
 
         List<MusicDto> musicDtoList = new ArrayList<>();
