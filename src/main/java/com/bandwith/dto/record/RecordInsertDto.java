@@ -13,6 +13,10 @@ public class RecordInsertDto {
     private String fileName;
     private String fileUrl;
 
+    public RecordInsertDto() {
+
+    }
+
     public RecordInsertDto(int musicId, int memberId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName, String fileUrl) {
         this.musicId = musicId;
         this.memberId = memberId;
@@ -100,4 +104,6 @@ public class RecordInsertDto {
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
+
+    
 }

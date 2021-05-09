@@ -45,7 +45,7 @@
 
     <insert id="insertRecord">
         INSERT INTO record (music_id, member_id, instrument, searchable, access, uuid, file_name, file_url)
-        VALUES (#{musicId}, #{memberId}, #{instrument}, #{searchable}, #{access}, #{uuid}, #{file_name}, #{file_url})
+        VALUES (#{musicId}, #{memberId}, #{instrument}, #{searchable}, #{access}, #{uuid}, #{fileName}, #{fileUrl})
     </insert>
 
     <delete id="deleteRecord">
