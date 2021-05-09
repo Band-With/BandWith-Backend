@@ -5,8 +5,8 @@
 
 <mapper namespace="MemberMapper">
     <insert id="insertMember">
-        INSERT INTO member (username, pwd, name, profile_img)
-        VALUES (#{username}, #{pwd}, #{name}, #{profileImgUrl})
+        INSERT INTO member (username, pwd, name, profile_img, email)
+        VALUES (#{username}, #{pwd}, #{name}, #{profile_img}, #{email})
     </insert>
 
     <select id="login" resultType="com.bandwith.domain.Member">
