@@ -9,4 +9,19 @@
                 https://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.bandwith.service"/>
     <context:component-scan base-package="com.bandwith.dao"/>
+
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="2wjdwo97@gmail.com" />
+        <property name="password" value="w0j9d7w1o!" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
