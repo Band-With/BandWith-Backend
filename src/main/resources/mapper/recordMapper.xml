@@ -23,8 +23,7 @@
     <select id="selectRecordsByFilter" resultType="com.bandwith.domain.Record">
         SELECT r.*
         FROM record r
-        WHERE r.music_id = #{musicId}
---      TODO 필터 추가해야함
+        WHERE r.music_id = #{musicId} AND r.searchable=TRUE
     </select>
 
     <select id="getRecordName" resultType="com.bandwith.dto.record.RecordNameDto">
@@ -48,4 +47,15 @@
         UPDATE record set access = #{access}, searchable = #{searchable}
         WHERE record_id = #{recordId}
     </update>
+
+
+
+    <select id="selectByMusicId" resultType="com.bandwith.domain.Record">
+        SELECT *
+        FROM record
+        WHERE record.music_id = #{music_id}
+    </select>
+
+
+
 </mapper>

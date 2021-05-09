@@ -1,6 +1,8 @@
 package com.bandwith.dto.record;
 
 import com.bandwith.domain.Record;
+import com.bandwith.dto.music.MusicDto;
+import lombok.Builder;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

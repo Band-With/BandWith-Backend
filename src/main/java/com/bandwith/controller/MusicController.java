@@ -2,16 +2,14 @@ package com.bandwith.controller;
 
 import com.bandwith.dto.music.MusicDto;
 import com.bandwith.service.MusicService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.bandwith.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -19,17 +17,20 @@ public class MusicController {
     private MusicService musicService;
 
     @Autowired
-    public MusicController(@Qualifier("musicServiceBean") MusicService musicService){
+    public MusicController(@Qualifier("musicServiceBean") MusicService musicService,
+                           @Qualifier("recordServiceBean") RecordService recordService){
         this.musicService = musicService;
     }
 
-    @PostMapping("/musics/insert")
-    public ResponseEntity<String> insertMusic(@RequestBody String filterJSON) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        MusicDto newmusic = mapper.readValue(filterJSON, MusicDto.class);
-        musicService.insertMusic(newmusic);
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
+    @GetMapping("/musics")
+    public ResponseEntity<List<MusicDto>> searchMusic(@RequestParam(value="q") String q,
+                                                      @RequestParam(value="filter") String filter) {
+        List<MusicDto> musicList = musicService.search(q, filter);
+        return ResponseEntity.status(HttpStatus.CREATED).body(musicList);
     }
 
-
+    @GetMapping("/musics/{musicId}")
+    public ResponseEntity getMusic(@PathVariable int musicId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(musicService.getMusic(musicId));
+    }
 }

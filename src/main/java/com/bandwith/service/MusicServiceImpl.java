@@ -1,12 +1,13 @@
 package com.bandwith.service;
 
-
 import com.bandwith.dao.MusicDao;
 import com.bandwith.domain.Music;
 import com.bandwith.dto.music.MusicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("musicServiceBean")
 public class MusicServiceImpl implements MusicService {
@@ -18,14 +19,21 @@ public class MusicServiceImpl implements MusicService {
         this.musicDao = musicDao;
     }
 
-    public void find(MusicDto theMusic) {
-
+    @Override
+    public MusicDto getMusic(int musicId) {
+        Music music = musicDao.selectMusic(musicId);
+        return MusicDto.of(music);
     }
 
     @Override
     public void insertMusic(MusicDto newMusic) {
-        Music music = Music.of(newMusic);
-        musicDao.insertMusic(music);
+
     }
 
+    @Override
+    public List<MusicDto> search(String title, String filter) {
+        List<Music> musics = musicDao.searchMusic(title, filter);
+        List<MusicDto> musicDtoList = MusicDto.of(musics);
+        return musicDtoList;
+    }
 }

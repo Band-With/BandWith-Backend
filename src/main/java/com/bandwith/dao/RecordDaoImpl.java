@@ -1,5 +1,6 @@
 package com.bandwith.dao;
 
+import com.bandwith.domain.Music;
 import com.bandwith.domain.Record;
 import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
@@ -19,10 +20,7 @@ public class RecordDaoImpl implements RecordDao {
         this.sqlSession = sqlSession;
     }
 
-    @Override
-    public List<Record> selectRecords(String username) {
-        return sqlSession.selectList("RecordMapper.selectRecords", username);
-    }
+
 
     @Override
     public RecordNameDto getRecordName(int recordId) {
@@ -31,6 +29,7 @@ public class RecordDaoImpl implements RecordDao {
 
     @Override
     public void insertRecord(RecordInsertDto recordDto) {
+
         sqlSession.insert("RecordMapper.insertRecord", recordDto);
     }
 
@@ -53,4 +52,16 @@ public class RecordDaoImpl implements RecordDao {
     public void updateAttributes(HashMap<String, Object> params){
         sqlSession.update("RecordMapper.updateAttributes", params);
     }
+
+    @Override
+    public List<Record> selectRecordsById(int music_id) {
+        List<Record> list = sqlSession.selectList("RecordMapper.selectByMusicId", music_id);
+
+        return list;
+    }
+    @Override
+    public List<Record> selectRecordsByUserName(String username) {
+        return sqlSession.selectList("RecordMapper.selectRecords", username);
+    }
+
 }

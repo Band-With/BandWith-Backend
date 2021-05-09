@@ -44,9 +44,9 @@ public class RecordController {
     }
 
     // 사용자 녹음 파일 저장
-    @RequestMapping(path = "members/{memberId}/records", method = RequestMethod.POST)
-    public ResponseEntity recordUpload(@RequestPart("json") String filterJSON,
-                                       @RequestPart("file") MultipartFile file,
+    @RequestMapping(path = "members/{memberId}/recording")
+    public ResponseEntity recordUpload(@RequestPart(value="json") String filterJSON,
+                                       @RequestPart(value="file") MultipartFile file,
                                        @PathVariable int memberId) {
         try {
             // S3에 저장

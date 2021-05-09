@@ -10,11 +10,31 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
+
+
+    <!--  SEARCH  -->
     <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
         SELECT *
         FROM music
-        WHERE music.title = #{title}
+        WHERE music.title
+        LIKE '%${title}%'
+--         ORDER BY music.title desc
     </select>
+    <select id="selectMusicByRecord" resultType="com.bandwith.domain.Music">
+        SELECT m.music_id AS music_id, m.title AS title, m.singer AS singer,
+               m.composer AS composer, m.profile_img AS profile_img, count(*) AS cnt
+        FROM music m LEFT JOIN record r ON m.music_id = r.music_id
+        WHERE m.title LIKE '%${title}%'
+        GROUP BY m.music_id
+        ORDER BY cnt DESC
+    </select>
+    <select id="selectMusicByLatest" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE title LIKE '%${title}%'
+        ORDER BY created_at DESC
+    </select>
+
 
     <select id="selectMyPage" resultType="com.bandwith.domain.Music">
         SELECT DISTINCT mu.*
@@ -36,4 +56,12 @@
         INSERT INTO music (music_id, title, profile_img, singer, composer)
         VALUES (#{music_id}, #{title}, #{profileImgUrl}, #{singer},#{composer})
     </insert>
+
+    <select id="sort" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE music.MUSIC_ID = #{filter}
+    </select>
+
+
 </mapper>

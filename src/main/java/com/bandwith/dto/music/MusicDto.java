@@ -1,6 +1,8 @@
 package com.bandwith.dto.music;
 
 import com.bandwith.domain.Music;
+import com.bandwith.dto.member.MemberDto;
+import lombok.Builder;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class MusicDto {
     private String composer;
     private String img;
 
+    @Builder
     public MusicDto(int music_id, String title, String singer, String composer, String img) {
         this.music_id = music_id;
         this.title = title;
@@ -23,6 +26,7 @@ public class MusicDto {
 
     public static MusicDto of(Music music){
         String photo = null;
+
         if(music.getProfile_img() != null) {
             photo = new String(music.getProfile_img(), StandardCharsets.UTF_8);
             if( photo.startsWith("\uFEFF") ) {
@@ -31,12 +35,14 @@ public class MusicDto {
         }
         return new MusicDto(music.getMusic_id(), music.getTitle(), music.getSinger(), music.getComposer(), photo);
     }
+
     public static List<MusicDto> of(List<Music> musics){
         List<MusicDto> musicsDto = new ArrayList<MusicDto>();
         for(Music music: musics)
             musicsDto.add(MusicDto.of(music));
         return musicsDto;
     }
+
 
     public int getMusic_id() {
         return music_id;
