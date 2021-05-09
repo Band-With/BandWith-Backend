@@ -18,8 +18,11 @@ public class MusicServiceImpl implements MusicService {
         this.musicDao = musicDao;
     }
 
-    public void find(MusicDto theMusic) {
 
+    @Override
+    public MusicDto getMusic(int musicId) {
+        Music music = musicDao.selectMusic(musicId);
+        return MusicDto.of(music);
     }
 
     @Override

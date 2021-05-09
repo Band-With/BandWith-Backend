@@ -28,6 +28,11 @@ public class MusicDaoImpl implements MusicDao {
     }
 
     @Override
+    public List<Music> selectMusics() {
+        return sqlSession.selectOne("MusicMapper.selectMusics");
+    }
+
+    @Override
     public List<Music> selectMusicOthersPage(String username) {
         return sqlSession.selectList("MusicMapper.selectOthersPage", username);
     }

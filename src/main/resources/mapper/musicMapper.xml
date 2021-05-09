@@ -10,6 +10,20 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
+    <select id="selectMusicByFilter" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        <include refid="setFilter"/>
+        WHERE music.title LIKE '%'||#{filter}||'%'
+    </select>
+
+    <sql id="setFilter">
+        <if test="filter != 'related'">AND s.category = #{filter.cat}</if>
+        <if test="filter != 'record'">AND s.age_limit = #{filter.age}</if>
+        <if test="filter != 'like'">AND s.gender_limit = #{filter.gen}</if>
+    </sql>
+
+
     <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
         SELECT *
         FROM music
