@@ -30,9 +30,9 @@ public class BookmarkController {
         this.bookmarkService = bookmarkService;
     }
 
-    @PostMapping("/members/{memberId}/bookmarks")
+    @PostMapping("/members/{username}/bookmarks")
     public ResponseEntity uploadBookmark(@RequestBody String filterJSON,
-                                         @PathVariable int memberId) {
+                                         @PathVariable String username) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             BookmarkInsertDto bookmarkInsertDto = mapper.readValue(filterJSON, BookmarkInsertDto.class);
