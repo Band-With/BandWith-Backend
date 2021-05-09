@@ -44,16 +44,19 @@ public class RecordController {
     }
 
     // 사용자 녹음 파일 저장
-    @RequestMapping(path = "members/{memberId}/recording")
-    public ResponseEntity recordUpload(@RequestPart(value="json") String filterJSON,
-                                       @RequestPart(value="file") MultipartFile file,
+    @PostMapping(path = "/members/{memberId}/recording")
+    public ResponseEntity recordUpload(@RequestPart("json") String filterJSON,
+                                       @RequestPart("file") MultipartFile file,
                                        @PathVariable int memberId) {
+
         try {
+            System.out.println("1");
             // S3에 저장
             String uploadPath = "records/";
             String[] fileInfo = s3Service.uploadFile(uploadPath, file); // fileInfo = {uuid, fileName, key}
             String url = s3Service.getFileURL(fileInfo[2]);
 
+            System.out.println("2");
             // DB에 저장
             ObjectMapper mapper = new ObjectMapper();
             RecordInsertDto recordInsertDto = mapper.readValue(filterJSON, RecordInsertDto.class);
@@ -62,6 +65,7 @@ public class RecordController {
             recordInsertDto.setFileUrl(fileInfo[2]);
             recordService.insertRecord(recordInsertDto);
 
+            System.out.println("3");
             return ResponseEntity.status(HttpStatus.OK).body("insert complete");
 
         } catch (Exception e) {
