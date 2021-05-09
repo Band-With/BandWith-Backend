@@ -7,10 +7,7 @@ import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.MyPageDto;
 import com.bandwith.dto.comment.CommentDto;
 import com.bandwith.dto.music.MusicDto;
-import com.bandwith.service.CommentService;
-import com.bandwith.service.MemberService;
-import com.bandwith.service.MyPageService;
-import com.bandwith.service.PracDetailService;
+import com.bandwith.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +25,7 @@ public class MemberController {
     private MyPageService myPageService;
     private PracDetailService pracDetailService;
     private CommentService commentService;
+    private HomeService homeService;
 
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService,
@@ -89,4 +87,7 @@ public class MemberController {
     public String mainPage(){
         return "index";
     }
+
+
+
 }

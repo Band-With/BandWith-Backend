@@ -17,6 +17,9 @@ public class Music {
         this.profile_img = profile_img;
     }
 
+
+    
+
     public static Music of(MusicDto newMusic) {
         return new Music(newMusic.getMusic_id(),newMusic.getTitle(), newMusic.getSinger(), newMusic.getComposer(),null);
 

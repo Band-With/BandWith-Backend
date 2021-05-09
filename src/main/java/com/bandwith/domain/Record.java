@@ -3,6 +3,7 @@ package com.bandwith.domain;
 import java.sql.Timestamp;
 
 public class Record {
+
     private int recordId;
     private int musicId;
     private int memberId;
@@ -106,4 +107,7 @@ public class Record {
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
+
+
+
 }
