@@ -5,20 +5,23 @@ public class BookmarkInsertDto {
     private int memberId;
     private int musicId;
     private String title;
-    private int[] members;
     private String fileUrl;
+
+    private int[] members;
+    private String[] recordUrls;
 
     public BookmarkInsertDto() {
 
     }
 
-    public BookmarkInsertDto(int bookmarkId, int memberId, int musicId, String title, int[] members, String fileUrl) {
+    public BookmarkInsertDto(int bookmarkId, int memberId, int musicId, String title, String fileUrl, int[] members, String[] recordUrls) {
         this.bookmarkId = bookmarkId;
         this.memberId = memberId;
         this.musicId = musicId;
         this.title = title;
-        this.members = members;
         this.fileUrl = fileUrl;
+        this.members = members;
+        this.recordUrls = recordUrls;
     }
 
     public int getBookmarkId() {
@@ -53,6 +56,14 @@ public class BookmarkInsertDto {
         this.title = title;
     }
 
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
     public int[] getMembers() {
         return members;
     }
@@ -61,11 +72,11 @@ public class BookmarkInsertDto {
         this.members = members;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String[] getRecordUrls() {
+        return recordUrls;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setRecordUrls(String[] recordUrls) {
+        this.recordUrls = recordUrls;
     }
 }

@@ -28,6 +28,11 @@ public class MusicDaoImpl implements MusicDao {
     }
 
     @Override
+    public List<Music> selectMusics() {
+        return sqlSession.selectOne("MusicMapper.selectMusics");
+    }
+
+    @Override
     public List<Music> selectMusicOthersPage(String username) {
         return sqlSession.selectList("MusicMapper.selectOthersPage", username);
     }
@@ -49,18 +54,14 @@ public class MusicDaoImpl implements MusicDao {
 
     @Override
     public List<Music> searchMusic(String title, String filter) {
-        List<Music> list=null;
-        if(filter.equals("rel")){
-             list= sqlSession.selectList("MusicMapper.selectMusicByTitle", title);
-        }
-        else if(filter.equals("rec")){
-            list= sqlSession.selectList("MusicMapper.selectMusicByTitleRec", title);
-        }
-        else{
-            list= sqlSession.selectList("MusicMapper.selectMusicByTitleLike", title);
-        }
+        List<Music> list = null;
 
-
+        if (filter.equals("related"))
+            list = sqlSession.selectList("MusicMapper.selectMusicByTitle", title);
+        else if (filter.equals("record"))
+            list = sqlSession.selectList("MusicMapper.selectMusicByRecord", title);
+        else if (filter.equals("latest"))
+            list = sqlSession.selectList("MusicMapper.selectMusicByLatest", title);
 
         return list;
     }

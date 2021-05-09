@@ -1,6 +1,7 @@
 package com.bandwith.controller;
 
 import com.bandwith.dto.bookmark.BookmarkInsertDto;
+import com.bandwith.service.AudioService;
 import com.bandwith.service.BookmarkService;
 import com.bandwith.service.S3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
+import java.util.Arrays;
 
 
 @CrossOrigin
@@ -27,18 +31,18 @@ public class BookmarkController {
     }
 
     @PostMapping("/members/{memberId}/bookmarks")
-    public ResponseEntity uploadBookmark(@RequestPart("json") String filterJSON,
-                                         @RequestPart("file") MultipartFile file,
+    public ResponseEntity uploadBookmark(@RequestBody String filterJSON,
                                          @PathVariable int memberId) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             BookmarkInsertDto bookmarkInsertDto = mapper.readValue(filterJSON, BookmarkInsertDto.class);
 
+            byte[] bookmark = AudioService.mixAudioFiles(Arrays.asList(bookmarkInsertDto.getRecordUrls()));
+
             String uploadPath = "bookmarks/";
-            String key = s3Service.uploadFile(uploadPath, file)[2];
+            String key = s3Service.uploadFile(uploadPath, bookmarkInsertDto.getTitle(), bookmark)[2];
             String url = s3Service.getFileURL(key);
 
-//            bookmarkInsertDto.setMemberId(memberId);
             bookmarkInsertDto.setFileUrl(url);
             bookmarkService.insertBookmark(bookmarkInsertDto);
 
