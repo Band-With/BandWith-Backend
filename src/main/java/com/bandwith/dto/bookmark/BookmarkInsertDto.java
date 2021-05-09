@@ -3,6 +3,7 @@ package com.bandwith.dto.bookmark;
 public class BookmarkInsertDto {
     private int bookmarkId;
     private int memberId;
+    private String username;
     private int musicId;
     private String title;
     private String fileUrl;
@@ -14,9 +15,10 @@ public class BookmarkInsertDto {
 
     }
 
-    public BookmarkInsertDto(int bookmarkId, int memberId, int musicId, String title, String fileUrl, int[] members, String[] recordUrls) {
+    public BookmarkInsertDto(int bookmarkId, int memberId, String username, int musicId, String title, String fileUrl, int[] members, String[] recordUrls) {
         this.bookmarkId = bookmarkId;
         this.memberId = memberId;
+        this.username = username;
         this.musicId = musicId;
         this.title = title;
         this.fileUrl = fileUrl;
@@ -38,6 +40,14 @@ public class BookmarkInsertDto {
 
     public void setMemberId(int memberId) {
         this.memberId = memberId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getMusicId() {
