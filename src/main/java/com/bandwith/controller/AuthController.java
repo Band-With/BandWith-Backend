@@ -7,12 +7,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
@@ -20,6 +23,7 @@ import java.util.Random;
 @RestController
 public class AuthController {
     private MemberService memberService;
+    private HttpSession session;
 
     @Autowired
     public AuthController(@Qualifier("memberServiceBean") MemberService memberService){
@@ -48,7 +52,8 @@ public class AuthController {
 
     @PostMapping("/auth/getCode") // AJAX와 URL을 매핑시켜줌
     @ResponseBody  //AJAX후 값을 리턴하기위해 작성
-    public ResponseEntity<?> sendCode(HttpSession session, @RequestBody JSONObject filterJSON) {
+    public ResponseEntity<?> sendCode(@RequestBody JSONObject filterJSON, HttpSession session) {
+        this.session = session;
         String mail = (String)filterJSON.get("mail");
         memberService.sendMail(mail, session);
 
@@ -57,7 +62,9 @@ public class AuthController {
 
     @PostMapping("/auth/checkCode")
     @ResponseBody
-    public ResponseEntity<?> checkCode(HttpSession session, @RequestBody JSONObject filterJSON){
+    public ResponseEntity<?> checkCode(@RequestBody JSONObject filterJSON){
+        HttpSession session = this.session;
+
         String mail = (String)filterJSON.get("mail");
         String code = (String)filterJSON.get("code");
 

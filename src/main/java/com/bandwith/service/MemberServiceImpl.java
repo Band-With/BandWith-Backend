@@ -57,12 +57,12 @@ public class MemberServiceImpl implements MemberService {
         message.setText("인증 번호 : "+key);
 
         mailSender.send(message);
-
         session.setAttribute(email, key);
-        session.setMaxInactiveInterval(60*2);
     }
 
     public Boolean checkCode(String mail, String code, HttpSession session){
+        System.out.println(session.getAttribute(mail));
+        System.out.println("??");
         if(session.getAttribute(mail).equals(code)) {
             session.removeAttribute(mail);
             return true;

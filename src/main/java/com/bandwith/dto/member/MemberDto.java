@@ -12,6 +12,7 @@ public class MemberDto {
     private String name;
     private String profileImg;
     private Date regDate;
+    private String email;
 
     public MemberDto(){}
 
@@ -20,6 +21,14 @@ public class MemberDto {
         this.pwd = pwd;
         this.name = name;
         this.profileImg = profileImg;
+    }
+
+    public MemberDto(String username, String pwd, String name, String profileImg, String email) {
+        this.username = username;
+        this.pwd = pwd;
+        this.name = name;
+        this.profileImg = profileImg;
+        this.email = email;
     }
 
     public MemberDto(int id, String username, String pwd, String name, String profileImg, Date regDate) {
@@ -88,5 +97,13 @@ public class MemberDto {
 
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
