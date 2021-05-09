@@ -71,20 +71,6 @@ public class RecordServiceImpl implements RecordService {
             searchRecordDtoList.add(new SearchRecordDto(recordDto, memberBasicDto, likeNum, commentNum));
         }
 
-        if (filter=="like"){
-
-            //좋아
-        }
-        else if (filter=="follow"){
-
-//팔로
-        }
-        else{
-//최신
-        }
-
-
-
 
 
         return searchRecordDtoList;

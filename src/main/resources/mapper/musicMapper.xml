@@ -15,7 +15,25 @@
         FROM music
         WHERE music.title
         LIKE '%${title}%'
+        ORDER BY music.title desc
     </select>
+
+    <select id="selectMusicByTitleRec" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE music.title
+        LIKE '%${title}%'
+
+
+
+    </select>
+    <select id="selectMusicByTitleLike" resultType="com.bandwith.domain.Music">
+        SELECT *
+        FROM music
+        WHERE music.title
+        LIKE '%${title}%'
+    </select>
+
 
     <select id="selectMyPage" resultType="com.bandwith.domain.Music">
         SELECT DISTINCT mu.*

@@ -49,7 +49,16 @@ public class MusicDaoImpl implements MusicDao {
 
     @Override
     public List<Music> searchMusic(String title, String filter) {
-        List<Music> list = sqlSession.selectList("MusicMapper.selectMusicByTitle", title);
+        List<Music> list=null;
+        if(filter.equals("rel")){
+             list= sqlSession.selectList("MusicMapper.selectMusicByTitle", title);
+        }
+        else if(filter.equals("rec")){
+            list= sqlSession.selectList("MusicMapper.selectMusicByTitleRec", title);
+        }
+        else{
+            list= sqlSession.selectList("MusicMapper.selectMusicByTitleLike", title);
+        }
 
 
 

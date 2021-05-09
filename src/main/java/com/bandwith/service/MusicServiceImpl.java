@@ -26,20 +26,16 @@ public class MusicServiceImpl implements MusicService {
     @Override
     @Transactional
     public List<MusicDto> search(String title, String filter) {
-        System.out.println("a"+title);
 
         List<Music> musics = musicDao.searchMusic(title, filter);
-        System.out.println("b"+title);
 
         List<MusicDto> musicDtoList = new ArrayList<>();
-        System.out.println("c"+title);
 
         if(musics.isEmpty()) return musicDtoList;
 
         for(Music music: musics){
             musicDtoList.add(this.convertEntityToDto(music));
         }
-        System.out.println("d"+title);
 
         return musicDtoList;
     }
