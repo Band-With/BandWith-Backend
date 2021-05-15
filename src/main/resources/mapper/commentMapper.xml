@@ -12,4 +12,21 @@
         SELECT * from comment WHERE RECORD_ID = #{record_id}
         ORDER BY created_at desc
     </select>
+
+    <insert id="insertComment">
+        INSERT INTO comment (band_music_id, member_id, record_id, content)
+        VALUES (#{bandMusicId}, #{memberId}, #{recordId}, #{content}))
+    </insert>
+
+    <update id="updateComment">
+        UPDATE comment
+        SET content = #{content},
+            updated = true
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <delete id="deleteComment">
+        DELETE FROM comment
+        WHERE comment_id = #{commentId}
+    </delete>
 </mapper>
