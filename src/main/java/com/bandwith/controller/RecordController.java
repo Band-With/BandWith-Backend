@@ -49,6 +49,7 @@ public class RecordController {
                                        @RequestPart(value="file") MultipartFile file,
                                        @PathVariable String memberId) {
         try {
+            System.out.println("1");
             // S3에 저장
             System.out.println("jhk");
             String uploadPath = "records/";
@@ -56,6 +57,7 @@ public class RecordController {
             String url = s3Service.getFileURL(fileInfo[2]);
             System.out.println(url);
 
+            System.out.println("2");
             // DB에 저장
             ObjectMapper mapper = new ObjectMapper();
             RecordInsertDto recordInsertDto = mapper.readValue(filterJSON, RecordInsertDto.class);
@@ -64,6 +66,7 @@ public class RecordController {
             recordInsertDto.setFileUrl(url);
             recordService.insertRecord(recordInsertDto);
 
+            System.out.println("3");
             return ResponseEntity.status(HttpStatus.OK).body("insert complete");
 
         } catch (Exception e) {
