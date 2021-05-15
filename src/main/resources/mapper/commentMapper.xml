@@ -15,7 +15,7 @@
 
     <insert id="insertComment">
         INSERT INTO comment (band_music_id, member_id, record_id, content)
-        VALUES (#{bandMusicId}, #{memberId}, #{recordId}, #{content}))
+        VALUES (#{bandMusicId}, #{memberId}, #{recordId}, #{content})
     </insert>
 
     <update id="updateComment">

@@ -43,7 +43,7 @@
         WHERE username = #{username}
     </delete>
 
-    <select id="getMemberId">
+    <select id="getMemberId" resultType="int">
         SELECT member_id FROM member
         WHERE username = #{username}
     </select>

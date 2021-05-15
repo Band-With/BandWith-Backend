@@ -37,6 +37,8 @@ public class CommentServiceImpl implements CommentService{
     }
 
     public void createComment(CommentCreateDto comment) {
+        int memberId = memberDao.getMemberIdOf(comment.getUsername());
+        comment.setMemberId(memberId);
         commentDao.createComment(comment);
     }
 

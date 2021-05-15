@@ -3,27 +3,27 @@ package com.bandwith.dto.comment;
 public class CommentCreateDto {
     private int bandMusicId;
     private String username;
-    private int member_id;
+    private int memberId;
     private int recordId;
     private String content;
 
 
     public CommentCreateDto(){}
 
-    public CommentCreateDto(int bandMusicId, String username, int member_id, int recordId, String content) {
+    public CommentCreateDto(int bandMusicId, String username, int memberId, int recordId, String content) {
         this.bandMusicId = bandMusicId;
         this.username = username;
-        this.member_id = member_id;
+        this.memberId = memberId;
         this.recordId = recordId;
         this.content = content;
     }
 
-    public int getMember_id() {
-        return member_id;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public int getBandMusicId() {
