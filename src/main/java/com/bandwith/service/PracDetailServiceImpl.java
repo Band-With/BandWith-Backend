@@ -35,16 +35,16 @@ public class PracDetailServiceImpl implements PracDetailService {
         this.likeDao = likeDao;
     }
 
-    public PracDetailDto getPracDetail(String username, String title, Boolean condition){
+    public PracDetailDto getPracDetail(String username, int musicId, Boolean condition){
         List<HashMap<String, Object>> details = new ArrayList<>();
         List<RecordDto> recordDtoList;
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);
-        params.put("title", title);
+        params.put("musicId", musicId);
         params.put("condition", condition);
 
-        recordDtoList = RecordDto.of(recordDao.selectRecordsByTitle(params));
+        recordDtoList = RecordDto.of(recordDao.selectRecordsByMusicId(params));
 
         for(RecordDto recordDto: recordDtoList) {
             HashMap<String, Object> detail = new HashMap<>();
@@ -58,7 +58,7 @@ public class PracDetailServiceImpl implements PracDetailService {
 
             details.add(detail);
         }
-        return new PracDetailDto(MusicDto.of(musicDao.getMusicByTitle(title)), details);
+        return new PracDetailDto(MusicDto.of(musicDao.getMusicById(musicId)), details);
     };
 
     public void patchRecordAttributes(int recordId, Boolean access, Boolean searchable){

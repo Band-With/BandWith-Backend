@@ -9,12 +9,17 @@ public class MyPageDto {
     private MemberBasicDto member;
     private int followerCount;
     private int followingCount;
+    private List<MemberBasicDto> followings;
+    private List<MemberBasicDto> followers;
     private List<BandDto> bands;
 
     public MyPageDto(){}
 
-    public MyPageDto(MemberBasicDto member, int followerCount, int followingCount, List<BandDto> bands) {
+    public MyPageDto(MemberBasicDto member, List<MemberBasicDto> followings, List<MemberBasicDto> followers,
+                     int followerCount, int followingCount, List<BandDto> bands) {
         this.member = member;
+        this.followings = followings;
+        this.followers = followers;
         this.followerCount = followerCount;
         this.followingCount = followingCount;
         this.bands = bands;
@@ -50,6 +55,22 @@ public class MyPageDto {
 
     public void setBands(List<BandDto> bands) {
         this.bands = bands;
+    }
+
+    public List<MemberBasicDto> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(List<MemberBasicDto> followings) {
+        this.followings = followings;
+    }
+
+    public List<MemberBasicDto> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<MemberBasicDto> followers) {
+        this.followers = followers;
     }
 
     public void addBand(BandDto newBand){

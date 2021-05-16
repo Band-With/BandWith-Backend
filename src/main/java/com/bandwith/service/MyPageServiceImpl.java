@@ -6,6 +6,7 @@ import com.bandwith.dto.MyPageDto;
 import com.bandwith.dto.band.BandDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.member.MemberBasicDto;
+import com.bandwith.dto.member.MemberDto;
 import com.bandwith.dto.music.MusicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,10 +47,14 @@ public class MyPageServiceImpl implements MyPageService {
 
         MemberBasicDto memberBasicDto = MemberBasicDto.of(member);
 
-        int followers = memberDao.countFollower(username);
-        int followings = memberDao.countFollowing(username);
+        int followerCount = memberDao.countFollower(username);
+        int followingCount = memberDao.countFollowing(username);
 
-        return new MyPageDto(memberBasicDto, followers, followings, newBandsDto);
+        int memberId = memberDao.getMemberIdOf(username);
+        List<MemberDto> followings = MemberBasicDto.of(memberDao.getFollowings(memberId));
+        List<MemberDto> followers = MemberBasicDto.of(memberDao.getFollowers(memberId));
+
+        return new MyPageDto(memberBasicDto, followings, followers, followerCount, followingCount, newBandsDto);
     }
 
     public List<MusicDto> getMyRecord(String username, Boolean condition) {

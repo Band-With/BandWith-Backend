@@ -60,19 +60,16 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(myPageService.getBookmarks(username));
     }
 
-    @GetMapping("/records/{title}")
-    public ResponseEntity<PracDetailDto> pracDetail(@PathVariable String username, @PathVariable String title, Boolean condition){
-        PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, title, condition);
+    @GetMapping("/records/{musicId}")
+    public ResponseEntity<PracDetailDto> pracDetail(@PathVariable String username, @PathVariable int musicId, Boolean condition){
+        PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, musicId, condition);
 
         if (pracDetailDto.getRecords().size() == 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(pracDetailDto);
     }
 
-    @GetMapping("/records/{recordId}/comments")
-    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId){
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
-    }
+
 
     @PatchMapping("/records/{recordId}")
     public ResponseEntity<?> patchRecordAttribute(@PathVariable int recordId, @RequestBody JSONObject jsonObject){

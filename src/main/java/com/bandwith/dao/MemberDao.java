@@ -14,4 +14,6 @@ public interface MemberDao {
     Member selectMember(int member_id);
     List<Member> selectMemberWithBookmark(int bookmark_id);
     void deleteMember(String username);
+    List<Member> getFollowers(int memberId);
+    List<Member> getFollowers(int memberId);
 }
