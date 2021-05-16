@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BandMusicMapper">
+    <insert id="insertBandMusic">
+        INSERT INTO band_music (band_id, band_music)
+        VALUES (#{bandId}, #{musicId})
+    </insert>
+
+<!--    <select id="getBandMusicByBandId" resultType="com.bandwith.dto.record.RecordForBandDto">-->
+<!--        SELECT * from band_music WHERE band_id = #{band_id}-->
+<!--    </select>-->
+</mapper>

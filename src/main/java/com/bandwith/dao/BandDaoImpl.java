@@ -30,6 +30,11 @@ public class BandDaoImpl implements BandDao{
     }
 
     @Override
+    public Band selectBandByName(String bandName) {
+        return sqlSession.selectOne("BandMapper.selectBandByName", bandName);
+    }
+
+    @Override
     public List<RecordForBandDto> findByBandName(int band_id) {
         return sqlSession.selectList("BandMapper.recordsByBandName", band_id);
     }
