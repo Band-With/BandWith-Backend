@@ -22,18 +22,21 @@ public class MyPageServiceImpl implements MyPageService {
     private BandDao bandDao;
     private MemberDao memberDao;
     private BookmarkDao bookmarkDao;
+    private FollowDao followDao;
 
     @Autowired
     public MyPageServiceImpl(@Qualifier("recordDaoBean") RecordDao recordDao,
                              @Qualifier("musicDaoBean") MusicDao musicDao,
                              @Qualifier("bandDaoBean") BandDao bandDao,
                              @Qualifier("memberDaoBean") MemberDao memberDao,
-                             @Qualifier("bookmarkDaoBean") BookmarkDao bookmarkDao){
+                             @Qualifier("bookmarkDaoBean") BookmarkDao bookmarkDao,
+                             @Qualifier("followDaoBean") FollowDao followDao){
         this.recordDao = recordDao;
         this.musicDao = musicDao;
         this.bandDao = bandDao;
         this.memberDao = memberDao;
         this.bookmarkDao = bookmarkDao;
+        this.followDao = followDao;
     }
 
     public MyPageDto getMyPage(String username){
@@ -51,8 +54,8 @@ public class MyPageServiceImpl implements MyPageService {
         int followingCount = memberDao.countFollowing(username);
 
         int memberId = memberDao.getMemberIdOf(username);
-        List<MemberDto> followings = MemberBasicDto.of(memberDao.getFollowings(memberId));
-        List<MemberDto> followers = MemberBasicDto.of(memberDao.getFollowers(memberId));
+        List<MemberBasicDto> followings = MemberBasicDto.of(followDao.getFollowings(memberId));
+        List<MemberBasicDto> followers = MemberBasicDto.of(followDao.getFollowers(memberId));
 
         return new MyPageDto(memberBasicDto, followings, followers, followerCount, followingCount, newBandsDto);
     }
