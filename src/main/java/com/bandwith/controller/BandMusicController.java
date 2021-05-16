@@ -1,6 +1,6 @@
 package com.bandwith.controller;
 
-import com.bandwith.dto.band.BandMusicDto;
+import com.bandwith.dto.band.BandMusicInsertDto;
 import com.bandwith.service.BandMusicService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,9 @@ public class BandMusicController {
     public ResponseEntity createBandMusic(@RequestBody String filterJSON) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            BandMusicDto bandMusicDto = mapper.readValue(filterJSON, BandMusicDto.class);
+            BandMusicInsertDto bandMusicInsertDto = mapper.readValue(filterJSON, BandMusicInsertDto.class);
 
-            bandMusicService.createBandMusic(bandMusicDto);
+            bandMusicService.createBandMusic(bandMusicInsertDto);
 
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {

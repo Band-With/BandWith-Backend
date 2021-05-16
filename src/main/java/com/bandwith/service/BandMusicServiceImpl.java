@@ -3,7 +3,7 @@ package com.bandwith.service;
 import com.bandwith.dao.BandDao;
 import com.bandwith.dao.BandMusicDao;
 import com.bandwith.domain.Band;
-import com.bandwith.dto.band.BandMusicDto;
+import com.bandwith.dto.band.BandMusicInsertDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ public class BandMusicServiceImpl implements BandMusicService {
     }
 
     @Override
-    public void createBandMusic(BandMusicDto bandMusicDto) {
-        Band band = bandDao.selectBandByName(bandMusicDto.getBandName());
-        bandMusicDto.setBandId(band.getBand_id());
+    public void createBandMusic(BandMusicInsertDto bandMusicInsertDto) {
+        Band band = bandDao.selectBandByName(bandMusicInsertDto.getBandName());
+        bandMusicInsertDto.setBandId(band.getBand_id());
         bandMusicDao.insertBandMusic(bandMusicDao);
         System.out.println("complete insert band music");
     }

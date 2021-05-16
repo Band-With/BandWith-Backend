@@ -1,7 +1,7 @@
 package com.bandwith.service;
 
-import com.bandwith.dto.band.BandMusicDto;
+import com.bandwith.dto.band.BandMusicInsertDto;
 
 public interface BandMusicService {
-    void createBandMusic(BandMusicDto bandMusicDto);
+    void createBandMusic(BandMusicInsertDto bandMusicInsertDto);
 }
