@@ -2,6 +2,7 @@ package com.bandwith.dao;
 
 import com.bandwith.domain.Band;
 import com.bandwith.domain.Member;
+import com.bandwith.dto.band.BandInsertDto;
 import com.bandwith.dto.band.BandMemberDto;
 import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.record.RecordForBandDto;
@@ -12,12 +13,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("bandDaoBean")
-public class BandDaoImpl implements BandDao{
+public class BandDaoImpl implements BandDao {
     private final SqlSession sqlSession;
 
     @Autowired
     public BandDaoImpl(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
+    }
+
+    @Override
+    public int insertBand(BandInsertDto bandInsertDto) {
+        return sqlSession.insert("BandMapper.insertBand", bandInsertDto);
+    }
+
+    @Override
+    public int insertMemberBand(BandInsertDto bandInsertDto) {
+        return sqlSession.insert("BandMapper.insertMemberBand", bandInsertDto);
     }
 
     @Override
@@ -52,7 +63,7 @@ public class BandDaoImpl implements BandDao{
 
     @Override
     public void invite(int member_id, int band_id) {
-        BandMemberDto member = new BandMemberDto(band_id,member_id,"");
+        BandMemberDto member = new BandMemberDto(band_id, member_id, "");
         sqlSession.insert("BandMapper.invite", member);
     }
 }
