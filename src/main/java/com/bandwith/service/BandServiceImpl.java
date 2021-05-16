@@ -43,5 +43,16 @@ public class BandServiceImpl implements BandService {
         return bandDetailDto;
     }
 
+    @Override
+    public List<Member> searchUser(int member_id) {
+        List<Member> members = bandDao.searchUser(member_id);
+        return members;
+    }
+
+    @Override
+    public void invite(int member_id,int band_id) {
+        bandDao.invite(member_id, band_id);
+    }
+
 
 }
