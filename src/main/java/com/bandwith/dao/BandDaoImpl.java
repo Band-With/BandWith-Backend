@@ -2,7 +2,8 @@ package com.bandwith.dao;
 
 import com.bandwith.domain.Band;
 import com.bandwith.domain.Member;
-import com.bandwith.domain.Record;
+import com.bandwith.dto.band.BandMemberDto;
+import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.record.RecordForBandDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,16 @@ public class BandDaoImpl implements BandDao{
     @Override
     public List<Member> memberinBand(int band_id) {
         return sqlSession.selectList("BandMapper.memberinBand", band_id);
+    }
+
+    @Override
+    public List<Member> searchUser(int band_id) {
+        return sqlSession.selectList("BandMapper.searchUser", band_id);
+    }
+
+    @Override
+    public void invite(int member_id, int band_id) {
+        BandMemberDto member = new BandMemberDto(band_id,member_id,"");
+        sqlSession.insert("BandMapper.invite", member);
     }
 }
