@@ -13,6 +13,7 @@ public class MyPageDto {
     private List<MemberBasicDto> followers;
     private List<BandDto> bands;
 
+
     public MyPageDto(){}
 
     public MyPageDto(MemberBasicDto member, List<MemberBasicDto> followings, List<MemberBasicDto> followers,
