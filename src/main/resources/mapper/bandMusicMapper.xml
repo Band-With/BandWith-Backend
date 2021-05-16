@@ -5,7 +5,7 @@
 
 <mapper namespace="BandMusicMapper">
     <insert id="insertBandMusic">
-        INSERT INTO band_music (band_id, band_music)
+        INSERT INTO band_music (band_id, music_id)
         VALUES (#{bandId}, #{musicId})
     </insert>
 

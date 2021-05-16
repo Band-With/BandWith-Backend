@@ -26,7 +26,7 @@ public class BandMusicServiceImpl implements BandMusicService {
     public void createBandMusic(BandMusicInsertDto bandMusicInsertDto) {
         Band band = bandDao.selectBandByName(bandMusicInsertDto.getBandName());
         bandMusicInsertDto.setBandId(band.getBand_id());
-        bandMusicDao.insertBandMusic(bandMusicDao);
+        bandMusicDao.insertBandMusic(bandMusicInsertDto);
         System.out.println("complete insert band music");
     }
 }

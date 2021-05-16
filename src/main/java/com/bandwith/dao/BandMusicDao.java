@@ -1,7 +1,7 @@
 package com.bandwith.dao;
 
-import com.bandwith.domain.Band;
+import com.bandwith.dto.band.BandMusicInsertDto;
 
 public interface BandMusicDao {
-    Band insertBandMusic(BandMusicDao bandMusicDao);
+    int insertBandMusic(BandMusicInsertDto bandMusicinsertDto);
 }

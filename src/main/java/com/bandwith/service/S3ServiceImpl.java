@@ -9,8 +9,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -25,7 +23,6 @@ import java.util.UUID;
 @Service("s3Service")
 public class S3ServiceImpl implements S3Service {
 
-    private final Logger logger = LoggerFactory.getLogger(S3ServiceImpl.class);
     private AmazonS3 s3Client;
 
     @Value("#{s3Properties['aws.access_key_id']}")
