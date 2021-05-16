@@ -11,6 +11,7 @@ public class MyPageDto {
     private int followingCount;
     private List<BandDto> bands;
 
+
     public MyPageDto(){}
 
     public MyPageDto(MemberBasicDto member, int followerCount, int followingCount, List<BandDto> bands) {
