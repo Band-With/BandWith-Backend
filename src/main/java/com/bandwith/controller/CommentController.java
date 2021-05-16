@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class CommentController {
         CommentCreateDto commentDto = mapper.readValue(filterJSON, CommentCreateDto.class);
         commentService.createComment(commentDto);
 
-        return ResponseEntity.ok("insert complete");
+        return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
 
     @DeleteMapping("/members/{username}/comments/{comment_id}")

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FollowMapper">
+    <select id="getFollowings" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member
+        WHERE member_id IN (SELECT F.member_id FROM follow F WHERE F.follower_id = #{memberId})
+    </select>
+
+    <select id="getFollowers" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member
+        WHERE member_id IN (SELECT F.follower_id FROM follow F WHERE F.following_id = #{memberId})
+    </select>
+
+    <insert id="insertFollow">
+        INSERT INTO follow (following_id, follower_id)
+        VALUES (#{followingId}, #{followerId})
+    </insert>
+
+    <delete id="deleteFollow">
+        DELETE FROM follow
+        WHERE follower_id = #{followerId} AND following_id = #{followingId}
+    </delete>
+</mapper>

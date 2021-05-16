@@ -6,6 +6,7 @@ import com.bandwith.dto.PracDetailDto;
 import com.bandwith.dto.bookmark.BookmarkDto;
 import com.bandwith.dto.MyPageDto;
 import com.bandwith.dto.comment.CommentDto;
+import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.music.MusicDto;
 import com.bandwith.service.*;
 import org.json.simple.JSONObject;
@@ -25,17 +26,20 @@ public class MemberController {
     private MyPageService myPageService;
     private PracDetailService pracDetailService;
     private CommentService commentService;
+    private FollowService followService;
     private HomeService homeService;
 
     @Autowired
     public MemberController(@Qualifier("memberServiceBean") MemberService memberService,
                             @Qualifier("myPageServiceBean") MyPageService myPageService,
                             @Qualifier("pracDetailServiceBean") PracDetailService pracDetailService,
-                            @Qualifier("commentServiceBean") CommentService commentService){
+                            @Qualifier("commentServiceBean") CommentService commentService,
+                            @Qualifier("followServiceBean") FollowService followService){
         this.memberService = memberService;
         this.myPageService = myPageService;
         this.pracDetailService = pracDetailService;
         this.commentService = commentService;
+        this.followService = followService;
     }
 
     @GetMapping("")
@@ -76,6 +80,30 @@ public class MemberController {
         Boolean searchable = (Boolean)jsonObject.get("searchable");
         pracDetailService.patchRecordAttributes(recordId, access, searchable);
         return ResponseEntity.ok("resource patched");
+    }
+
+    @GetMapping("/followings")
+    public ResponseEntity<List<MemberBasicDto>> getfollowings(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowings(username));
+    }
+
+    @GetMapping("/followers")
+    public ResponseEntity<List<MemberBasicDto>> getfollowers(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowers(username));
+    }
+
+    @DeleteMapping("/follows")
+    public ResponseEntity unfollow(@PathVariable String username, @RequestBody JSONObject jsonObject){
+        int followerId = (int)jsonObject.get("followerId");
+        followService.unfollow(username, followerId);
+        return ResponseEntity.ok("");
+    }
+
+    @PostMapping("/follows")
+    public ResponseEntity follow(@PathVariable String username, @RequestBody JSONObject jsonObject){
+        int followerId = (int)jsonObject.get("followerId");
+        followService.follow(username, followerId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
     @GetMapping("/testAPI")
