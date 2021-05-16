@@ -5,6 +5,7 @@ import com.bandwith.dto.comment.CommentCreateDto;
 import com.bandwith.service.CommentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,15 @@ public class CommentController {
         return ResponseEntity.ok("insert complete");
     }
 
-    @DeleteMapping("/members/{username}/comments")
-    public ResponseEntity deleteComment(int commentId){
+    @DeleteMapping("/members/{username}/comments/{comment_id}")
+    public ResponseEntity deleteComment(@PathVariable("comment_id") int commentId){
         commentService.deleteComment(commentId);
         return ResponseEntity.ok("deleted");
     }
 
-    @PatchMapping("/members/{username}/comments")
-    public ResponseEntity updateComment(int commentId, String comment){
+    @PatchMapping("/members/{username}/comments/{comment_id}")
+    public ResponseEntity updateComment(@PathVariable("comment_id") int commentId,  @RequestBody JSONObject jsonObject){
+        String comment = (String)jsonObject.get("content");
         commentService.updateComment(commentId, comment);
         return ResponseEntity.ok("updated");
     }
