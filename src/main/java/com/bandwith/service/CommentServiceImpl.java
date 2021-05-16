@@ -3,6 +3,7 @@ package com.bandwith.service;
 import com.bandwith.dao.CommentDao;
 import com.bandwith.dao.MemberDao;
 import com.bandwith.domain.Comment;
+import com.bandwith.domain.Member;
 import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.comment.CommentCreateDto;
 import com.bandwith.dto.comment.CommentDto;
@@ -31,8 +32,13 @@ public class CommentServiceImpl implements CommentService{
         List<Comment> comments = commentDao.getRecordComments(recordId);
         List<CommentPageDto> commentPageDtoList = new ArrayList<>();
 
-        for(Comment comment: comments)
-            commentPageDtoList.add(new CommentPageDto(MemberBasicDto.of(memberDao.selectMember(comment.getMember_id())), CommentDto.of(comment)));
+        for(Comment comment: comments) {
+            Member member = memberDao.selectMember(comment.getMember_id());
+            MemberBasicDto memberDto = MemberBasicDto.of(member);
+            CommentDto commentDto = CommentDto.of(comment);
+            commentPageDtoList.add(new CommentPageDto(memberDto, commentDto));
+        }
+
         return commentPageDtoList;
     }
 
