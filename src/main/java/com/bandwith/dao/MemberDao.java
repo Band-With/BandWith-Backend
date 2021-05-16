@@ -5,6 +5,7 @@ import com.bandwith.domain.Member;
 import java.util.List;
 
 public interface MemberDao {
+    int getMemberIdOf(String username);
     void insertMember(Member member);
     Member login(Member member);
     int countFollower(String username);
