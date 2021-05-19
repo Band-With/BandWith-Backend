@@ -91,15 +91,15 @@ public class MemberController {
 
     @DeleteMapping("/follows")
     public ResponseEntity unfollow(@PathVariable String username, @RequestBody JSONObject jsonObject){
-        int followerId = (int)jsonObject.get("followerId");
-        followService.unfollow(username, followerId);
+        int followingId = (int)jsonObject.get("followingId");
+        followService.unfollow(username, followingId);
         return ResponseEntity.ok("");
     }
 
     @PostMapping("/follows")
     public ResponseEntity follow(@PathVariable String username, @RequestBody JSONObject jsonObject){
-        int followerId = (int)jsonObject.get("followerId");
-        followService.follow(username, followerId);
+        int followingId = (int)jsonObject.get("followingId");
+        followService.follow(username, followingId);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
