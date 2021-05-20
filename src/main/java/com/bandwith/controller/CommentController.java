@@ -30,7 +30,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getBandMusicComments(bandMusicId));
     }
 
-    @GetMapping("/records/{recordId}/comments")
+    @GetMapping("/members/{username}/records/{recordId}/comments")
     public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId){
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
     }
