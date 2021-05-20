@@ -10,12 +10,12 @@
         WHERE record.MEMBER_ID = (SELECT MEMBER_ID from member WHERE USERNAME = #{username})
     </select>
 
-    <select id="selectRecordsByTitle" resultType="com.bandwith.domain.Record">
+    <select id="selectRecordsByMusicId" resultType="com.bandwith.domain.Record">
         SELECT r.*
         FROM record r
                  INNER JOIN music m ON r.music_id = m.music_id
         WHERE r.MEMBER_ID = (SELECT MEMBER_ID from member WHERE USERNAME = #{username})
-          AND m.title = #{title}
+          AND m.music_id = #{musicId}
           AND (r.access OR #{condition})
         ORDER BY r.created_at desc
     </select>

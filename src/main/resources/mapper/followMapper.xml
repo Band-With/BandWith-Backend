@@ -6,7 +6,7 @@
 <mapper namespace="FollowMapper">
     <select id="getFollowings" resultType="com.bandwith.domain.Member">
         SELECT * FROM member
-        WHERE member_id IN (SELECT F.member_id FROM follow F WHERE F.follower_id = #{memberId})
+        WHERE member_id IN (SELECT F.following_id FROM follow F WHERE F.follower_id = #{memberId})
     </select>
 
     <select id="getFollowers" resultType="com.bandwith.domain.Member">

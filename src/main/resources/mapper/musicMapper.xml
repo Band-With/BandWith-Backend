@@ -10,10 +10,10 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
-    <select id="getMusicByTitle" resultType="com.bandwith.domain.Music">
+    <select id="getMusicById" resultType="com.bandwith.domain.Music">
         SELECT *
         FROM music
-        WHERE music.title = #{title}
+        WHERE music.music_id = #{musicId}
     </select>
 
 

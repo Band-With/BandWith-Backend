@@ -60,19 +60,16 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(myPageService.getBookmarks(username));
     }
 
-    @GetMapping("/records/{title}")
-    public ResponseEntity<PracDetailDto> pracDetail(@PathVariable String username, @PathVariable String title, Boolean condition){
-        PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, title, condition);
+    @GetMapping("/records/{musicId}")
+    public ResponseEntity<PracDetailDto> pracDetail(@PathVariable String username, @PathVariable int musicId, Boolean condition){
+        PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, musicId, condition);
 
         if (pracDetailDto.getRecords().size() == 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(pracDetailDto);
     }
 
-    @GetMapping("/records/{recordId}/comments")
-    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId){
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
-    }
+
 
     @PatchMapping("/records/{recordId}")
     public ResponseEntity<?> patchRecordAttribute(@PathVariable int recordId, @RequestBody JSONObject jsonObject){
@@ -83,26 +80,26 @@ public class MemberController {
     }
 
     @GetMapping("/followings")
-    public ResponseEntity<List<MemberBasicDto>> getfollowings(@PathVariable String username){
+    public ResponseEntity<List<MemberBasicDto>> getFollowings(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowings(username));
     }
 
     @GetMapping("/followers")
-    public ResponseEntity<List<MemberBasicDto>> getfollowers(@PathVariable String username){
+    public ResponseEntity<List<MemberBasicDto>> getFollowers(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowers(username));
     }
 
     @DeleteMapping("/follows")
     public ResponseEntity unfollow(@PathVariable String username, @RequestBody JSONObject jsonObject){
-        int followerId = (int)jsonObject.get("followerId");
-        followService.unfollow(username, followerId);
+        int followingId = (int)jsonObject.get("followingId");
+        followService.unfollow(username, followingId);
         return ResponseEntity.ok("");
     }
 
     @PostMapping("/follows")
     public ResponseEntity follow(@PathVariable String username, @RequestBody JSONObject jsonObject){
-        int followerId = (int)jsonObject.get("followerId");
-        followService.follow(username, followerId);
+        int followingId = (int)jsonObject.get("followingId");
+        followService.follow(username, followingId);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 

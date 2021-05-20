@@ -126,16 +126,16 @@ public class RecordController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-    // 녹음 파일의 댓글 가져오기
-    @GetMapping("/records/{recordId}/comments")
-    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//
+//    // 녹음 파일의 댓글 가져오기
+//    @GetMapping("/records/{recordId}/comments")
+//    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId) {
+//        try {
+//            return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
     // 녹음 파일에 좋아요 누르기
     @PostMapping("/records/{recordId}/likes")
