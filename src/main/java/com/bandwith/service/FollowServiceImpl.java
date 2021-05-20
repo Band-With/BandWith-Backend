@@ -30,8 +30,6 @@ public class FollowServiceImpl implements FollowService{
         int memberId = memberDao.getMemberIdOf(username);
         params.put("followingId", followingId);
         params.put("followerId", memberId);
-        System.out.println(params);
-
         followDao.follow(params);
     }
 
@@ -39,7 +37,6 @@ public class FollowServiceImpl implements FollowService{
     public void unfollow(String username, int followingId) {
         HashMap<String, Integer> params = new HashMap<>();
         int memberId = memberDao.getMemberIdOf(username);
-        System.out.println(memberId);
         params.put("followingId", followingId);
         params.put("followerId", memberId);
         followDao.unfollow(params);

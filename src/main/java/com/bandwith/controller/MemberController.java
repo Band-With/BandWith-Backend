@@ -80,12 +80,12 @@ public class MemberController {
     }
 
     @GetMapping("/followings")
-    public ResponseEntity<List<MemberBasicDto>> getfollowings(@PathVariable String username){
+    public ResponseEntity<List<MemberBasicDto>> getFollowings(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowings(username));
     }
 
     @GetMapping("/followers")
-    public ResponseEntity<List<MemberBasicDto>> getfollowers(@PathVariable String username){
+    public ResponseEntity<List<MemberBasicDto>> getFollowers(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(followService.getFollowers(username));
     }
 
