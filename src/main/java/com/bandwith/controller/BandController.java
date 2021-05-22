@@ -41,8 +41,8 @@ public class BandController {
    }
 
     @GetMapping("/members")
-    public ResponseEntity<List<Member>> searchMusic(@RequestParam(value="member_id") int member_id) {
-        List<Member> memberBasicDtoList = bandService.searchUser(member_id);
+    public ResponseEntity<List<MemberBasicDto>> searchMember(@RequestParam(value="member_id") int member_id) {
+        List<MemberBasicDto> memberBasicDtoList = bandService.searchUser(member_id);
         return ResponseEntity.status(HttpStatus.CREATED).body(memberBasicDtoList);
     }
 

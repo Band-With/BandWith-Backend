@@ -10,59 +10,47 @@ import com.bandwith.dto.record.RecordForBandDto;
 import java.util.List;
 
 public class BandDetailDto {
-    private int band_id;
-    private String band_name;
-    private byte[] img;
-    private List<Member> members;
-    private List<RecordForBandDto> records;
+    private BandGetDto bandGetDto;
+    private List<MemberBasicDto> memberBasicDtoList;
+    private List<BandMusicDto> bandMusicDtoList;
+    private int totalLikes;
 
-
-    public BandDetailDto(Band band, List<Member> members, List<RecordForBandDto> records) {
-        this.band_id = band.getBand_id();
-        this.band_name = band.getBand_name();
-        this.img = band.getImg();
-        this.members = members;
-        this.records = records;
-
+    public BandGetDto getBandGetDto() {
+        return bandGetDto;
     }
 
-    public int getBand_id() {
-        return band_id;
+    public void setBandGetDto(BandGetDto bandGetDto) {
+        this.bandGetDto = bandGetDto;
     }
 
-    public void setBand_id(int band_id) {
-        this.band_id = band_id;
+    public List<MemberBasicDto> getMemberBasicDtoList() {
+        return memberBasicDtoList;
     }
 
-    public String getBand_name() {
-        return band_name;
+    public void setMemberBasicDtoList(List<MemberBasicDto> memberBasicDtoList) {
+        this.memberBasicDtoList = memberBasicDtoList;
     }
 
-    public void setBand_name(String band_name) {
-        this.band_name = band_name;
+    public List<BandMusicDto> getBandMusicDtoList() {
+        return bandMusicDtoList;
     }
 
-    public byte[] getImg() {
-        return img;
+    public void setBandMusicDtoList(List<BandMusicDto> bandMusicDtoList) {
+        this.bandMusicDtoList = bandMusicDtoList;
     }
 
-    public void setImg(byte[] img) {
-        this.img = img;
+    public int getTotalLikes() {
+        return totalLikes;
     }
 
-    public List<Member> getMembers() {
-        return members;
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
-    }
-
-    public List<RecordForBandDto> getRecords() {
-        return records;
-    }
-
-    public void setRecords(List<RecordForBandDto> records) {
-        this.records = records;
+    public BandDetailDto(BandGetDto bandGetDto, List<MemberBasicDto> memberBasicDtoList, List<BandMusicDto> bandMusicDtoList, int totalLikes) {
+        this.bandGetDto = bandGetDto;
+        this.memberBasicDtoList = memberBasicDtoList;
+        this.bandMusicDtoList = bandMusicDtoList;
+        this.totalLikes = totalLikes;
     }
 }
