@@ -24,20 +24,24 @@ public class BandServiceImpl implements BandService {
     private BandDao bandDao;
     private LikeDao likeDao;
     private BandMusicDao bandMusicDao;
-
+    private CommentDao commentDao;
     @Autowired
-    public BandServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao, @Qualifier("likeDaoBean") LikeDao likeDao, @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao) {
+    public BandServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao, @Qualifier("likeDaoBean") LikeDao likeDao, @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao, @Qualifier("commentDaoBean") CommentDao commentDao) {
         this.bandDao = bandDao;
         this.likeDao = likeDao;
+        this.bandMusicDao = bandMusicDao;
+        this.commentDao = commentDao;
 
     }
 
     @Override
     public BandDetailDto getBand(int band_id) {
+
+
         //BandGetDto 완성
-        Band band = bandDao.selectOne(band_id);
-        BandGetDto bandGetDto = BandGetDto.of(band);
-        //Band의 멤버 가져와서 MeberBasicDto List 생성함
+        Band band_ = bandDao.selectOne(band_id);
+        BandGetDto band = BandGetDto.of(band_);
+        //Band의 멤버
         List<Member> members = bandDao.memberinBand(band_id);
         List<MemberBasicDto> memberBasicDtos = new ArrayList<MemberBasicDto>();
         for(int i=0; i<members.size(); i++){
@@ -45,35 +49,53 @@ public class BandServiceImpl implements BandService {
             memberBasicDtos.add(memberBasicDto);
         }
 
+
         //BandMusic의 List를 가져옴
         List<BandMusic> bandMusicList= bandDao.selectBandMusics(band_id);
         //BandMusic의 List의 id값들을 이용해서 MusicDto의 List 만듬
         List<MusicDto> musics =  new ArrayList<MusicDto>();
         for(int i=0; i<bandMusicList.size(); i++){
-            MusicDto musicDto = MusicDto.of(bandMusicDao.getMusic(bandMusicList.get(i).getBandMusicId()));
+            //밴드 뮤직 리스트 안의, i번째 밴드 뮤직에서 music ID를 가져와서 bandmusicdao.getmusic을 이용해 music table 검색
+            MusicDto musicDto = MusicDto.of(bandMusicDao.getMusic(bandMusicList.get(i).getMusicId()));
             musics.add(musicDto);
         }
         //BandMusic의 Dto만듬
-        List<BandMusicDto> bandMusicDtoList = new ArrayList<BandMusicDto>();
+        List<BandDetailMusicDto> bandMusicDtoList = new ArrayList<BandDetailMusicDto>();
         // Band Music에 대한 Member를 가져옴
-        List<List<Member>> recordMember = new ArrayList<List<Member>>();
+        List<List<Member>> bandMusicMember = new ArrayList<List<Member>>();
         for (int i=0; i<bandMusicList.size(); i++){
-            recordMember.add(bandMusicDao.recordMember(bandMusicList.get(i).getBandMusicId()));
+            bandMusicMember.add(bandMusicDao.recordMember(bandMusicList.get(i).getBandMusicId()));
         }
 
         List<List<MemberBasicDto>> recordMemberDtos = new ArrayList<List<MemberBasicDto>>();
-        for(int i=0; i<members.size(); i++){
-            recordMemberDtos.add(MemberBasicDto.of(recordMember.get(i)));
+        for(int i=0; i<musics.size(); i++){
+            recordMemberDtos.add(MemberBasicDto.of(bandMusicMember.get(i)));
         }
 
+        List<Integer> likes= new ArrayList<Integer>();
+        for(int i=0; i< musics.size(); i++) {
+            likes.add(likeDao.bandMusicLike(bandMusicList.get(i).getMusicId()));
+        }
+        List<Integer> comments= new ArrayList<Integer>();
+        for(int i=0; i< musics.size(); i++) {
+            comments.add(commentDao.bandMusicComments(bandMusicList.get(i).getMusicId()));
+        }
+
+  
+
         for(int i=0; i<members.size(); i++){
-//BandMusic bandMusic, MusicDto musicDto, List<MemberBasicDto> memberBasicDtoList, int likes, int comments
-            BandMusicDto bandMusicDto = BandMusicDto.of(bandMusicList.get(i), musics.get(i), recordMemberDtos.get(i), 0, 0);
+           // BandMusic bandMusic, MusicDto musicDto, List<MemberBasicDto> memberBasicDtoList, int likes, int comments
+            BandDetailMusicDto bandMusicDto = BandDetailMusicDto.of(bandMusicList.get(i), musics.get(i), recordMemberDtos.get(i), likes.get(i),comments.get(i));
             bandMusicDtoList.add(bandMusicDto);
         }
-        int totalLikes=1;
+        int totalLikes=0;
 
-        BandDetailDto bandDetailDto= new BandDetailDto(bandGetDto, memberBasicDtos, bandMusicDtoList, totalLikes);
+        for(int i=0; i<likes.size(); i++){
+            totalLikes+=likes.get(i);
+        }
+
+//int band_music_id, Timestamp complete_date, Boolean complete, MusicDto musicDto, List<MemberBasicDto> memberBasicDtoList, int likes, int comments
+        BandDetailDto bandDetailDto= new BandDetailDto(band, memberBasicDtos, bandMusicDtoList, totalLikes);
         return bandDetailDto;
     }
 

@@ -4,6 +4,7 @@ import com.bandwith.dao.CommentDao;
 import com.bandwith.dao.LikeDao;
 import com.bandwith.dao.MemberDao;
 import com.bandwith.dao.RecordDao;
+import com.bandwith.domain.Member;
 import com.bandwith.dto.SearchRecordDto;
 import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.record.RecordDto;
@@ -43,6 +44,9 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void insertRecord(RecordInsertDto recordDto) {
+        Member member = memberDao.selectMemberWithUsername(recordDto.getUsername());
+        recordDto.setMemberId(member.getMember_id());
+
         recordDao.insertRecord(recordDto);
         System.out.println("upload record service");
     }

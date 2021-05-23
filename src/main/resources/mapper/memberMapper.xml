@@ -14,7 +14,7 @@
     </select>
 
     <select id="countFollower" resultType="int">
-        SELECT count(*) from follow WHERE MEMBER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
+        SELECT count(*) from follow WHERE FOLLOWING_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
     </select>
 
     <select id="countFollowing" resultType="int">
@@ -42,4 +42,9 @@
         FROM member
         WHERE username = #{username}
     </delete>
+
+    <select id="getMemberId" resultType="int">
+        SELECT member_id FROM member
+        WHERE username = #{username}
+    </select>
 </mapper>

@@ -56,4 +56,6 @@ public class MemberDaoImpl implements MemberDao {
     public void deleteMember(String username) {
         sqlSession.delete("MemberMapper.deleteMember", username);
     }
+
+    public int getMemberIdOf(String username){ return sqlSession.selectOne("MemberMapper.getMemberId", username);};
 }

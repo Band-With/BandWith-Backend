@@ -10,33 +10,33 @@ import com.bandwith.dto.record.RecordForBandDto;
 import java.util.List;
 
 public class BandDetailDto {
-    private BandGetDto bandGetDto;
-    private List<MemberBasicDto> memberBasicDtoList;
-    private List<BandMusicDto> bandMusicDtoList;
+    private BandGetDto band;
+    private List<MemberBasicDto> members;
+    private List<BandDetailMusicDto> band_musics;
     private int totalLikes;
 
     public BandGetDto getBandGetDto() {
-        return bandGetDto;
+        return band;
     }
 
-    public void setBandGetDto(BandGetDto bandGetDto) {
-        this.bandGetDto = bandGetDto;
+    public void setBandGetDto(BandGetDto band) {
+        this.band = band;
     }
 
     public List<MemberBasicDto> getMemberBasicDtoList() {
-        return memberBasicDtoList;
+        return members;
     }
 
-    public void setMemberBasicDtoList(List<MemberBasicDto> memberBasicDtoList) {
-        this.memberBasicDtoList = memberBasicDtoList;
+    public void setMemberBasicDtoList(List<MemberBasicDto> members) {
+        this.members = members;
     }
 
-    public List<BandMusicDto> getBandMusicDtoList() {
-        return bandMusicDtoList;
+    public List<BandDetailMusicDto> getBandMusicDtoList() {
+        return band_musics;
     }
 
-    public void setBandMusicDtoList(List<BandMusicDto> bandMusicDtoList) {
-        this.bandMusicDtoList = bandMusicDtoList;
+    public void setBandMusicDtoList(List<BandDetailMusicDto> band_musics) {
+        this.band_musics = band_musics;
     }
 
     public int getTotalLikes() {
@@ -47,10 +47,10 @@ public class BandDetailDto {
         this.totalLikes = totalLikes;
     }
 
-    public BandDetailDto(BandGetDto bandGetDto, List<MemberBasicDto> memberBasicDtoList, List<BandMusicDto> bandMusicDtoList, int totalLikes) {
-        this.bandGetDto = bandGetDto;
-        this.memberBasicDtoList = memberBasicDtoList;
-        this.bandMusicDtoList = bandMusicDtoList;
+    public BandDetailDto(BandGetDto band, List<MemberBasicDto> members, List<BandDetailMusicDto> band_musics, int totalLikes) {
+        this.band = band;
+        this.members = members;
+        this.band_musics = band_musics;
         this.totalLikes = totalLikes;
     }
 }

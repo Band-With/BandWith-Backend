@@ -6,6 +6,7 @@ import com.bandwith.domain.Record;
 public class RecordInsertDto {
     private int musicId;
     private int memberId;
+    private String username;
     private String instrument;
     private Boolean searchable;
     private Boolean access;
@@ -17,28 +18,16 @@ public class RecordInsertDto {
 
     }
 
-    public RecordInsertDto(int musicId, int memberId, String instrument, Boolean searchable, Boolean access, String uuid, String fileName, String fileUrl) {
+    public RecordInsertDto(int musicId, int memberId, String username, String instrument, Boolean searchable, Boolean access, String uuid, String fileName, String fileUrl) {
         this.musicId = musicId;
         this.memberId = memberId;
+        this.username = username;
         this.instrument = instrument;
         this.searchable = searchable;
         this.access = access;
         this.uuid = uuid;
         this.fileName = fileName;
         this.fileUrl = fileUrl;
-    }
-
-    public static RecordInsertDto of(Record record){
-        return new RecordInsertDto(
-                record.getMusicId(),
-                record.getMemberId(),
-                record.getInstrument(),
-                record.isSearchable(),
-                record.isAccess(),
-                record.getUuid(),
-                record.getFileName(),
-                record.getFileUrl()
-        );
     }
 
     public int getMusicId() {
@@ -55,6 +44,14 @@ public class RecordInsertDto {
 
     public void setMemberId(int memberId) {
         this.memberId = memberId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getInstrument() {
@@ -105,5 +102,5 @@ public class RecordInsertDto {
         this.fileUrl = fileUrl;
     }
 
-    
+
 }

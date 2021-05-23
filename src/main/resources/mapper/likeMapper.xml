@@ -8,6 +8,9 @@
         SELECT count(*) FROM likes WHERE RECORD_ID = #{record_id}
     </select>
 
+    <select id="bandMusicLike" resultType="int">
+        SELECT count(*) FROM likes WHERE band_music_id = #{band_music_id}
+    </select>
     <insert id="insertLikeOnRecord">
         INSERT INTO likes (member_id, record_id, band_music_id)
         VALUES (#{memberId}, #{recordId}, null)

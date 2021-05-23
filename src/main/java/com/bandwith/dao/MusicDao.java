@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface MusicDao {
     Music selectMusic(int music_id);
+    Music getMusicByTitle(String title);
     Music selectMusicByTitle(String title);
     List<Music> selectMusics();
     List<Music> selectMusicOthersPage(String username);

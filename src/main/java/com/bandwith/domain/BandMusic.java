@@ -1,20 +1,8 @@
-package com.bandwith.dto.band;
-
-import com.bandwith.domain.Band;
-import com.bandwith.domain.BandMusic;
-import com.bandwith.dto.member.MemberBasicDto;
-import com.bandwith.dto.music.MusicDto;
-
-import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.util.List;
-
-
-import com.bandwith.domain.BandMusic;
+package com.bandwith.domain;
 
 import java.sql.Timestamp;
 
-public class BandMusicDto {
+public class BandMusic {
     private int bandMusicId;
     private int bandId;
     private int musicId;
@@ -25,11 +13,7 @@ public class BandMusicDto {
     private String fileName;
     private String fileUrl;
 
-
-    public BandMusicDto() {
-    }
-
-    public BandMusicDto(int bandMusicId, int bandId, int musicId, Timestamp createdAt, boolean complete, Timestamp completeDate, String uuid, String fileName, String fileUrl) {
+    public BandMusic(int bandMusicId, int bandId, int musicId, Timestamp createdAt, boolean complete, Timestamp completeDate, String uuid, String fileName, String fileUrl) {
         this.bandMusicId = bandMusicId;
         this.bandId = bandId;
         this.musicId = musicId;
@@ -39,20 +23,6 @@ public class BandMusicDto {
         this.uuid = uuid;
         this.fileName = fileName;
         this.fileUrl = fileUrl;
-    }
-
-    public static BandMusicDto of(BandMusic bandMusic) {
-        return new BandMusicDto(
-                bandMusic.getBandMusicId(),
-                bandMusic.getBandId(),
-                bandMusic.getMusicId(),
-                bandMusic.getCreatedAt(),
-                bandMusic.isComplete(),
-                bandMusic.getCompleteDate(),
-                bandMusic.getUuid(),
-                bandMusic.getFileName(),
-                bandMusic.getFileUrl()
-        );
     }
 
     public int getBandMusicId() {

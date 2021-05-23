@@ -9,16 +9,20 @@ import java.util.List;
 public class CommentDto {
     private int comment_id;
     private String content;
+    private Boolean updated;
     private Timestamp created_at;
 
-    public CommentDto(int comment_id, String content, Timestamp created_at) {
+    public CommentDto(){}
+
+    public CommentDto(int comment_id, String content, Boolean updated, Timestamp created_at) {
         this.comment_id = comment_id;
         this.content = content;
+        this.updated = updated;
         this.created_at = created_at;
     }
 
     public static CommentDto of(Comment comment){
-        return new CommentDto(comment.getComment_id(), comment.getContent(), comment.getCreated_at());
+        return new CommentDto(comment.getComment_id(), comment.getContent(), comment.getUpdated(), comment.getCreated_at());
     }
 
     public static List<CommentDto> of(List<Comment> comments){
@@ -42,6 +46,14 @@ public class CommentDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Boolean getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Boolean updated) {
+        this.updated = updated;
     }
 
     public Timestamp getCreated_at() {
