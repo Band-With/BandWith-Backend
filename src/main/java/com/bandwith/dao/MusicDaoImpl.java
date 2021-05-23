@@ -23,8 +23,8 @@ public class MusicDaoImpl implements MusicDao {
     }
 
     @Override
-    public Music getMusicByTitle(String title) {
-        return sqlSession.selectOne("MusicMapper.getMusicByTitle", title);
+    public Music getMusicById(int musicId) {
+        return sqlSession.selectOne("MusicMapper.getMusicById", musicId);
     }
 
     @Override

@@ -9,6 +9,12 @@ import com.bandwith.dto.band.*;
 import com.bandwith.dto.bookmark.BookmarkInsertDto;
 import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.music.MusicDto;
+import com.bandwith.dao.BandDao;
+import com.bandwith.dao.MemberDao;
+import com.bandwith.domain.Band;
+import com.bandwith.domain.Member;
+import com.bandwith.dto.band.BandDetailDto;
+import com.bandwith.dto.band.BandInsertDto;
 import com.bandwith.dto.record.RecordForBandDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,13 +31,28 @@ public class BandServiceImpl implements BandService {
     private LikeDao likeDao;
     private BandMusicDao bandMusicDao;
     private CommentDao commentDao;
+    private MemberDao memberDao;
+
     @Autowired
-    public BandServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao, @Qualifier("likeDaoBean") LikeDao likeDao, @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao, @Qualifier("commentDaoBean") CommentDao commentDao) {
+    public BandServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao,@Qualifier("memberDaoBean") MemberDao memberDao, @Qualifier("likeDaoBean") LikeDao likeDao, @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao, @Qualifier("commentDaoBean") CommentDao commentDao) {
         this.bandDao = bandDao;
         this.likeDao = likeDao;
         this.bandMusicDao = bandMusicDao;
         this.commentDao = commentDao;
+        this.memberDao = memberDao;
+    }
 
+    @Override
+    public void insertBand(BandInsertDto bandInsertDto) {
+        // band 생성
+        bandDao.insertBand(bandInsertDto);
+        
+        // member name -> id
+        Member member = memberDao.selectMemberWithUsername(bandInsertDto.getUsername());
+        bandInsertDto.setMemberId(member.getMember_id());
+        
+        // member_band 생성
+        bandDao.insertMemberBand(bandInsertDto);
     }
 
     @Override
@@ -96,6 +117,7 @@ public class BandServiceImpl implements BandService {
 
 //int band_music_id, Timestamp complete_date, Boolean complete, MusicDto musicDto, List<MemberBasicDto> memberBasicDtoList, int likes, int comments
         BandDetailDto bandDetailDto= new BandDetailDto(band, memberBasicDtos, bandMusicDtoList, totalLikes);
+
         return bandDetailDto;
     }
 
@@ -112,7 +134,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public void invite(int member_id,int band_id) {
+    public void invite(int member_id, int band_id) {
         bandDao.invite(member_id, band_id);
     }
 

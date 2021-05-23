@@ -28,6 +28,11 @@ public class CommentServiceImpl implements CommentService{
         this.memberDao = memberDao;
     }
 
+    @Override
+    public List<CommentPageDto> getBandMusicComments(int bandMusicId) {
+        return null;
+    }
+
     public List<CommentPageDto> getRecordComments(int recordId){
         List<Comment> comments = commentDao.getRecordComments(recordId);
         List<CommentPageDto> commentPageDtoList = new ArrayList<>();

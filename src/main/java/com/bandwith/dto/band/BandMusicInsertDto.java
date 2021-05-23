@@ -7,13 +7,6 @@ public class BandMusicInsertDto {
     private String bandName;
     private int bandId;
     private int musicId;
-//    private Timestamp createdAt;
-//    private boolean complete;
-//    private Timestamp completeDate;
-//    private String uuid;
-//    private String fileName;
-//    private String fileUrl;
-
 
     public BandMusicInsertDto() {
     }

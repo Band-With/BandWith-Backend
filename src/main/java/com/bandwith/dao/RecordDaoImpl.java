@@ -38,8 +38,8 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public List<Record> selectRecordsByTitle(HashMap<String, Object> params) {
-        return sqlSession.selectList("RecordMapper.selectRecordsByTitle", params);
+    public List<Record> selectRecordsByMusicId(HashMap<String, Object> params) {
+        return sqlSession.selectList("RecordMapper.selectRecordsByMusicId", params);
     }
 
     @Override

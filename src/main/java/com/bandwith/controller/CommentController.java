@@ -1,6 +1,7 @@
 package com.bandwith.controller;
 
 
+import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.comment.CommentCreateDto;
 import com.bandwith.service.CommentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class CommentController {
@@ -20,6 +23,16 @@ public class CommentController {
     @Autowired
     public CommentController(@Qualifier("commentServiceBean") CommentService commentService){
         this.commentService = commentService;
+    }
+
+    @GetMapping("/bands/{band_id}/band_musics/{band_music_id}/comments")
+    public ResponseEntity<List<CommentPageDto>> getBandMusicRecord (@PathVariable("band_music_id") int bandMusicId){
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getBandMusicComments(bandMusicId));
+    }
+
+    @GetMapping("/members/{username}/records/{recordId}/comments")
+    public ResponseEntity<List<CommentPageDto>> getRecordComments(@PathVariable int recordId){
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getRecordComments(recordId));
     }
 
     @PostMapping("/members/{username}/comments")

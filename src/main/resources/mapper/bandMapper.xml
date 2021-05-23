@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BandMapper">
+    <insert id="insertBand" parameterType="com.bandwith.dto.band.BandInsertDto"
+            useGeneratedKeys="true" keyProperty="bandId">
+        -- insert 후 bandId를 DTO에 넣음
+        INSERT INTO band (band_name, img)
+        VALUES (#{bandName}, #{img})
+    </insert>
+
     <select id="selectBands" resultType="com.bandwith.domain.Band">
         SELECT b.BAND_ID,
                b.BAND_NAME,
@@ -16,22 +23,38 @@
     </select>
 
     <select id="selectOne" resultType="com.bandwith.domain.Band">
-        SELECT * from band WHERE band_id = #{band_id}
+        SELECT *
+        from band
+        WHERE band_id = #{band_id}
     </select>
 
     <select id="selectBandByName" resultType="com.bandwith.domain.Band">
-        SELECT * from band WHERE band_name = #{bandName}
+        SELECT *
+        from band
+        WHERE band_name = #{bandName}
     </select>
 
     <select id="recordsByBandName" resultType="com.bandwith.dto.record.RecordForBandDto">
-        SELECT * from band_music WHERE band_id = #{band_id}
+        SELECT *
+        from band_music
+        WHERE band_id = #{band_id}
     </select>
 
+    <insert id="insertMemberBand">
+        INSERT INTO member_band (band_id, member_id, band_auth)
+        VALUES (#{bandId}, #{memberId}, #{bandAuth})
+    </insert>
+
     <select id="memberinBand" resultType="com.bandwith.domain.Member">
-        SELECT * from member_band WHERE band_id = #{band_id}
+        SELECT *
+        from member_band
+        WHERE band_id = #{band_id}
     </select>
+
     <select id="searchUser" resultType="com.bandwith.domain.Member">
-        SELECT * from member WHERE member_id = #{member_id}
+        SELECT *
+        from member
+        WHERE member_id = #{member_id}
     </select>
 
     <insert id="invite">

@@ -25,23 +25,20 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public void follow(String username, int followerId) {
+    public void follow(String username, int followingId) {
         HashMap<String, Integer> params = new HashMap<>();
         int memberId = memberDao.getMemberIdOf(username);
-        params.put("followingId", memberId);
-        params.put("followerId", followerId);
-        System.out.println(params);
-
+        params.put("followingId", followingId);
+        params.put("followerId", memberId);
         followDao.follow(params);
     }
 
     @Override
-    public void unfollow(String username, int followerId) {
+    public void unfollow(String username, int followingId) {
         HashMap<String, Integer> params = new HashMap<>();
         int memberId = memberDao.getMemberIdOf(username);
-        System.out.println(memberId);
-        params.put("followingId", memberId);
-        params.put("followerId", followerId);
+        params.put("followingId", followingId);
+        params.put("followerId", memberId);
         followDao.unfollow(params);
     }
 
