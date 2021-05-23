@@ -1,5 +1,6 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.band.BandMusicDetailDto;
 import com.bandwith.dto.band.BandMusicInsertDto;
 import com.bandwith.service.BandMusicService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,18 @@ public class BandMusicController {
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+        }
+    }
+
+
+
+    @GetMapping("/{band_music_id}")
+    public ResponseEntity<BandMusicDetailDto> getBandMusic(@PathVariable("band_music_id") int bandMusicId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusic(bandMusicId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

@@ -9,6 +9,10 @@
         VALUES (#{bandId}, #{musicId})
     </insert>
 
+    <select id="select" resultType="com.bandwith.domain.BandMusic">
+        SELECT * from band_music WHERE band_id = #{band_id}
+    </select>
+
 <!--    <select id="getBandMusicByBandId" resultType="com.bandwith.dto.record.RecordForBandDto">-->
 <!--        SELECT * from band_music WHERE band_id = #{band_id}-->
 <!--    </select>-->
