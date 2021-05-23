@@ -59,19 +59,19 @@ public class BandDetailMusicDto {
         this.complete = complete;
     }
 
-    public MusicDto getMusicDto() {
+    public MusicDto getMusic() {
         return music;
     }
 
-    public void setMusicDto(MusicDto music) {
+    public void setMusic(MusicDto music) {
         this.music = music;
     }
 
-    public List<MemberBasicDto> getMemberBasicDtoList() {
+    public List<MemberBasicDto> getMembers() {
         return members;
     }
 
-    public void setMemberBasicDtoList(List<MemberBasicDto> members) {
+    public void setMembers(List<MemberBasicDto> members) {
         this.members = members;
     }
 

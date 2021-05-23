@@ -15,27 +15,27 @@ public class BandDetailDto {
     private List<BandDetailMusicDto> band_musics;
     private int totalLikes;
 
-    public BandGetDto getBandGetDto() {
+    public BandGetDto getBand() {
         return band;
     }
 
-    public void setBandGetDto(BandGetDto band) {
+    public void setBand(BandGetDto band) {
         this.band = band;
     }
 
-    public List<MemberBasicDto> getMemberBasicDtoList() {
+    public List<MemberBasicDto> getMembers() {
         return members;
     }
 
-    public void setMemberBasicDtoList(List<MemberBasicDto> members) {
+    public void setMembers(List<MemberBasicDto> members) {
         this.members = members;
     }
 
-    public List<BandDetailMusicDto> getBandMusicDtoList() {
+    public List<BandDetailMusicDto> getBand_musics() {
         return band_musics;
     }
 
-    public void setBandMusicDtoList(List<BandDetailMusicDto> band_musics) {
+    public void setBand_musics(List<BandDetailMusicDto> band_musics) {
         this.band_musics = band_musics;
     }
 
