@@ -35,12 +35,12 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDetailDto getBand(int band_id) {
-
-
+    public BandDetailDto getBand(String bandname) {
         //BandGetDto 완성
-        Band band_ = bandDao.selectOne(band_id);
+        Band band_ = bandDao.selectBandByName(bandname);
         BandGetDto band = BandGetDto.of(band_);
+
+        int band_id = band.getBand_id();
         //Band의 멤버
         List<Member> members = bandDao.memberinBand(band_id);
         List<MemberBasicDto> memberBasicDtos = new ArrayList<MemberBasicDto>();
