@@ -40,10 +40,10 @@ public class BandController {
         }
     }
 
-    @GetMapping("/bands/{band_id}")
-    public ResponseEntity<BandDetailDto> getBands(@PathVariable int band_id) {
+   @GetMapping("/bands/{bandname}")
+    public ResponseEntity<BandDetailDto> getBands(@PathVariable String bandname) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(bandService.getBand(band_id));
+            return ResponseEntity.status(HttpStatus.OK).body(bandService.getBand(bandname));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -1,16 +1,18 @@
 package com.bandwith.domain;
 
 import com.bandwith.dto.member.MemberDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Member {
     private int member_id;
-    private String username;
+    private String username=null;
     private String pwd;
     private String name;
-    private byte[] profile_img;
+    private byte[] profile_img=null;
     private Timestamp reg_date;
     private String email;
 

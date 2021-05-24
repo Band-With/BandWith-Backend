@@ -3,17 +3,19 @@ package com.bandwith.dto.band;
 import com.bandwith.domain.BandMusic;
 import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.music.MusicDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BandDetailMusicDto {
 
     private int band_music_id;
     private Timestamp complete_date;
     private Boolean complete;
-    private MusicDto music;
-    private List<MemberBasicDto> members;
+    private MusicDto music=null;
+    private List<MemberBasicDto> members=null;
     private int likes;
     private int comments;
 
@@ -59,19 +61,19 @@ public class BandDetailMusicDto {
         this.complete = complete;
     }
 
-    public MusicDto getMusicDto() {
+    public MusicDto getMusic() {
         return music;
     }
 
-    public void setMusicDto(MusicDto music) {
+    public void setMusic(MusicDto music) {
         this.music = music;
     }
 
-    public List<MemberBasicDto> getMemberBasicDtoList() {
+    public List<MemberBasicDto> getMembers() {
         return members;
     }
 
-    public void setMemberBasicDtoList(List<MemberBasicDto> members) {
+    public void setMembers(List<MemberBasicDto> members) {
         this.members = members;
     }
 

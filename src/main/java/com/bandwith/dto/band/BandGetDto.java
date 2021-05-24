@@ -3,15 +3,17 @@ package com.bandwith.dto.band;
 import com.bandwith.domain.Band;
 import com.bandwith.domain.Music;
 import com.bandwith.dto.music.MusicDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Timestamp;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BandGetDto {
 
     private int band_id;
-    private String band_name;
-    private String img;
+    private String band_name=null;
+    private String img=null;
     private Timestamp created_at;
 
     public static BandGetDto of(Band band){

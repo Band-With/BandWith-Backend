@@ -4,7 +4,7 @@ import com.bandwith.domain.Record;
 
 
 public class RecordInsertDto {
-    private int musicId;
+    private int musicId ;
     private int memberId;
     private String username;
     private String instrument;

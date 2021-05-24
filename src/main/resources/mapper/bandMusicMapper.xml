@@ -15,8 +15,13 @@
     </select>
     <select id="getRecordMember" resultType="com.bandwith.domain.Member">
         SELECT *
-        FROM record_band_music
-        WHERE band_music_id = #{band_music_id}
+        FROM  member
+        WHERE member_id IN(
+            SELECT member_id
+            FROM record_band_music
+            WHERE band_music_id = #{band_music_id}
+        )
+
     </select>
 
 

@@ -1,12 +1,15 @@
 package com.bandwith.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.security.Timestamp;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Band {
     private int band_id;
-    private String band_name;
-    private byte[] img;
+    private String band_name=null;
+    private byte[] img=null;
     private Timestamp created_at;
 
     public Band() {

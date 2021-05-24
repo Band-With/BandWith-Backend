@@ -11,9 +11,11 @@ import java.util.List;
 
 
 import com.bandwith.domain.BandMusic;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Timestamp;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BandMusicDto {
     private int bandMusicId;
     private int bandId;
