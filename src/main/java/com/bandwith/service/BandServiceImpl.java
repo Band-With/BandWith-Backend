@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service("bandServiceBean")
-public class BandServiceImpl implements BandService {
+public class
+BandServiceImpl implements BandService {
 
     private BandDao bandDao;
     private LikeDao likeDao;

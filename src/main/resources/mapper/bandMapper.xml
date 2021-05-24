@@ -47,8 +47,12 @@
 
     <select id="memberinBand" resultType="com.bandwith.domain.Member">
         SELECT *
-        from member_band
-        WHERE band_id = #{band_id}
+        FROM  member
+        WHERE member_id IN(
+            SELECT member_id
+            from member_band
+            WHERE band_id = #{band_id}
+        )
     </select>
 
     <select id="searchUser" resultType="com.bandwith.domain.Member">
