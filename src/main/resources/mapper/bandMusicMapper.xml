@@ -10,7 +10,7 @@
     </insert>
 
     <select id="select" resultType="com.bandwith.domain.BandMusic">
-        SELECT * from band_music WHERE band_id = #{band_id}
+        SELECT * from band_music WHERE band_music_id = #{bandMusicId}
     </select>
 
 <!--    <select id="getBandMusicByBandId" resultType="com.bandwith.dto.record.RecordForBandDto">-->
