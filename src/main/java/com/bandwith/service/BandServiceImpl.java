@@ -83,8 +83,8 @@ public class BandServiceImpl implements BandService {
 
   
 
-        for(int i=0; i<members.size(); i++){
-           // BandMusic bandMusic, MusicDto musicDto, List<MemberBasicDto> memberBasicDtoList, int likes, int comments
+        for(int i=0; i<musics.size(); i++){
+           // BandMusic bandMusic, MusicDto musicDto, List<MemberBasicDto> membe    rBasicDtoList, int likes, int comments
             BandDetailMusicDto bandMusicDto = BandDetailMusicDto.of(bandMusicList.get(i), musics.get(i), recordMemberDtos.get(i), likes.get(i),comments.get(i));
             bandMusicDtoList.add(bandMusicDto);
         }
