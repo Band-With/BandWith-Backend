@@ -15,6 +15,11 @@
         ORDER BY created_at desc
     </select>
 
+    <select id="getBandMusicComments" resultType="com.bandwith.domain.Comment">
+        SELECT * from comment WHERE BAND_MUSIC_ID = #{bandMusicId}
+        ORDER BY created_at desc
+    </select>
+
     <insert id="insertComment">
         INSERT INTO comment (band_music_id, member_id, record_id, content)
         VALUES (#{bandMusicId}, #{memberId}, #{recordId}, #{content})

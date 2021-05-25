@@ -26,6 +26,10 @@ public class CommentDaoImpl implements CommentDao {
         return sqlSession.selectList("CommentMapper.getRecordComments", recordId);
     }
 
+    public List<Comment> getBandMusicComments(int bandMusicId) {
+        return sqlSession.selectList("CommentMapper.getBandMusicComments", bandMusicId);
+    }
+
     public void createComment(CommentCreateDto comment) {
         sqlSession.insert("CommentMapper.insertComment", comment);
     }

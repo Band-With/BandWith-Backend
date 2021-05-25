@@ -25,7 +25,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/bands/{band_id}/band_musics/{band_music_id}/comments")
+    @GetMapping("/bandmusics/{band_music_id}/comments")
     public ResponseEntity<List<CommentPageDto>> getBandMusicRecord (@PathVariable("band_music_id") int bandMusicId){
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getBandMusicComments(bandMusicId));
     }

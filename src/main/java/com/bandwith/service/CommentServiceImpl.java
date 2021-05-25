@@ -30,7 +30,17 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<CommentPageDto> getBandMusicComments(int bandMusicId) {
-        return null;
+        List<Comment> comments = commentDao.getBandMusicComments(bandMusicId);
+        List<CommentPageDto> commentPageDtoList = new ArrayList<>();
+
+        for(Comment comment: comments) {
+            Member member = memberDao.selectMember(comment.getMember_id());
+            MemberBasicDto memberDto = MemberBasicDto.of(member);
+            CommentDto commentDto = CommentDto.of(comment);
+            commentPageDtoList.add(new CommentPageDto(memberDto, commentDto));
+        }
+
+        return commentPageDtoList;
     }
 
     public List<CommentPageDto> getRecordComments(int recordId){
