@@ -1,16 +1,16 @@
 package com.bandwith.dto.comment;
 
 public class CommentCreateDto {
-    private int bandMusicId;
+    private Integer bandMusicId;
     private String username;
     private int memberId;
-    private int recordId;
+    private Integer recordId;
     private String content;
 
 
     public CommentCreateDto(){}
 
-    public CommentCreateDto(int bandMusicId, String username, int memberId, int recordId, String content) {
+    public CommentCreateDto(Integer bandMusicId, String username, int memberId, Integer recordId, String content) {
         this.bandMusicId = bandMusicId;
         this.username = username;
         this.memberId = memberId;
@@ -26,11 +26,11 @@ public class CommentCreateDto {
         this.memberId = memberId;
     }
 
-    public int getBandMusicId() {
+    public Integer getBandMusicId() {
         return bandMusicId;
     }
 
-    public void setBandMusicId(int bandMusicId) {
+    public void setBandMusicId(Integer bandMusicId) {
         this.bandMusicId = bandMusicId;
     }
 
@@ -42,11 +42,11 @@ public class CommentCreateDto {
         this.username = username;
     }
 
-    public int getRecordId() {
+    public Integer getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(Integer recordId) {
         this.recordId = recordId;
     }
 
