@@ -1,7 +1,9 @@
 package com.bandwith.domain;
 
-import java.sql.Timestamp;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.sql.Timestamp;
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BandMusic {
     private int bandMusicId;
     private int bandId;

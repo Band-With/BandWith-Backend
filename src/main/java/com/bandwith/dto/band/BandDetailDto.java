@@ -6,63 +6,53 @@ import com.bandwith.domain.Member;
 import com.bandwith.domain.Record;
 import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.record.RecordForBandDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BandDetailDto {
-    private int band_id;
-    private String band_name;
-    private byte[] img;
-    private List<Member> members;
-    private List<RecordForBandDto> records;
+    private BandGetDto band=null;
+    private List<MemberBasicDto> members=null;
+    private List<BandDetailMusicDto> band_musics=null;
+    private int totalLikes;
 
-
-    public BandDetailDto(Band band, List<Member> members, List<RecordForBandDto> records) {
-        this.band_id = band.getBand_id();
-        this.band_name = band.getBand_name();
-        this.img = band.getImg();
-        this.members = members;
-        this.records = records;
-
+    public BandGetDto getBand() {
+        return band;
     }
 
-    public int getBand_id() {
-        return band_id;
+    public void setBand(BandGetDto band) {
+        this.band = band;
     }
 
-    public void setBand_id(int band_id) {
-        this.band_id = band_id;
-    }
-
-    public String getBand_name() {
-        return band_name;
-    }
-
-    public void setBand_name(String band_name) {
-        this.band_name = band_name;
-    }
-
-    public byte[] getImg() {
-        return img;
-    }
-
-    public void setImg(byte[] img) {
-        this.img = img;
-    }
-
-    public List<Member> getMembers() {
+    public List<MemberBasicDto> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Member> members) {
+    public void setMembers(List<MemberBasicDto> members) {
         this.members = members;
     }
 
-    public List<RecordForBandDto> getRecords() {
-        return records;
+    public List<BandDetailMusicDto> getBand_musics() {
+        return band_musics;
     }
 
-    public void setRecords(List<RecordForBandDto> records) {
-        this.records = records;
+    public void setBand_musics(List<BandDetailMusicDto> band_musics) {
+        this.band_musics = band_musics;
+    }
+
+    public int getTotalLikes() {
+        return totalLikes;
+    }
+
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
+    }
+
+    public BandDetailDto(BandGetDto band, List<MemberBasicDto> members, List<BandDetailMusicDto> band_musics, int totalLikes) {
+        this.band = band;
+        this.members = members;
+        this.band_musics = band_musics;
+        this.totalLikes = totalLikes;
     }
 }

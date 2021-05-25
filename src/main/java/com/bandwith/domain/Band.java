@@ -1,17 +1,21 @@
 package com.bandwith.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.security.Timestamp;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Band {
     private int band_id;
-    private String band_name;
-    private byte[] img;
-    private Date created_at;
+    private String band_name=null;
+    private byte[] img=null;
+    private Timestamp created_at;
 
     public Band() {
     }
 
-    public Band(int band_id, String band_name, byte[] img, Date created_at) {
+    public Band(int band_id, String band_name, byte[] img, Timestamp created_at) {
         this.band_id = band_id;
         this.band_name = band_name;
         this.img = img;
@@ -42,11 +46,11 @@ public class Band {
         this.band_name = band_name;
     }
 
-    public Date getCreated_at() {
+    public Timestamp getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
 }

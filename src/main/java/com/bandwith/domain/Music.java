@@ -1,13 +1,15 @@
 package com.bandwith.domain;
 
 import com.bandwith.dto.music.MusicDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Music {
     private int music_id;
     private String title;
-    private String singer;
-    private String composer;
-    private byte[] profile_img;
+    private String singer=null;
+    private String composer=null;
+    private byte[] profile_img=null;
 
     public Music(int music_id, String title, String singer, String composer, byte[] profile_img) {
         this.music_id = music_id;

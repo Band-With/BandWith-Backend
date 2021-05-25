@@ -13,4 +13,7 @@ public interface CommentDao {
     void createComment(CommentCreateDto comment);
     void updateComment(HashMap<String, Object> params);
     void deleteComment(int commentId);
+
+
+    int bandMusicComments(int band_music_id);
 }

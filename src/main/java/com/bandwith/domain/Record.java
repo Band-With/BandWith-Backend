@@ -1,7 +1,10 @@
 package com.bandwith.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.sql.Timestamp;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Record {
 
     private int recordId;

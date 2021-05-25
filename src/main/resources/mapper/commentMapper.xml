@@ -7,7 +7,9 @@
     <select id="countComment" resultType="int">
         SELECT count(*) from comment WHERE RECORD_ID = #{record_id}
     </select>
-
+    <select id="bandMusicComment" resultType="int">
+        SELECT count(*) from comment WHERE BAND_MUSIC_ID = #{band_music_id}
+    </select>
     <select id="getRecordComments" resultType="com.bandwith.domain.Comment">
         SELECT * from comment WHERE RECORD_ID = #{record_id}
         ORDER BY created_at desc

@@ -37,4 +37,14 @@ public class CommentDaoImpl implements CommentDao {
     public void deleteComment(int commentId) {
         sqlSession.delete("CommentMapper.deleteComment", commentId);
     }
+
+    @Override
+    public int bandMusicComments(int band_music_id) {
+        if(sqlSession.selectOne("CommentMapper.bandMusicComment", band_music_id)!=null) {
+            return sqlSession.selectOne("CommentMapper.bandMusicComment", band_music_id);
+        }else{
+            return 0;
+        }
+    }
+
 }

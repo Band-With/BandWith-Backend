@@ -1,6 +1,7 @@
 package com.bandwith.dao;
 
 import com.bandwith.domain.Band;
+import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;
 import com.bandwith.domain.Record;
 import com.bandwith.dto.band.BandInsertDto;
@@ -20,4 +21,5 @@ public interface BandDao {
     List<Member> memberinBand(int band_id);
     List<Member> searchUser(int band_id);
     void invite(int member_id, int band_id);
+    List<BandMusic> selectBandMusics(int band_id);
 }

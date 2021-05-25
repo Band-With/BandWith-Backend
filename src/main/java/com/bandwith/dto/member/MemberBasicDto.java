@@ -28,6 +28,8 @@ public class MemberBasicDto {
                 photo = photo.substring(1);
             }
         }
+        System.out.println("fucking!"+member.getUsername());
+
         return new MemberBasicDto(member.getMember_id(), member.getUsername(), photo);
     }
 

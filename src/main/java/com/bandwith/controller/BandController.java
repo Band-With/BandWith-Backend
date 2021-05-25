@@ -3,6 +3,7 @@ package com.bandwith.controller;
 import com.bandwith.domain.Member;
 import com.bandwith.dto.band.BandDetailDto;
 import com.bandwith.dto.band.BandInsertDto;
+import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.service.BandService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +40,10 @@ public class BandController {
         }
     }
 
-    @GetMapping("/bands/{band_id}")
-    public ResponseEntity<BandDetailDto> getBands(@PathVariable int band_id) {
+   @GetMapping("/bands/{bandname}")
+    public ResponseEntity<BandDetailDto> getBands(@PathVariable String bandname) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(bandService.getBand(band_id));
+            return ResponseEntity.status(HttpStatus.OK).body(bandService.getBand(bandname));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -50,8 +51,8 @@ public class BandController {
     }
 
     @GetMapping("/members")
-    public ResponseEntity<List<Member>> searchMusic(@RequestParam(value = "member_id") int member_id) {
-        List<Member> memberBasicDtoList = bandService.searchUser(member_id);
+    public ResponseEntity<List<MemberBasicDto>> searchMusic(@RequestParam(value = "member_id") int member_id) {
+        List<MemberBasicDto> memberBasicDtoList = bandService.searchUser(member_id);
         return ResponseEntity.status(HttpStatus.CREATED).body(memberBasicDtoList);
     }
 

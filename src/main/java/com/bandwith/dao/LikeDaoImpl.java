@@ -22,6 +22,17 @@ public class LikeDaoImpl implements LikeDao{
     }
 
     @Override
+    public int bandMusicLike(int band_music_id) {
+        if(sqlSession.selectOne("LikeMapper.bandMusicLike", band_music_id)!=null){
+            return sqlSession.selectOne("LikeMapper.bandMusicLike", band_music_id);
+
+        }else{
+            return 0;
+        }
+
+    }
+
+    @Override
     public void insertLikeOnRecord(LikeOnRecordDto likeOnRecordDto) {
         sqlSession.insert("LikeMapper.insertLikeOnRecord", likeOnRecordDto);
     }
