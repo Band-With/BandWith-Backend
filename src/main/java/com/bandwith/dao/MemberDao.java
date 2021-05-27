@@ -13,5 +13,6 @@ public interface MemberDao {
     Member selectMemberWithUsername(String username);
     Member selectMember(int member_id);
     List<Member> selectMemberWithBookmark(int bookmark_id);
+    List<Member> selectMemberBandMusic(int bandMusicId);
     void deleteMember(String username);
 }

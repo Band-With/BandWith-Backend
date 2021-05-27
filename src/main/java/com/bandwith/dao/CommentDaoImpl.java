@@ -44,11 +44,7 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public int bandMusicComments(int band_music_id) {
-        if(sqlSession.selectOne("CommentMapper.bandMusicComment", band_music_id)!=null) {
-            return sqlSession.selectOne("CommentMapper.bandMusicComment", band_music_id);
-        }else{
-            return 0;
-        }
+        return sqlSession.selectOne("CommentMapper.bandMusicComment", band_music_id);
     }
 
 }

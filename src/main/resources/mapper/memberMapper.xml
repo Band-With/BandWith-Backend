@@ -29,6 +29,16 @@
         WHERE b.BOOKMARK_ID = #{bookmark_id}
     </select>
 
+
+    <select id="selectWithBandMusic" resultType="com.bandwith.domain.Member">
+        SELECT m.*
+        FROM record r
+            INNER JOIN (
+                SELECT record_id FROM RECORD_BAND_MUSIC WHERE band_music_id = #{bandMusicId}
+            ) rbm ON rbm.RECORD_ID = r.RECORD_ID
+            INNER JOIN member m ON m.MEMBER_ID = r.MEMBER_ID
+    </select>
+
     <select id="selectWithUsername" resultType="com.bandwith.domain.Member">
         SELECT * FROM member WHERE member.username = #{username}
     </select>

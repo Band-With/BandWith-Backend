@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("recordDaoBean")
 public class RecordDaoImpl implements RecordDao {
@@ -20,7 +21,12 @@ public class RecordDaoImpl implements RecordDao {
         this.sqlSession = sqlSession;
     }
 
-
+    public int countInstrument(int memberId, String instrument){
+        Map<String, Object> param = new HashMap<>();
+        param.put("memberId", memberId);
+        param.put("instrument", instrument);
+        return sqlSession.selectOne("RecordMapper.countInstrument", param);
+    }
 
     @Override
     public RecordNameDto getRecordName(int recordId) {

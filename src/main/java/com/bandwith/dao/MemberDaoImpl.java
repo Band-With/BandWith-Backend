@@ -53,6 +53,11 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public List<Member> selectMemberBandMusic(int bandMusicId) {
+        return sqlSession.selectList("MemberMapper.selectWithBandMusic", bandMusicId);
+    }
+
+    @Override
     public void deleteMember(String username) {
         sqlSession.delete("MemberMapper.deleteMember", username);
     }

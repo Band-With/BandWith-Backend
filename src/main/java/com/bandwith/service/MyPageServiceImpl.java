@@ -57,7 +57,13 @@ public class MyPageServiceImpl implements MyPageService {
         List<MemberBasicDto> followings = MemberBasicDto.of(followDao.getFollowings(memberId));
         List<MemberBasicDto> followers = MemberBasicDto.of(followDao.getFollowers(memberId));
 
-        return new MyPageDto(memberBasicDto, followings, followers, followerCount, followingCount, newBandsDto);
+        int piano = recordDao.countInstrument(memberId, "piano");
+        int elec = recordDao.countInstrument(memberId, "elec");
+        int base = recordDao.countInstrument(memberId, "base");
+        int sing = recordDao.countInstrument(memberId, "sing");
+        int drum = recordDao.countInstrument(memberId, "drum");
+
+        return new MyPageDto(memberBasicDto, followerCount, followingCount, piano, elec, base, sing, drum, followings, followers, newBandsDto);
     }
 
     public List<MusicDto> getMyRecord(String username, Boolean condition) {

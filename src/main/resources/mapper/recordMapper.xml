@@ -68,5 +68,9 @@
         WHERE record.music_id = #{music_id}
     </select>
 
-
+    <select id="countInstrument" resultType="int">
+        SELECT count(*)
+        FROM record
+        WHERE record.member_id = #{memberId} AND record.instrument = #{instrument}
+    </select>
 </mapper>

@@ -9,6 +9,13 @@ public class MyPageDto {
     private MemberBasicDto member;
     private int followerCount;
     private int followingCount;
+
+    private int piano;
+    private int elec;
+    private int base;
+    private int sing;
+    private int drum;
+
     private List<MemberBasicDto> followings;
     private List<MemberBasicDto> followers;
     private List<BandDto> bands;
@@ -16,13 +23,17 @@ public class MyPageDto {
 
     public MyPageDto(){}
 
-    public MyPageDto(MemberBasicDto member, List<MemberBasicDto> followings, List<MemberBasicDto> followers,
-                     int followerCount, int followingCount, List<BandDto> bands) {
+    public MyPageDto(MemberBasicDto member, int followerCount, int followingCount, int piano, int elec, int base, int sing, int drum, List<MemberBasicDto> followings, List<MemberBasicDto> followers, List<BandDto> bands) {
         this.member = member;
-        this.followings = followings;
-        this.followers = followers;
         this.followerCount = followerCount;
         this.followingCount = followingCount;
+        this.piano = piano;
+        this.elec = elec;
+        this.base = base;
+        this.sing = sing;
+        this.drum = drum;
+        this.followings = followings;
+        this.followers = followers;
         this.bands = bands;
     }
 
@@ -48,6 +59,46 @@ public class MyPageDto {
 
     public void setFollowingCount(int followingCount) {
         this.followingCount = followingCount;
+    }
+
+    public int getPiano() {
+        return piano;
+    }
+
+    public void setPiano(int piano) {
+        this.piano = piano;
+    }
+
+    public int getElec() {
+        return elec;
+    }
+
+    public void setElec(int elec) {
+        this.elec = elec;
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public void setBase(int base) {
+        this.base = base;
+    }
+
+    public int getSing() {
+        return sing;
+    }
+
+    public void setSing(int sing) {
+        this.sing = sing;
+    }
+
+    public int getDrum() {
+        return drum;
+    }
+
+    public void setDrum(int drum) {
+        this.drum = drum;
     }
 
     public List<BandDto> getBands() {

@@ -15,6 +15,8 @@ public interface RecordDao {
     void deleteRecord(int recordId);
     void updateAttributes(HashMap<String, Object> params);
 
+    int countInstrument(int memberId, String instrument);
+
     List<Record> selectRecordsById(int music_id);
     List<Record> selectRecordsByUserName(String username);
 
