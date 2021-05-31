@@ -24,13 +24,19 @@ public class BandMusicDaoImpl implements BandMusicDao {
         return sqlSession.insert("BandMusicMapper.insertBandMusic", bandMusicInsertDto);
     }
 
+    @Override
     public BandMusic select(int bandMusicId){
         return sqlSession.selectOne("BandMusicMapper.select", bandMusicId);
     }
 
+//    @Override
+//    public Music getMusic(int music_id) {
+//        return sqlSession.selectOne("BandMusicMapper.getMusic", music_id);
+//    }
+
     @Override
-    public Music getMusic(int music_id) {
-        return sqlSession.selectOne("BandMusicMapper.getMusic", music_id);
+    public void deleteBandMusic(int bandMusicId) {
+        sqlSession.delete("BandMusicMapper.deleteBandMusic", bandMusicId);
     }
 
     @Override

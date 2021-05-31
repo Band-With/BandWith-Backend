@@ -28,6 +28,7 @@ import java.util.List;
 public class
 BandServiceImpl implements BandService {
 
+    private MusicDao musicDao;
     private BandDao bandDao;
     private LikeDao likeDao;
     private BandMusicDao bandMusicDao;
@@ -35,7 +36,13 @@ BandServiceImpl implements BandService {
     private MemberDao memberDao;
 
     @Autowired
-    public BandServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao,@Qualifier("memberDaoBean") MemberDao memberDao, @Qualifier("likeDaoBean") LikeDao likeDao, @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao, @Qualifier("commentDaoBean") CommentDao commentDao) {
+    public BandServiceImpl(@Qualifier("musicDaoBean") MusicDao musicDao,
+                           @Qualifier("bandDaoBean") BandDao bandDao,
+                           @Qualifier("memberDaoBean") MemberDao memberDao,
+                           @Qualifier("likeDaoBean") LikeDao likeDao,
+                           @Qualifier("bandMusicDaoBean") BandMusicDao bandMusicDao,
+                           @Qualifier("commentDaoBean") CommentDao commentDao) {
+        this.musicDao = musicDao;
         this.bandDao = bandDao;
         this.likeDao = likeDao;
         this.bandMusicDao = bandMusicDao;
@@ -81,7 +88,7 @@ BandServiceImpl implements BandService {
         List<MusicDto> musics =  new ArrayList<MusicDto>();
         for(int i=0; i<bandMusicList.size(); i++){
             //밴드 뮤직 리스트 안의, i번째 밴드 뮤직에서 music ID를 가져와서 bandmusicdao.getmusic을 이용해 music table 검색
-            MusicDto musicDto = MusicDto.of(bandMusicDao.getMusic(bandMusicList.get(i).getMusicId()));
+            MusicDto musicDto = MusicDto.of(musicDao.selectMusic(bandMusicList.get(i).getMusicId()));
             musics.add(musicDto);
         }
         //BandMusic의 Dto만듬

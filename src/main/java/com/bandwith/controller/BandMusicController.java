@@ -23,6 +23,17 @@ public class BandMusicController {
         this.bandMusicService = bandMusicService;
     }
 
+    // 밴드 합주곡 가져오기
+    @GetMapping("/{band_music_id}")
+    public ResponseEntity<BandMusicDetailDto> getBandMusic(@PathVariable("band_music_id") int bandMusicId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusic(bandMusicId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     // 밴드 합주곡 처음 등록
     @PostMapping("")
     public ResponseEntity createBandMusic(@RequestBody String filterJSON) {
@@ -49,18 +60,6 @@ public class BandMusicController {
         }
     }
 
-
-
-    @GetMapping("/{band_music_id}")
-    public ResponseEntity<BandMusicDetailDto> getBandMusic(@PathVariable("band_music_id") int bandMusicId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusic(bandMusicId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-
     // TODO 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장하기
     @PostMapping("/{bandMusicId}")
     public ResponseEntity completeBandMusic() {
@@ -72,11 +71,12 @@ public class BandMusicController {
         }
     }
 
-    // TODO 밴드 합주곡 삭제
+    // 밴드 합주곡 삭제
     @DeleteMapping("/{bandMusicId}")
-    public ResponseEntity deleteBandMusic() {
+    public ResponseEntity deleteBandMusic(@PathVariable int bandMusicId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            bandMusicService.deleteBandMusic(bandMusicId);
+            return ResponseEntity.status(HttpStatus.OK).body("deletion complete");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());

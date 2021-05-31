@@ -44,9 +44,10 @@ public class BandMusicServiceImpl implements BandMusicService {
         Band band = bandDao.selectBandByName(bandMusicInsertDto.getBandName());
         bandMusicInsertDto.setBandId(band.getBand_id());
         bandMusicDao.insertBandMusic(bandMusicInsertDto);
-        System.out.println("complete insert band music");
+        System.out.println("Band Music Insertion Completed");
     }
 
+    @Override
     public BandMusicDetailDto getBandMusic(int bandMusicId){
         BandMusic bandMusic = bandMusicDao.select(bandMusicId);
         List<Member> members = memberDao.selectMemberBandMusic(bandMusicId);
@@ -58,5 +59,11 @@ public class BandMusicServiceImpl implements BandMusicService {
         int comments = commentDao.bandMusicComments(bandMusicId);
 
         return BandMusicDetailDto.of(bandMusic, likes, comments, music, members);
+    }
+
+    @Override
+    public void deleteBandMusic(int bandMusicId) {
+        bandMusicDao.deleteBandMusic(bandMusicId);
+        System.out.println("Band Music Deletion Completed");
     }
 }
