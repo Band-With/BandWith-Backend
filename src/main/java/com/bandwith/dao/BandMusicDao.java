@@ -12,4 +12,6 @@ public interface BandMusicDao {
     BandMusic select(int bandMusicId);
     Music getMusic(int music_id);
     List<Member> recordMember(int band_music_id);
+    List<BandMusic> searchBandMusicTitle(String title);
+    List<BandMusic> searchBandMusicLike(String title);
 }

@@ -29,7 +29,23 @@
         SELECT * from band_music WHERE band_music_id = #{bandMusicId}
     </select>
 
-<!--    <select id="getBandMusicByBandId" resultType="com.bandwith.dto.record.RecordForBandDto">-->
-<!--        SELECT * from band_music WHERE band_id = #{band_id}-->
-<!--    </select>-->
+    <!--  SEARCH  -->
+    <select id="selectBandMusicTitle" resultType="com.bandwith.domain.BandMusic">
+        SELECT *
+        FROM band_music bm
+        WHERE (
+            SELECT m.title
+            FROM music m
+            WHERE m.music_id = bm.music_id AND bm.complete = true
+        ) LIKE '%${title}%'
+    </select>
+    <select id="selectBandMusicLike" resultType="com.bandwith.domain.BandMusic">
+        SELECT bm.*, count(*)+1 cnt
+        FROM band_music bm
+            INNER JOIN music m ON bm.music_id = m.music_id
+            INNER JOIN likes l ON bm.band_music_id = l.band_music_id
+        WHERE bm.complete = true AND m.title LIKE '%${title}%'
+        GROUP BY bm.band_music_id
+        ORDER BY cnt DESC
+    </select>
 </mapper>

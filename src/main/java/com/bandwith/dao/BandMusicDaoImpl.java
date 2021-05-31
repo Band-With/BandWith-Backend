@@ -37,4 +37,12 @@ public class BandMusicDaoImpl implements BandMusicDao {
     public List<Member> recordMember(int band_music_id) {
         return sqlSession.selectList("BandMusicMapper.getRecordMember", band_music_id);
     }
+
+    public List<BandMusic> searchBandMusicTitle(String title) {
+        return sqlSession.selectList("BandMusicMapper.selectBandMusicTitle", title);
+    }
+
+    public List<BandMusic> searchBandMusicLike(String title) {
+        return sqlSession.selectList("BandMusicMapper.selectBandMusicLike", title);
+    }
 }
