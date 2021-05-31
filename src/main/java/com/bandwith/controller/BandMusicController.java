@@ -1,8 +1,11 @@
 package com.bandwith.controller;
 
-import com.bandwith.dto.band.BandMusicDetailDto;
-import com.bandwith.dto.band.BandMusicInsertDto;
+import com.bandwith.dto.bandMusic.BandMusicDetailDto;
+import com.bandwith.dto.bandMusic.BandMusicInsertDto;
+import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
+import com.bandwith.service.AudioService;
 import com.bandwith.service.BandMusicService;
+import com.bandwith.service.S3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,10 +20,13 @@ import org.springframework.web.bind.annotation.*;
 public class BandMusicController {
 
     private BandMusicService bandMusicService;
+    private S3Service s3Service;
 
     @Autowired
-    public BandMusicController(@Qualifier("bandMusicServiceBean") BandMusicService bandMusicService){
+    public BandMusicController(@Qualifier("bandMusicServiceBean") BandMusicService bandMusicService,
+                               @Qualifier("s3Service") S3Service s3Service) {
         this.bandMusicService = bandMusicService;
+        this.s3Service = s3Service;
     }
 
     // 밴드 합주곡 가져오기
@@ -46,7 +52,7 @@ public class BandMusicController {
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -56,18 +62,28 @@ public class BandMusicController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    // TODO 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장하기
+    // 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장하기
     @PostMapping("/{bandMusicId}")
-    public ResponseEntity completeBandMusic() {
+    public ResponseEntity completeBandMusic(@PathVariable int bandMusicId) {
         try {
+            System.out.println(bandMusicService.getRecordUrls(bandMusicId));
+            byte[] bandMusic = AudioService.mixAudioFiles(bandMusicService.getRecordUrls(bandMusicId));
+
+            String uploadPath = "bandmusics/";
+            String[] fileInfo = s3Service.uploadFile(uploadPath, "bandmusic" + bandMusicId, bandMusic); // {uuid, fileName, key}
+            String url = s3Service.getFileURL(fileInfo[2]);
+
+            BandMusicUpdateDto bandMusicUpdateDto = new BandMusicUpdateDto(bandMusicId, true, fileInfo[0], fileInfo[1], url);
+            bandMusicService.updateComplete(bandMusicUpdateDto);
+
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -76,10 +92,10 @@ public class BandMusicController {
     public ResponseEntity deleteBandMusic(@PathVariable int bandMusicId) {
         try {
             bandMusicService.deleteBandMusic(bandMusicId);
-            return ResponseEntity.status(HttpStatus.OK).body("deletion complete");
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

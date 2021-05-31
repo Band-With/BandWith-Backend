@@ -2,8 +2,9 @@ package com.bandwith.dao;
 
 import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;
-import com.bandwith.domain.Music;
-import com.bandwith.dto.band.BandMusicInsertDto;
+import com.bandwith.domain.RecordBandMusic;
+import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
+import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,10 +30,20 @@ public class BandMusicDaoImpl implements BandMusicDao {
         return sqlSession.selectOne("BandMusicMapper.select", bandMusicId);
     }
 
+    @Override
+    public List<Integer> selectRecordBandMusic(int bandMusicId) {
+        return sqlSession.selectList("BandMusicMapper.selectRecordBandMusic", bandMusicId);
+    }
+
 //    @Override
 //    public Music getMusic(int music_id) {
 //        return sqlSession.selectOne("BandMusicMapper.getMusic", music_id);
 //    }
+
+    @Override
+    public void updateComplete(BandMusicUpdateDto bandMusicUpdateDto) {
+        sqlSession.update("BandMusicMapper.updateComplete", bandMusicUpdateDto);
+    }
 
     @Override
     public void deleteBandMusic(int bandMusicId) {

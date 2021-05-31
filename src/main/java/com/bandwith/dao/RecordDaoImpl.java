@@ -21,26 +21,26 @@ public class RecordDaoImpl implements RecordDao {
         this.sqlSession = sqlSession;
     }
 
-    public int countInstrument(int memberId, String instrument){
-        Map<String, Object> param = new HashMap<>();
-        param.put("memberId", memberId);
-        param.put("instrument", instrument);
-        return sqlSession.selectOne("RecordMapper.countInstrument", param);
-    }
-
     @Override
     public RecordNameDto getRecordName(int recordId) {
         return sqlSession.selectOne("RecordMapper.getRecordName", recordId);
     }
 
     @Override
-    public void insertRecord(RecordInsertDto recordDto) {
-        sqlSession.insert("RecordMapper.insertRecord", recordDto);
+    public List<Record> selectRecordsById(int music_id) {
+        return sqlSession.selectList("RecordMapper.selectByMusicId", music_id);
     }
 
     @Override
-    public void deleteRecord(int recordId) {
-        sqlSession.delete("RecordMapper.deleteRecord", recordId);
+    public List<String> selectRecordUrlsByIdList(List<Integer> recordIdList) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("recordIdList", recordIdList);
+        return sqlSession.selectList("RecordMapper.selectRecordUrlsByIdList", param);
+    }
+
+    @Override
+    public List<Record> selectRecordsByUserName(String username) {
+        return sqlSession.selectList("RecordMapper.selectRecords", username);
     }
 
     @Override
@@ -54,19 +54,25 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public void updateAttributes(HashMap<String, Object> params){
+    public void insertRecord(RecordInsertDto recordDto) {
+        sqlSession.insert("RecordMapper.insertRecord", recordDto);
+    }
+
+    @Override
+    public void deleteRecord(int recordId) {
+        sqlSession.delete("RecordMapper.deleteRecord", recordId);
+    }
+
+    @Override
+    public void updateAttributes(HashMap<String, Object> params) {
         sqlSession.update("RecordMapper.updateAttributes", params);
     }
 
     @Override
-    public List<Record> selectRecordsById(int music_id) {
-        List<Record> list = sqlSession.selectList("RecordMapper.selectByMusicId", music_id);
-
-        return list;
+    public int countInstrument(int memberId, String instrument) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("memberId", memberId);
+        param.put("instrument", instrument);
+        return sqlSession.selectOne("RecordMapper.countInstrument", param);
     }
-    @Override
-    public List<Record> selectRecordsByUserName(String username) {
-        return sqlSession.selectList("RecordMapper.selectRecords", username);
-    }
-
 }
