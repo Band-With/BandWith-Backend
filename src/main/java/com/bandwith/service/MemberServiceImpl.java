@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -16,13 +17,16 @@ import java.util.Random;
 @Service("memberServiceBean")
 public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
-    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao) {
+    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao,
+                             PasswordEncoder passwordEncoder) {
         this.memberDao = memberDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void signUp(MemberDto newMember) {
@@ -35,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
         Member loginMember = memberDao.login(member);
 
         MemberDto loginMemberDto = null;
-        if(loginMember != null)
+        if(loginMember != null && passwordEncoder.matches(member.getPwd(), loginMember.getPwd()))
             loginMemberDto = MemberDto.of(loginMember);
         return loginMemberDto;
     }

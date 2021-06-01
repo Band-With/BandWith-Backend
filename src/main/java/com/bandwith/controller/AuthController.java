@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,10 +33,13 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
     private MemberService memberService;
     private HttpSession session;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(@Qualifier("memberServiceBean") MemberService memberService){
+    public AuthController(@Qualifier("memberServiceBean") MemberService memberService,
+                          PasswordEncoder passwordEncoder){
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(value = "/auth/rsa", method = RequestMethod.GET)
@@ -49,7 +53,6 @@ public class AuthController {
 
         if(this.session.getAttribute("RSA_PUBLIC_KEY") != null) {
             publicKey = (PublicKey) this.session.getAttribute("RSA_PUBLIC_KEY");
-            System.out.println("??!!?!?!?!");
         }
 	    else {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
@@ -75,6 +78,11 @@ public class AuthController {
     public ResponseEntity<String> signUp(@RequestBody String filterJSON) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         MemberDto newMember = mapper.readValue(filterJSON, MemberDto.class);
+        String rawPwd;
+
+        rawPwd = newMember.getPwd();
+        newMember.setPwd(passwordEncoder.encode(rawPwd));
+
         memberService.signUp(newMember);
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
@@ -113,20 +121,15 @@ public class AuthController {
         String uid = memberDto.getUsername();
         String pwd = memberDto.getPwd();
 
-        System.out.println(uid);
-        System.out.println(pwd);
-
         PrivateKey privateKey = (PrivateKey) this.session.getAttribute("RSA_PRIVATE_KEY");
-        System.out.println(privateKey);
         //암호화처리된 사용자계정정보를 복호화 처리한다.
         String _uid = decryptRsa(privateKey, uid);
         String _pwd = decryptRsa(privateKey, pwd);
 
-        System.out.println(_uid);
-        System.out.println(_pwd);
-
         memberDto.setUsername(_uid);
         memberDto.setPwd(_pwd);
+
+        System.out.println(passwordEncoder.encode(_pwd));
 
         MemberDto loginMember = memberService.signIn(memberDto);
 

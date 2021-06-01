@@ -10,7 +10,7 @@
     </insert>
 
     <select id="login" resultType="com.bandwith.domain.Member">
-        SELECT * from member WHERE USERNAME = #{username} AND PWD = #{pwd}
+        SELECT * from member WHERE USERNAME = #{username}
     </select>
 
     <select id="countFollower" resultType="int">
