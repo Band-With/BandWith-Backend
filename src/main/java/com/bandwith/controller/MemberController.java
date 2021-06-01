@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/members/{username}")
 public class MemberController {

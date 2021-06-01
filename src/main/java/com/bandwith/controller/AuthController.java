@@ -24,15 +24,14 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class AuthController {
     private MemberService memberService;
-    private HttpSession session;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -43,16 +42,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/auth/rsa", method = RequestMethod.GET)
-    public List<String> mainLogout(HttpSession session, HttpServletResponse response ) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        if(this.session == null)
-            this.session = session;
-
+    public List<String> sendRSAPublicKey(HttpSession session, HttpServletResponse response ) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         List<String> publicKeyList = new ArrayList<>();
         PublicKey publicKey;
 
-        if(this.session.getAttribute("RSA_PUBLIC_KEY") != null) {
-            publicKey = (PublicKey) this.session.getAttribute("RSA_PUBLIC_KEY");
+        if(session.getAttribute("RSA_PUBLIC_KEY") != null) {
+            publicKey = (PublicKey) session.getAttribute("RSA_PUBLIC_KEY");
         }
 	    else {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
@@ -61,8 +57,8 @@ public class AuthController {
             publicKey = keyPair.getPublic();
             PrivateKey privateKey = keyPair.getPrivate();
 
-            this.session.setAttribute("RSA_PRIVATE_KEY", privateKey);   //세션에 RSA 개인키를 세션에 저장한다.
-            this.session.setAttribute("RSA_PUBLIC_KEY", publicKey);
+            session.setAttribute("RSA_PRIVATE_KEY", privateKey);   //세션에 RSA 개인키를 세션에 저장한다.
+            session.setAttribute("RSA_PUBLIC_KEY", publicKey);
         }
         RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
         String publicKeyModulus = publicSpec.getModulus().toString(16);
@@ -75,13 +71,22 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public ResponseEntity<String> signUp(@RequestBody String filterJSON) throws JsonProcessingException {
+    public ResponseEntity<String> signUp(@RequestBody String filterJSON,
+                                         HttpSession session) throws JsonProcessingException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
         ObjectMapper mapper = new ObjectMapper();
         MemberDto newMember = mapper.readValue(filterJSON, MemberDto.class);
-        String rawPwd;
 
-        rawPwd = newMember.getPwd();
-        newMember.setPwd(passwordEncoder.encode(rawPwd));
+        String uid = newMember.getUsername();
+        String pwd = newMember.getPwd();
+
+        PrivateKey privateKey = (PrivateKey) session.getAttribute("RSA_PRIVATE_KEY");
+
+        //암호화처리된 사용자계정정보를 복호화 처리한다.
+        String _uid = decryptRsa(privateKey, uid);
+        String _pwd = decryptRsa(privateKey, pwd);
+
+        newMember.setUsername(_uid);
+        newMember.setPwd(passwordEncoder.encode(_pwd));
 
         memberService.signUp(newMember);
         return ResponseEntity.status(HttpStatus.CREATED).body("");
@@ -113,23 +118,21 @@ public class AuthController {
 
 
     @PostMapping("/auth/signin")
-    public ResponseEntity<MemberDto> signIn(@RequestBody String filterJSON) throws JsonProcessingException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+    public ResponseEntity<MemberDto> signIn(@RequestBody String filterJSON,
+                                            HttpSession session) throws JsonProcessingException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
         ObjectMapper mapper = new ObjectMapper();
         MemberDto memberDto = mapper.readValue(filterJSON, MemberDto.class);
-
 
         String uid = memberDto.getUsername();
         String pwd = memberDto.getPwd();
 
-        PrivateKey privateKey = (PrivateKey) this.session.getAttribute("RSA_PRIVATE_KEY");
+        PrivateKey privateKey = (PrivateKey)session.getAttribute("RSA_PRIVATE_KEY");
         //암호화처리된 사용자계정정보를 복호화 처리한다.
         String _uid = decryptRsa(privateKey, uid);
         String _pwd = decryptRsa(privateKey, pwd);
 
         memberDto.setUsername(_uid);
         memberDto.setPwd(_pwd);
-
-        System.out.println(passwordEncoder.encode(_pwd));
 
         MemberDto loginMember = memberService.signIn(memberDto);
 
@@ -141,20 +144,20 @@ public class AuthController {
 
     @PostMapping("/auth/getCode")
     @ResponseBody
-    public ResponseEntity<?> sendCode(@RequestBody JSONObject filterJSON, HttpSession session) {
-        if(this.session == null)
-            this.session = session;
+    public ResponseEntity<?> sendCode(@RequestBody JSONObject filterJSON,
+                                      HttpSession session) {
         String mail = (String)filterJSON.get("mail");
-        memberService.sendMail(mail, this.session);
+        String key = memberService.sendMail(mail);
+
+        session.setAttribute(mail, key);
 
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
     @PostMapping("/auth/checkCode")
     @ResponseBody
-    public ResponseEntity<?> checkCode(@RequestBody JSONObject filterJSON){
-        HttpSession session = this.session;
-
+    public ResponseEntity<?> checkCode(@RequestBody JSONObject filterJSON,
+                                       HttpSession session){
         String mail = (String)filterJSON.get("mail");
         String code = (String)filterJSON.get("code");
 
