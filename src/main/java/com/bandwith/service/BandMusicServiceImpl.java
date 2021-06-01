@@ -2,9 +2,11 @@ package com.bandwith.service;
 
 import com.bandwith.dao.*;
 import com.bandwith.domain.*;
+import com.bandwith.domain.Record;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
 import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
+import com.bandwith.dto.bandMusic.RecordBandMusicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class BandMusicServiceImpl implements BandMusicService {
     }
 
     @Override
-    public void createBandMusic(BandMusicInsertDto bandMusicInsertDto) {
+    public void insertBandMusic(BandMusicInsertDto bandMusicInsertDto) {
         Band band = bandDao.selectBandByName(bandMusicInsertDto.getBandName());
         bandMusicInsertDto.setBandId(band.getBand_id());
         bandMusicDao.insertBandMusic(bandMusicInsertDto);
@@ -70,6 +72,14 @@ public class BandMusicServiceImpl implements BandMusicService {
             throw new Exception("There should be at least two recordings registered for band music.");
 
         return recordDao.selectRecordUrlsByIdList(recordIdList);
+    }
+
+    @Override
+    public void insertRecordBandMusic(int bandMusicId, int recordId) {
+        Record record = recordDao.selectRecord(recordId);
+        RecordBandMusicDto recordBandMusicDto = new RecordBandMusicDto(bandMusicId, recordId, record.getMusicId(), record.getMemberId());
+
+        bandMusicDao.insertRecordBandMusic(recordBandMusicDto);
     }
 
     @Override

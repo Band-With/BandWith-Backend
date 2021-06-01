@@ -22,6 +22,11 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
+    public Record selectRecord(int recordId) {
+        return sqlSession.selectOne("RecordMapper.select", recordId);
+    }
+
+    @Override
     public RecordNameDto getRecordName(int recordId) {
         return sqlSession.selectOne("RecordMapper.getRecordName", recordId);
     }

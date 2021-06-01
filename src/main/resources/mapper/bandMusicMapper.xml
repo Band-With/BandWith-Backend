@@ -21,6 +21,11 @@
         VALUES (#{bandId}, #{musicId})
     </insert>
 
+    <insert id="insertRecordBandMusic">
+        INSERT INTO record_band_music (band_music_id, record_id, music_id, member_id)
+        VALUES (#{bandMusicId}, #{recordId}, #{musicId}, #{memberId})
+    </insert>
+
     <!--    <select id="getMusic" resultType="com.bandwith.domain.Music">-->
     <!--        SELECT *-->
     <!--        FROM music-->

@@ -7,6 +7,7 @@ import com.bandwith.service.AudioService;
 import com.bandwith.service.BandMusicService;
 import com.bandwith.service.S3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -42,35 +43,37 @@ public class BandMusicController {
 
     // 밴드 합주곡 처음 등록
     @PostMapping("")
-    public ResponseEntity createBandMusic(@RequestBody String filterJSON) {
+    public ResponseEntity insertBandMusic(@RequestBody String filterJSON) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             BandMusicInsertDto bandMusicInsertDto = mapper.readValue(filterJSON, BandMusicInsertDto.class);
 
-            bandMusicService.createBandMusic(bandMusicInsertDto);
+            bandMusicService.insertBandMusic(bandMusicInsertDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body("Insert Band Music");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    // TODO 밴드 합주곡에 대해 각자의 녹음 등록
+    // 밴드 합주곡에 대해 각자의 녹음 등록
     @PostMapping("/{bandMusicId}/records")
-    public ResponseEntity addBandMusicRecord() {
+    public ResponseEntity addBandMusicRecord(@PathVariable int bandMusicId, @RequestBody JSONObject filterJSON) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            int recordId = (int)filterJSON.get("recordId");
+            bandMusicService.insertRecordBandMusic(bandMusicId, recordId);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Add Record to Band Music");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    // 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장하기
+    // 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장
     @PostMapping("/{bandMusicId}")
     public ResponseEntity completeBandMusic(@PathVariable int bandMusicId) {
         try {
-            System.out.println(bandMusicService.getRecordUrls(bandMusicId));
             byte[] bandMusic = AudioService.mixAudioFiles(bandMusicService.getRecordUrls(bandMusicId));
 
             String uploadPath = "bandmusics/";
@@ -80,7 +83,7 @@ public class BandMusicController {
             BandMusicUpdateDto bandMusicUpdateDto = new BandMusicUpdateDto(bandMusicId, true, fileInfo[0], fileInfo[1], url);
             bandMusicService.updateComplete(bandMusicUpdateDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body("Complete Band Music");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -92,7 +95,7 @@ public class BandMusicController {
     public ResponseEntity deleteBandMusic(@PathVariable int bandMusicId) {
         try {
             bandMusicService.deleteBandMusic(bandMusicId);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body("Delete Band Music");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

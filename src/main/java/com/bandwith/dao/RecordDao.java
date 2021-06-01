@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface RecordDao {
+    Record selectRecord(int recordId);
     List<String> selectRecordUrlsByIdList(List<Integer> recordIdList);
     List<Record> selectRecordsByMusicId(HashMap<String, Object> params);
     List<Record> selectRecordsByFilter(HashMap<String, Object> params);
