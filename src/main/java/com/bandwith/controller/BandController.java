@@ -40,10 +40,21 @@ public class BandController {
         }
     }
 
-   @GetMapping("/bands/{bandname}")
+    @GetMapping("/bands/{bandname}")
     public ResponseEntity<BandDetailDto> getBands(@PathVariable String bandname) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(bandService.getBand(bandname));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/bands/{bandname}/members/{username}")
+    public ResponseEntity leaveBand(@PathVariable("bandname") String bandName, @PathVariable String username) {
+        try {
+            bandService.leaveBand(bandName, username);
+            return ResponseEntity.ok("");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

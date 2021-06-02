@@ -142,5 +142,7 @@ BandServiceImpl implements BandService {
         bandDao.invite(member_id, band_id);
     }
 
-
+    public void leaveBand(String bandName, String username){
+        bandDao.deleteMember(bandName, username);
+    }
 }

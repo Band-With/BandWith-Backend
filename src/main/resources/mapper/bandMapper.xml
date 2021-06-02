@@ -70,7 +70,13 @@
         SELECT * from band_music WHERE band_id = #{band_id}
     </select>
 
-
-
-
+    <delete id="deleteMember">
+        DELETE FROM member_band mb
+        WHERE mb.member_id = (
+                SELECT member_id FROM member m WHERE m.username = #{username}
+            ) AND
+              mb.band_id = (
+                SELECT band_id FROM band b WHERE b.band_name = #{bandName}
+            )
+    </delete>
 </mapper>

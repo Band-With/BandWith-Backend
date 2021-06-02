@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("bandDaoBean")
 public class BandDaoImpl implements BandDao {
@@ -72,5 +74,14 @@ public class BandDaoImpl implements BandDao {
     @Override
     public List<BandMusic> selectBandMusics(int band_id) {
         return sqlSession.selectList("BandMapper.selectBandMusics", band_id);
+    }
+
+    @Override
+    public void deleteMember(String bandName, String username) {
+        Map<String, String> params = new HashMap<>();
+        params.put("bandName", bandName);
+        params.put("username", username);
+
+        sqlSession.delete("BandMapper.deleteMember", params);
     }
 }
