@@ -7,10 +7,16 @@
     <select id="countLike" resultType="int">
         SELECT count(*) FROM likes WHERE RECORD_ID = #{record_id}
     </select>
-
+    <select id="searchByMemberID" resultType="int">
+        SELECT count(*)
+        FROM likes b
+                 INNER JOIN record rb ON b.record_id = rb.record_id
+        WHERE rb.member_id = #{member_id}
+    </select>
     <select id="bandMusicLike" resultType="int">
         SELECT count(*) FROM likes WHERE band_music_id = #{band_music_id}
     </select>
+
     <insert id="insertLikeOnRecord">
         INSERT INTO likes (member_id, record_id, band_music_id)
         VALUES (#{memberId}, #{recordId}, null)

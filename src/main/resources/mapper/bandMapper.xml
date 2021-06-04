@@ -70,7 +70,10 @@
         SELECT * from band_music WHERE band_id = #{band_id}
     </select>
 
-
+    <select id="bandList" resultType="com.bandwith.domain.Band">
+        SELECT *
+        from band
+    </select>
 
 
 </mapper>
