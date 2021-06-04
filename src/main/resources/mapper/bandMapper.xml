@@ -79,4 +79,9 @@
                 SELECT band_id FROM band b WHERE b.band_name = #{bandName}
             )
     </delete>
+    <select id="bandList" resultType="com.bandwith.domain.Band">
+        SELECT *
+        from band
+    </select>
+
 </mapper>
