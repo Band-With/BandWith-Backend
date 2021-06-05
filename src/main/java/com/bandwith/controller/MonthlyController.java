@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class MonthlyController {
     private ScheduledService scheduledService;
