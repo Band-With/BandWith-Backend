@@ -4,32 +4,53 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BandMusicMapper">
+    <select id="select" resultType="com.bandwith.domain.BandMusic">
+        SELECT *
+        FROM band_music
+        WHERE band_music_id = #{bandMusicId}
+    </select>
+
+    <select id="selectRecordBandMusic" resultType="Integer">
+        SELECT record_id
+        FROM record_band_music
+        WHERE band_music_id = #{bandMusicId}
+    </select>
+
     <insert id="insertBandMusic">
         INSERT INTO band_music (band_id, music_id)
         VALUES (#{bandId}, #{musicId})
     </insert>
-    <select id="getMusic" resultType="com.bandwith.domain.Music">
-        SELECT *
-        FROM music
-        WHERE music_id = #{music_id}
-    </select>
+
+    <insert id="insertRecordBandMusic">
+        INSERT INTO record_band_music (band_music_id, record_id, music_id, member_id)
+        VALUES (#{bandMusicId}, #{recordId}, #{musicId}, #{memberId})
+    </insert>
+
+    <!--    <select id="getMusic" resultType="com.bandwith.domain.Music">-->
+    <!--        SELECT *-->
+    <!--        FROM music-->
+    <!--        WHERE music_id = #{music_id}-->
+    <!--    </select>-->
+
+    <update id="updateComplete">
+        UPDATE band_music
+        SET complete = true, complete_date = now(), uuid = #{uuid}, file_name = #{fileName}, file_url = #{fileUrl}
+        WHERE band_music_id = #{bandMusicId}
+    </update>
+
+    <delete id="deleteBandMusic">
+        DELETE
+        FROM band_music
+        WHERE band_music_id = #{bandMusicId}
+    </delete>
+
     <select id="getRecordMember" resultType="com.bandwith.domain.Member">
         SELECT *
-        FROM  member
-        WHERE member_id IN(
+        FROM member
+        WHERE member_id IN (
             SELECT member_id
             FROM record_band_music
             WHERE band_music_id = #{band_music_id}
         )
-
     </select>
-
-
-    <select id="select" resultType="com.bandwith.domain.BandMusic">
-        SELECT * from band_music WHERE band_music_id = #{bandMusicId}
-    </select>
-
-<!--    <select id="getBandMusicByBandId" resultType="com.bandwith.dto.record.RecordForBandDto">-->
-<!--        SELECT * from band_music WHERE band_id = #{band_id}-->
-<!--    </select>-->
 </mapper>

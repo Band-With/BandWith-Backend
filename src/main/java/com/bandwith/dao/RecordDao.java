@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface RecordDao {
+    Record selectRecord(int recordId);
+    List<String> selectRecordUrlsByIdList(List<Integer> recordIdList);
     List<Record> selectRecordsByMusicId(HashMap<String, Object> params);
     List<Record> selectRecordsByFilter(HashMap<String, Object> params);
     RecordNameDto getRecordName(int recordId);
@@ -19,5 +21,4 @@ public interface RecordDao {
 
     List<Record> selectRecordsById(int music_id);
     List<Record> selectRecordsByUserName(String username);
-
 }

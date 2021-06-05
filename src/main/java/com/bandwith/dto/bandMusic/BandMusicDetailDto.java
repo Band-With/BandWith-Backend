@@ -1,4 +1,4 @@
-package com.bandwith.dto.band;
+package com.bandwith.dto.bandMusic;
 
 import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;

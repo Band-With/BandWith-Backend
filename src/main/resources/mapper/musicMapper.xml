@@ -10,13 +10,6 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
-    <select id="getMusicById" resultType="com.bandwith.domain.Music">
-        SELECT *
-        FROM music
-        WHERE music.music_id = #{musicId}
-    </select>
-
-
     <!--  SEARCH  -->
     <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
         SELECT *
