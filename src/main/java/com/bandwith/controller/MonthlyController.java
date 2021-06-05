@@ -26,7 +26,7 @@ public class MonthlyController {
         this.scheduledService = scheduledService;
     }
 
-/*
+
     @GetMapping("/monthlyBand")
     public List<BandMontlyDto> monthlyBand(){
         return scheduledService.getBandResult();
@@ -34,7 +34,7 @@ public class MonthlyController {
 
     @GetMapping("/monthlyMember")
     public List<MemberMonthlyDto> monthlyMember(){
+        return scheduledService.getMemberResult();
     }
-*/
 }
 
