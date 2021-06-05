@@ -31,7 +31,7 @@ import java.util.*;
 @EnableScheduling
 @Service("scheduledService")
 public class ScheduledService{
-
+/*
     LikeDao likeDao;
     List<BandMontlyDto> bandResult;
     List<MemberMonthlyDto> memberResult;
@@ -112,5 +112,5 @@ public class ScheduledService{
         monthlyBand();
         monthlyMember();
     }
-
+*/
 }
