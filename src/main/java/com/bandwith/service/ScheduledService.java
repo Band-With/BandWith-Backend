@@ -69,7 +69,7 @@ public class ScheduledService{
         }
     }
     //@Scheduled(cron = "0 0 0 1 * *") 매월 1일 0시
-    @Scheduled(fixedDelay=10000) //10초마다 수정
+    @Scheduled(cron = "0 0 0/9 * * *") //10초마다 수정
     public List<BandMontlyDto> monthlyBand() {
         List<BandMontlyDto> list=likeDao.monthlyBand();
         Collections.sort(list,new BandComparator());
@@ -88,7 +88,8 @@ public class ScheduledService{
         return bandResult;
     }
 
-    @Scheduled(fixedDelay=10000) //10초마다 수정
+    //@Scheduled(fixedDelay=10000) //10초마다 수정
+    @Scheduled(cron = "0 0 0/9 * * *") //10초마다 수정
     public List<MemberMonthlyDto> monthlyMember() {
         List<MemberMonthlyDto> list=likeDao.monthlyMember();
         Collections.sort(list,new MemberComparator());

@@ -36,6 +36,5 @@ public class MonthlyController {
     public List<MemberMonthlyDto> monthlyMember(){
         return scheduledService.getMemberResult();
     }
-
 }
 
