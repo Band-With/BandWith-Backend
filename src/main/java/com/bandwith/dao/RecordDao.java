@@ -17,6 +17,7 @@ public interface RecordDao {
 
     int countInstrument(int memberId, String instrument);
 
+    List<Record> selectRecordByBandMusicId(int bandMusicId);
     List<Record> selectRecordsById(int music_id);
     List<Record> selectRecordsByUserName(String username);
 

@@ -1,5 +1,6 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.MixDetailDto;
 import com.bandwith.dto.band.BandMusicDetailDto;
 import com.bandwith.dto.band.BandMusicInsertDto;
 import com.bandwith.service.BandMusicService;
@@ -39,9 +40,16 @@ public class BandMusicController {
         }
     }
 
+    @GetMapping("/{bandMusicId}/records")
+    public ResponseEntity<MixDetailDto> getBandMusicRecords(@PathVariable("bandname") String bandName,
+                                                         @PathVariable int bandMusicId){
+        return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusicRecords(bandName, bandMusicId));
+    }
+
     // TODO 밴드 합주곡에 대해 각자의 녹음 등록
     @PostMapping("/{bandMusicId}/records")
-    public ResponseEntity addBandMusicRecord() {
+    public ResponseEntity addBandMusicRecord(@PathVariable("bandname") String bandName,
+                                             @PathVariable int bandMusicId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {

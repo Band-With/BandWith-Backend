@@ -69,4 +69,8 @@ public class RecordDaoImpl implements RecordDao {
         return sqlSession.selectList("RecordMapper.selectRecords", username);
     }
 
+    public List<Record> selectRecordByBandMusicId(int bandMusicId) {
+        return sqlSession.selectList("RecordMapper.selectRecordsByBandMusicId", bandMusicId);
+    }
+
 }

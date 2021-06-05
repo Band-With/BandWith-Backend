@@ -5,12 +5,18 @@ import com.bandwith.domain.Band;
 import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;
 import com.bandwith.domain.Music;
+import com.bandwith.domain.Record;
+import com.bandwith.dto.MixDetailDto;
 import com.bandwith.dto.band.BandMusicDetailDto;
 import com.bandwith.dto.band.BandMusicInsertDto;
+import com.bandwith.dto.band.BandMusicRecordDto;
+import com.bandwith.dto.member.MemberBasicDto;
+import com.bandwith.dto.music.MusicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,6 +29,7 @@ public class BandMusicServiceImpl implements BandMusicService {
     private MemberDao memberDao;
     private LikeDao likeDao;
     private CommentDao commentDao;
+    private RecordDao recordDao;
 
     @Autowired
     public BandMusicServiceImpl(@Qualifier("bandDaoBean") BandDao bandDao,
@@ -30,13 +37,15 @@ public class BandMusicServiceImpl implements BandMusicService {
                                 @Qualifier("musicDaoBean") MusicDao musicDao,
                                 @Qualifier("memberDaoBean") MemberDao memberDao,
                                 @Qualifier("likeDaoBean") LikeDao likeDao,
-                                @Qualifier("commentDaoBean") CommentDao commentDao) {
+                                @Qualifier("commentDaoBean") CommentDao commentDao,
+                                @Qualifier("recordDaoBean") RecordDao recordDao) {
         this.bandDao = bandDao;
         this.bandMusicDao = bandMusicDao;
         this.musicDao = musicDao;
         this.memberDao = memberDao;
         this.likeDao = likeDao;
         this.commentDao = commentDao;
+        this.recordDao = recordDao;
     }
 
     @Override
@@ -58,5 +67,22 @@ public class BandMusicServiceImpl implements BandMusicService {
         int comments = commentDao.bandMusicComments(bandMusicId);
 
         return BandMusicDetailDto.of(bandMusic, likes, comments, music, members);
+    }
+
+    public void addBandMusicRecord(){
+
+    }
+
+    public MixDetailDto getBandMusicRecords(String bandName, int bandMusicId){
+        Music music = musicDao.selectMusicByBandMusicId(bandMusicId);
+
+        List<BandMusicRecordDto> recordDtoList = new ArrayList<>();
+
+        List<Record> records = recordDao.selectRecordByBandMusicId(bandMusicId);
+        for(Record record: records){
+            Member member = memberDao.selectMemberByRecordId(record.getRecordId());
+            recordDtoList.add(new BandMusicRecordDto(MemberBasicDto.of(member), record.getFileUrl()));
+        }
+        return new MixDetailDto(MusicDto.of(music), recordDtoList);
     }
 }

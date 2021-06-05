@@ -29,6 +29,13 @@
         WHERE b.BOOKMARK_ID = #{bookmark_id}
     </select>
 
+    <select id="selectByRecordId" resultType="com.bandwith.domain.Member">
+        SELECT m.*
+        FROM member m
+        WHERE m.member_id = (
+            SELECT r.member_id FROM record r WHERE r.record_id = #{recordId}
+        )
+    </select>
 
     <select id="selectWithBandMusic" resultType="com.bandwith.domain.Member">
         SELECT m.*
