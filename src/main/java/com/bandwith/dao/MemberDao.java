@@ -14,5 +14,6 @@ public interface MemberDao {
     Member selectMember(int member_id);
     List<Member> selectMemberWithBookmark(int bookmark_id);
     List<Member> selectMemberBandMusic(int bandMusicId);
+    Member selectMemberByRecordId(int recordId);
     void deleteMember(String username);
 }

@@ -65,7 +65,7 @@ public class MemberController {
         PracDetailDto pracDetailDto = pracDetailService.getPracDetail(username, musicId, condition);
 
         if (pracDetailDto.getRecords().size() == 0)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(pracDetailDto);
     }
 

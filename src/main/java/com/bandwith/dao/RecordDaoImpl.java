@@ -80,4 +80,8 @@ public class RecordDaoImpl implements RecordDao {
         param.put("instrument", instrument);
         return sqlSession.selectOne("RecordMapper.countInstrument", param);
     }
+
+    public List<Record> selectRecordByBandMusicId(int bandMusicId) {
+        return sqlSession.selectList("RecordMapper.selectRecordsByBandMusicId", bandMusicId);
+    }
 }

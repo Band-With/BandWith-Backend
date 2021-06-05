@@ -63,4 +63,9 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     public int getMemberIdOf(String username){ return sqlSession.selectOne("MemberMapper.getMemberId", username);}
+
+    public Member selectMemberByRecordId(int recordId){
+        return sqlSession.selectOne("MemberMapper.selectByRecordId", recordId);
+    }
+
 }

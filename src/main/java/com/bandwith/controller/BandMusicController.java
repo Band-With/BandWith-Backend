@@ -4,6 +4,7 @@ import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
 import com.bandwith.service.AudioService;
+import com.bandwith.dto.MixDetailDto;
 import com.bandwith.service.BandMusicService;
 import com.bandwith.service.S3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,6 +56,12 @@ public class BandMusicController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{bandMusicId}/records")
+    public ResponseEntity<MixDetailDto> getBandMusicRecords(@PathVariable("bandname") String bandName,
+                                                         @PathVariable int bandMusicId){
+        return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusicRecords(bandName, bandMusicId));
     }
 
     // 밴드 합주곡에 대해 각자의 녹음 등록

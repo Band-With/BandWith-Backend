@@ -5,6 +5,7 @@ import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
 
 import java.util.List;
+import com.bandwith.dto.MixDetailDto;
 
 public interface BandMusicService {
     BandMusicDetailDto getBandMusic(int bandMusicId);
@@ -14,4 +15,5 @@ public interface BandMusicService {
     void insertRecordBandMusic(int bandMusicId, int recordId);
     void updateComplete(BandMusicUpdateDto bandMusicUpdateDto);
     void deleteBandMusic(int bandMusicId);
+    MixDetailDto getBandMusicRecords(String bandName, int bandMusicId);
 }

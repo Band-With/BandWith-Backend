@@ -13,4 +13,5 @@ public interface MusicDao {
     void insertMusic(Music music);
     void deleteMusic(Music music);
     List<Music> searchMusic(String title, String filter);
+    Music selectMusicByBandMusicId(int bandMusicId);
 }

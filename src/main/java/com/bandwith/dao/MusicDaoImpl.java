@@ -66,4 +66,7 @@ public class MusicDaoImpl implements MusicDao {
         return list;
     }
 
+    public Music selectMusicByBandMusicId(int bandMusicId) {
+        return sqlSession.selectOne("MusicMapper.selectMusicByBandMusicId", bandMusicId);
+    }
 }

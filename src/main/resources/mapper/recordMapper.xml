@@ -82,6 +82,17 @@
         WHERE record_id = #{recordId}
     </update>
 
+    <select id="selectRecordsByBandMusicId" resultType="com.bandwith.domain.Record">
+        SELECT r.*
+        FROM (
+                SELECT *
+                FROM band_music bm
+                WHERE bm.band_music_id = #{bandMusicId}
+            ) AS bms
+        INNER JOIN record_band_music rbm ON bms.band_music_id = rbm.band_music_id
+        INNER JOIN record r ON r.record_id = rbm.record_id
+    </select>
+
     <select id="countInstrument" resultType="int">
         SELECT count(*)
         FROM record

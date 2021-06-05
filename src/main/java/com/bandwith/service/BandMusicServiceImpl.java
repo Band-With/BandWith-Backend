@@ -1,12 +1,19 @@
 package com.bandwith.service;
 
 import com.bandwith.dao.*;
-import com.bandwith.domain.*;
 import com.bandwith.domain.Record;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
 import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import com.bandwith.dto.bandMusic.RecordBandMusicDto;
+import com.bandwith.domain.Band;
+import com.bandwith.domain.BandMusic;
+import com.bandwith.domain.Member;
+import com.bandwith.domain.Music;
+import com.bandwith.dto.MixDetailDto;
+import com.bandwith.dto.band.BandMusicRecordDto;
+import com.bandwith.dto.member.MemberBasicDto;
+import com.bandwith.dto.music.MusicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -91,5 +98,18 @@ public class BandMusicServiceImpl implements BandMusicService {
     public void deleteBandMusic(int bandMusicId) {
         bandMusicDao.deleteBandMusic(bandMusicId);
         System.out.println("Band Music Deletion Completed");
+    }
+
+    public MixDetailDto getBandMusicRecords(String bandName, int bandMusicId){
+        Music music = musicDao.selectMusicByBandMusicId(bandMusicId);
+
+        List<BandMusicRecordDto> recordDtoList = new ArrayList<>();
+
+        List<Record> records = recordDao.selectRecordByBandMusicId(bandMusicId);
+        for(Record record: records){
+            Member member = memberDao.selectMemberByRecordId(record.getRecordId());
+            recordDtoList.add(new BandMusicRecordDto(MemberBasicDto.of(member), record.getFileUrl()));
+        }
+        return new MixDetailDto(MusicDto.of(music), recordDtoList);
     }
 }
