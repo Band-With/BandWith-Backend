@@ -58,7 +58,7 @@ public class PracDetailServiceImpl implements PracDetailService {
 
             details.add(detail);
         }
-        return new PracDetailDto(MusicDto.of(musicDao.getMusicById(musicId)), details);
+        return new PracDetailDto(MusicDto.of(musicDao.selectMusic(musicId)), details);
     };
 
     public void patchRecordAttributes(int recordId, Boolean access, Boolean searchable){
