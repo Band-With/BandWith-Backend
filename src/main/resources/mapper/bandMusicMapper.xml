@@ -78,7 +78,7 @@
         SELECT *
         FROM band_music bm
         WHERE (
-                  SELECT b.title
+                  SELECT b.band_name
                   FROM band b
                   WHERE b.band_id = bm.band_id AND bm.complete = true
               ) LIKE '%${title}%'
