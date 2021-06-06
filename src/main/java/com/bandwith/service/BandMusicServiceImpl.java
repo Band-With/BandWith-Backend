@@ -2,6 +2,7 @@ package com.bandwith.service;
 
 import com.bandwith.dao.*;
 import com.bandwith.domain.Record;
+import com.bandwith.dto.BandMusicSearchResultDto;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
 import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
@@ -72,7 +73,7 @@ public class BandMusicServiceImpl implements BandMusicService {
         return BandMusicDetailDto.of(bandMusic, likes, comments, music, members);
     }
 
-    public List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception {
+    public List<BandMusicSearchResultDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception {
         List<BandMusic> bandMusicList;
 
         if (subject.equals("music")) {
@@ -92,10 +93,12 @@ public class BandMusicServiceImpl implements BandMusicService {
         } else
             throw new Exception();
 
-        List<BandMusicDetailDto> bandMusicDetailDtoList = new ArrayList<>();
+
+        List<BandMusicSearchResultDto> bandMusicSearchResultDto = new ArrayList<>();
 
         for (BandMusic bandMusic : bandMusicList) {
             int bandMusicId = bandMusic.getBandMusicId();
+            Band band = bandDao.selectBandByBandMusicId(bandMusicId);
 
             List<Member> members = memberDao.selectMemberBandMusic(bandMusicId);
             int musicId = bandMusic.getMusicId();
@@ -104,10 +107,10 @@ public class BandMusicServiceImpl implements BandMusicService {
             int likes = likeDao.bandMusicLike(bandMusicId);
             int comments = commentDao.bandMusicComments(bandMusicId);
 
-            bandMusicDetailDtoList.add(BandMusicDetailDto.of(bandMusic, likes, comments, music, members));
+            bandMusicSearchResultDto.add(BandMusicSearchResultDto.of(bandMusic, likes, comments, music, members, band));
         }
 
-        return bandMusicDetailDtoList;
+        return bandMusicSearchResultDto;
     }
 
     @Override

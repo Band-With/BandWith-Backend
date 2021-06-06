@@ -11,6 +11,13 @@
         VALUES (#{bandName}, #{img})
     </insert>
 
+    <select id="selectBandByBandMusicId" resultType="com.bandwith.domain.Band">
+        SELECT b.*
+        FROM band b
+        INNER JOIN band_music bm ON b.band_id = bm.band_id
+        WHERE bm.band_music_id = #{bandMusicId}
+    </select>
+
     <select id="selectBands" resultType="com.bandwith.domain.Band">
         SELECT b.BAND_ID,
                b.BAND_NAME,

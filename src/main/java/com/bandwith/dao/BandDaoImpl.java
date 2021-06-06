@@ -84,4 +84,8 @@ public class BandDaoImpl implements BandDao {
 
         sqlSession.delete("BandMapper.deleteMember", params);
     }
+
+    public Band selectBandByBandMusicId(int bandMusicId){
+        return sqlSession.selectOne("BandMapper.selectBandByBandMusicId", bandMusicId);
+    }
 }

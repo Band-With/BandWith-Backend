@@ -1,5 +1,6 @@
 package com.bandwith.controller;
 
+import com.bandwith.dto.BandMusicSearchResultDto;
 import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
@@ -122,11 +123,11 @@ public class BandMusicController {
     }
 
     @GetMapping("/bandmusics")
-    public ResponseEntity<List<BandMusicDetailDto>> searchBandMusic(@RequestParam(value="title") String bandMusicTitle,
-                                                                   @RequestParam(value="filter") String filter,
-                                                                    @RequestParam(value="subject") String subject){
+    public ResponseEntity<List<BandMusicSearchResultDto>> searchBandMusic(@RequestParam(value="title") String bandMusicTitle,
+                                                                          @RequestParam(value="filter") String filter,
+                                                                          @RequestParam(value="subject") String subject){
         try {
-            List<BandMusicDetailDto> bandMusicDtoList = bandMusicService.searchBandMusic(bandMusicTitle, filter, subject);
+            List<BandMusicSearchResultDto> bandMusicDtoList = bandMusicService.searchBandMusic(bandMusicTitle, filter, subject);
             return ResponseEntity.status(HttpStatus.OK).body(bandMusicDtoList);
 
         } catch (Exception e) {

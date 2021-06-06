@@ -1,5 +1,6 @@
 package com.bandwith.service;
 
+import com.bandwith.dto.BandMusicSearchResultDto;
 import com.bandwith.dto.bandMusic.BandMusicDetailDto;
 import com.bandwith.dto.bandMusic.BandMusicInsertDto;
 import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface BandMusicService {
     BandMusicDetailDto getBandMusic(int bandMusicId);
-    List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception;
+    List<BandMusicSearchResultDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception;
     List<String> getRecordUrls(int bandMusicId) throws Exception;
 
     void insertBandMusic(BandMusicInsertDto bandMusicInsertDto);

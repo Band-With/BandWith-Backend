@@ -23,4 +23,5 @@ public interface BandDao {
     void invite(int member_id, int band_id);
     List<BandMusic> selectBandMusics(int band_id);
     void deleteMember(String bandName, String username);
+    Band selectBandByBandMusicId(int bandMusicId);
 }
