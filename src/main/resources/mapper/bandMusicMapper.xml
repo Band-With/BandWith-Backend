@@ -40,11 +40,30 @@
         ) LIKE '%${title}%'
     </select>
     <select id="selectBandMusicLike" resultType="com.bandwith.domain.BandMusic">
-        SELECT bm.*, count(*)+1 cnt
+        SELECT bm.*, count(*) cnt
         FROM band_music bm
             INNER JOIN music m ON bm.music_id = m.music_id
             INNER JOIN likes l ON bm.band_music_id = l.band_music_id
         WHERE bm.complete = true AND m.title LIKE '%${title}%'
+        GROUP BY bm.band_music_id
+        ORDER BY cnt DESC
+    </select>
+
+    <select id="selectBandMusicBandTitle" resultType="com.bandwith.domain.BandMusic">
+        SELECT *
+        FROM band_music bm
+        WHERE (
+                  SELECT b.title
+                  FROM band b
+                  WHERE b.band_id = bm.band_id AND bm.complete = true
+              ) LIKE '%${title}%'
+    </select>
+    <select id="selectBandMusicBandLike" resultType="com.bandwith.domain.BandMusic">
+        SELECT bm.*, count(*) cnt
+        FROM band_music bm
+                 INNER JOIN music m ON bm.music_id = m.music_id
+                 INNER JOIN likes l ON bm.band_music_id = l.band_music_id
+        WHERE bm.complete = true AND bm.title LIKE '%${title}%'
         GROUP BY bm.band_music_id
         ORDER BY cnt DESC
     </select>

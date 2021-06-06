@@ -13,7 +13,8 @@ import java.util.List;
 
 
 @Service("homeServiceBean")
-public class HomeServiceImpl implements HomeService{
+public class
+HomeServiceImpl implements HomeService{
 
 
 

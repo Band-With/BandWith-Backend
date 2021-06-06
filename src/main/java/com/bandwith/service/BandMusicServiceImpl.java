@@ -61,13 +61,25 @@ public class BandMusicServiceImpl implements BandMusicService {
         return BandMusicDetailDto.of(bandMusic, likes, comments, music, members);
     }
 
-    public List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter) throws Exception {
+    public List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception {
         List<BandMusic> bandMusicList;
 
-        if(filter.equals("related"))
-            bandMusicList = bandMusicDao.searchBandMusicTitle(bandMusicTitle);
-        else if(filter.equals("like"))
-            bandMusicList = bandMusicDao.searchBandMusicLike(bandMusicTitle);
+        if(subject.equals("music")) {
+            if (filter.equals("related"))
+                bandMusicList = bandMusicDao.searchBandMusicTitle(bandMusicTitle);
+            else if (filter.equals("like"))
+                bandMusicList = bandMusicDao.searchBandMusicLike(bandMusicTitle);
+            else
+                throw new Exception();
+        }
+        else if(subject.equals("band")){
+            if (filter.equals("related"))
+                bandMusicList = bandMusicDao.searchBandMusicBandTitle(bandMusicTitle);
+            else if (filter.equals("like"))
+                bandMusicList = bandMusicDao.searchBandMusicBandLike(bandMusicTitle);
+            else
+                throw new Exception();
+        }
         else
             throw new Exception();
 

@@ -1,5 +1,6 @@
 package com.bandwith.service;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public class AudioService {
                 byteBuffers.add(IOUtils.toByteArray(isList[i]));
             }
             output = mixBuffers(byteBuffers);
-            // FileUtils.writeByteArrayToFile(new File("path"), output);
+            FileUtils.writeByteArrayToFile(new File("C:/Users/LeeJeongJae/Desktop/haha.wav"), output);
         } catch (Exception e) {
             throw (e);
         } finally {

@@ -45,4 +45,12 @@ public class BandMusicDaoImpl implements BandMusicDao {
     public List<BandMusic> searchBandMusicLike(String title) {
         return sqlSession.selectList("BandMusicMapper.selectBandMusicLike", title);
     }
+
+    public List<BandMusic> searchBandMusicBandTitle(String title){
+        return sqlSession.selectList("BandMusicMapper.selectBandMusicBandTitle", title);
+    }
+
+    public List<BandMusic> searchBandMusicBandLike(String title){
+        return sqlSession.selectList("BandMusicMapper.selectBandMusicBandLike", title);
+    }
 }

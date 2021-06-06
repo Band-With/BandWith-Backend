@@ -25,15 +25,7 @@ public class MusicDto {
     }
 
     public static MusicDto of(Music music){
-        String photo = null;
-
-        if(music.getProfile_img() != null) {
-            photo = new String(music.getProfile_img(), StandardCharsets.UTF_8);
-            if( photo.startsWith("\uFEFF") ) {
-                photo = photo.substring(1);
-            }
-        }
-        return new MusicDto(music.getMusic_id(), music.getTitle(), music.getSinger(), music.getComposer(), photo);
+        return new MusicDto(music.getMusic_id(), music.getTitle(), music.getSinger(), music.getComposer(), music.getProfile_img());
     }
 
     public static List<MusicDto> of(List<Music> musics){

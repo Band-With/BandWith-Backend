@@ -8,5 +8,5 @@ import java.util.List;
 public interface BandMusicService {
     void createBandMusic(BandMusicInsertDto bandMusicInsertDto);
     BandMusicDetailDto getBandMusic(int bandMusicId);
-    List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter) throws Exception;
+    List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception;
 }
