@@ -5,10 +5,12 @@ import com.bandwith.dto.music.MusicDto;
 
 public class BandMusicRecordDto {
     private MemberBasicDto member;
+    private int recordId;
     private String fileUrl;
 
-    public BandMusicRecordDto(MemberBasicDto member, String fileUrl) {
+    public BandMusicRecordDto(MemberBasicDto member, int recordId, String fileUrl) {
         this.member = member;
+        this.recordId = recordId;
         this.fileUrl = fileUrl;
     }
 
@@ -18,6 +20,14 @@ public class BandMusicRecordDto {
 
     public void setMember(MemberBasicDto member) {
         this.member = member;
+    }
+
+    public int getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
     }
 
     public String getFileUrl() {

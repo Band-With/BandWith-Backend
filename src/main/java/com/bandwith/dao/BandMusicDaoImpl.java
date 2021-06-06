@@ -9,7 +9,10 @@ import com.bandwith.dto.bandMusic.RecordBandMusicDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("bandMusicDaoBean")
 public class BandMusicDaoImpl implements BandMusicDao {
@@ -76,5 +79,12 @@ public class BandMusicDaoImpl implements BandMusicDao {
 
     public List<BandMusic> searchBandMusicBandLike(String title){
         return sqlSession.selectList("BandMusicMapper.selectBandMusicBandLike", title);
+    }
+
+    public void deleteBandMusicRecord(int bandMusicId, int recordId){
+        Map<String, Integer> params = new HashMap<>();
+        params.put("bandMusicId", bandMusicId);
+        params.put("recordId", recordId);
+        sqlSession.delete("BandMusicMapper.deleteBandMusicRecord", params);
     }
 }

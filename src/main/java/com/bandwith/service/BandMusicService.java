@@ -19,4 +19,5 @@ public interface BandMusicService {
     void updateComplete(BandMusicUpdateDto bandMusicUpdateDto);
     void deleteBandMusic(int bandMusicId);
     MixDetailDto getBandMusicRecords(String bandName, int bandMusicId);
+    void deleteBandMusicRecord(int bandMusicId, int recordId);
 }

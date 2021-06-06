@@ -92,4 +92,10 @@
         GROUP BY bm.band_music_id
         ORDER BY cnt DESC
     </select>
+
+    <delete id="deleteBandMusicRecord">
+        DELETE
+        FROM record_band_music
+        WHERE record_id = #{recordId} AND band_music_id = #{bandMusicId}
+    </delete>
 </mapper>

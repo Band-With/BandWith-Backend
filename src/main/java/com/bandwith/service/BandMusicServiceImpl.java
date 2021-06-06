@@ -146,8 +146,12 @@ public class BandMusicServiceImpl implements BandMusicService {
         List<Record> records = recordDao.selectRecordByBandMusicId(bandMusicId);
         for(Record record: records){
             Member member = memberDao.selectMemberByRecordId(record.getRecordId());
-            recordDtoList.add(new BandMusicRecordDto(MemberBasicDto.of(member), record.getFileUrl()));
+            recordDtoList.add(new BandMusicRecordDto(MemberBasicDto.of(member), record.getRecordId(), record.getFileUrl()));
         }
         return new MixDetailDto(MusicDto.of(music), recordDtoList);
+    }
+
+    public void deleteBandMusicRecord(int bandMusicId, int recordId){
+        bandMusicDao.deleteBandMusicRecord(bandMusicId, recordId);
     }
 }

@@ -26,7 +26,6 @@ public class AudioService {
                 byteBuffers.add(IOUtils.toByteArray(isList[i]));
             }
             output = mixBuffers(byteBuffers);
-            FileUtils.writeByteArrayToFile(new File("C:/Users/LeeJeongJae/Desktop/haha.wav"), output);
         } catch (Exception e) {
             throw (e);
         } finally {
@@ -81,8 +80,8 @@ public class AudioService {
     // 잡음 제거
     public static void denoiser(String path, String fileName) throws IOException, InterruptedException {
         String[] args = new String[6];
-        args[0] = "python";
-        args[1] = "C:/band-with/wavelet-denoiser/src/denoiser-argument.py";    // 수행할 코드의 위치
+        args[0] = "python3";
+        args[1] = "/var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/com/wavelet-denoiser/src/denoiser-argument.py";    // 수행할 코드의 위치
         args[2] = "-i";
         args[3] = path + fileName;                  // input file
         args[4] = "-o";

@@ -98,6 +98,16 @@ public class BandMusicController {
         }
     }
 
+    @DeleteMapping("/bands/{bandname}/bandmusics/{bandMusicId}/records/{recordId}")
+    public ResponseEntity deleteBandMusicRecord(@PathVariable int bandMusicId, @PathVariable int recordId) {
+        try {
+            bandMusicService.deleteBandMusicRecord(bandMusicId, recordId);
+            return ResponseEntity.status(HttpStatus.OK).body("Delete Band Music Record");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
     // 밴드 합주곡 삭제
     @DeleteMapping("/bands/{bandname}/bandmusics/{bandMusicId}")

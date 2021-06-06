@@ -23,4 +23,5 @@ public interface BandMusicDao {
     List<BandMusic> searchBandMusicLike(String title);
     List<BandMusic> searchBandMusicBandTitle(String title);
     List<BandMusic> searchBandMusicBandLike(String title);
+    void deleteBandMusicRecord(int bandMusicId, int recordId);
 }
