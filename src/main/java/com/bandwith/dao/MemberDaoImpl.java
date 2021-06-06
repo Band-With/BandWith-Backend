@@ -1,11 +1,14 @@
 package com.bandwith.dao;
 
 import com.bandwith.domain.Member;
+import com.bandwith.dto.member.MemberProfileUpdateDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("memberDaoBean")
 public class MemberDaoImpl implements MemberDao {
@@ -23,13 +26,36 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
-    public Member selectMemberWithUsername(String username){
+    public void updateProfile(MemberProfileUpdateDto memberProfileUpdateDto) {
+        sqlSession.update("MemberMapper.updateProfile", memberProfileUpdateDto);
+    }
+
+    @Override
+    public void updatePw(int memberId, String pwd) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("memberId", memberId);
+        params.put("pwd", pwd);
+        sqlSession.update("MemberMapper.updatePw", params);
+    }
+
+    @Override
+    public Member selectMemberWithUsername(String username) {
         return sqlSession.selectOne("MemberMapper.selectWithUsername", username);
     }
 
     @Override
-    public Member selectMember(int member_id){
+    public Member selectMember(int member_id) {
         return sqlSession.selectOne("MemberMapper.select", member_id);
+    }
+
+    @Override
+    public Member selectMember(String username) {
+        return sqlSession.selectOne("MemberMapper.selectMember", username);
+    }
+
+    @Override
+    public List<Member> selectUsersByUsername(String username) {
+        return sqlSession.selectList("MemberMapper.selectUsersByUsername", username);
     }
 
     @Override
@@ -38,12 +64,12 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
-    public int countFollower(String username){
+    public int countFollower(String username) {
         return sqlSession.selectOne("MemberMapper.countFollower", username);
     }
 
     @Override
-    public int countFollowing(String username){
+    public int countFollowing(String username) {
         return sqlSession.selectOne("MemberMapper.countFollowing", username);
     }
 
@@ -62,9 +88,11 @@ public class MemberDaoImpl implements MemberDao {
         sqlSession.delete("MemberMapper.deleteMember", username);
     }
 
-    public int getMemberIdOf(String username){ return sqlSession.selectOne("MemberMapper.getMemberId", username);}
+    public int getMemberIdOf(String username) {
+        return sqlSession.selectOne("MemberMapper.getMemberId", username);
+    }
 
-    public Member selectMemberByRecordId(int recordId){
+    public Member selectMemberByRecordId(int recordId) {
         return sqlSession.selectOne("MemberMapper.selectByRecordId", recordId);
     }
 

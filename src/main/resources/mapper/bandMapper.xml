@@ -62,15 +62,9 @@
         )
     </select>
 
-    <select id="searchUser" resultType="com.bandwith.domain.Member">
-        SELECT *
-        from member
-        WHERE member_id = #{member_id}
-    </select>
-
     <insert id="invite">
         INSERT INTO member_band (band_id, member_id, band_auth)
-        VALUES (#{band_id}, #{member_id}, #{band_auth})
+        VALUES (#{bandId}, #{memberId}, #{auth})
     </insert>
 
     <select id="selectBandMusics" resultType="com.bandwith.domain.BandMusic">

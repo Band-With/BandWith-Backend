@@ -16,11 +16,13 @@ public class MemberDto {
 
     public MemberDto(){}
 
-    public MemberDto(String username, String pwd, String name, String profileImg) {
+    public MemberDto(int id, String username, String pwd, String name, String profileImg, String email) {
+        this.id = id;
         this.username = username;
         this.pwd = pwd;
         this.name = name;
         this.profileImg = profileImg;
+        this.email = email;
     }
 
     public MemberDto(String username, String pwd, String name, String profileImg, String email) {
@@ -48,7 +50,7 @@ public class MemberDto {
                 photo = photo.substring(1);
             }
         }
-        return new MemberDto(member.getUsername(), member.getPwd(), member.getName(), photo);
+        return new MemberDto(member.getMember_id(), member.getUsername(), member.getPwd(), member.getName(), photo, member.getEmail());
     }
 
     public int getId() {
