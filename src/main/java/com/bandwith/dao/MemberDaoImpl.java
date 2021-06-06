@@ -54,6 +54,11 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public List<Member> selectUsersByUsername(String username) {
+        return sqlSession.selectList("MemberMapper.selectUsersByUsername", username);
+    }
+
+    @Override
     public Member login(Member member) {
         return sqlSession.selectOne("MemberMapper.login", member);
     }

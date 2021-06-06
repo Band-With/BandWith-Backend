@@ -19,8 +19,7 @@ public interface BandDao {
     Band selectBandByName(String bandName);
     List<RecordForBandDto> findByBandName(int band_id);
     List<Member> memberinBand(int band_id);
-    List<Member> searchUser(int band_id);
-    void invite(int member_id, int band_id);
+    void invite(int bandId, int memberId);
     List<BandMusic> selectBandMusics(int band_id);
     void deleteMember(String bandName, String username);
     Band selectBandByBandMusicId(int bandMusicId);

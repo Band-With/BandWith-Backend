@@ -4,14 +4,11 @@ import com.bandwith.domain.Band;
 import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;
 import com.bandwith.dto.band.BandInsertDto;
-import com.bandwith.dto.band.BandMemberDto;
-import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.record.RecordForBandDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,14 +58,12 @@ public class BandDaoImpl implements BandDao {
     }
 
     @Override
-    public List<Member> searchUser(int band_id) {
-        return sqlSession.selectList("BandMapper.searchUser", band_id);
-    }
-
-    @Override
-    public void invite(int member_id, int band_id) {
-        BandMemberDto member = new BandMemberDto(band_id, member_id, "");
-        sqlSession.insert("BandMapper.invite", member);
+    public void invite(int bandId, int memberId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("bandId", bandId);
+        params.put("memberId", memberId);
+        params.put("auth", "member");
+        sqlSession.insert("BandMapper.invite", params);
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.util.List;
 public interface BandService {
     void insertBand(BandInsertDto bandInsertDto);
     BandDetailDto getBand(String bandname);
-    List<MemberBasicDto> searchUser(int member_id);
-    void invite(int member_id, int band_id);
+    void invite(String bandName, int memberId);
     void leaveBand(String bandName, String username);
 }

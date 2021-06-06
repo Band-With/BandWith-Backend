@@ -29,6 +29,12 @@
         SELECT * FROM member WHERE username = #{username}
     </select>
 
+    <select id="selectUsersByUsername" resultType="com.bandwith.domain.Member">
+        SELECT *
+        from member
+        WHERE username LIKE '${username}%'
+    </select>
+
     <select id="selectWithBookmark" resultType="com.bandwith.domain.Member">
         SELECT m.*
         FROM bookmark b

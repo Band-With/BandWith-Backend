@@ -11,6 +11,7 @@ public interface MemberDao {
     Member selectMemberWithUsername(String username);
     Member selectMember(int member_id);
     Member selectMember(String username);
+    List<Member> selectUsersByUsername(String username);
     List<Member> selectMemberWithBookmark(int bookmark_id);
     List<Member> selectMemberBandMusic(int bandMusicId);
     Member selectMemberByRecordId(int recordId);

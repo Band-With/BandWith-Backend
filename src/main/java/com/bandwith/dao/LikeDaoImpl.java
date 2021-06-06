@@ -96,7 +96,6 @@ public class LikeDaoImpl implements LikeDao{
             int like = sqlSession.selectOne("LikeMapper.searchByMemberID", members.get(i).getMember_id());
             MemberMonthlyDto memberMonthlyDto = new MemberMonthlyDto(members.get(i).getUsername(), members.get(i).getProfile_img(), like);
             monthly.add(memberMonthlyDto);
-            System.out.println("번호: "+members.get(i).getMember_id()+" 좋아요:"+like);
         }
         return monthly;
     }

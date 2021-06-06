@@ -2,6 +2,7 @@ package com.bandwith.service;
 
 import com.bandwith.dao.MemberDao;
 import com.bandwith.domain.Member;
+import com.bandwith.dto.member.MemberBasicDto;
 import com.bandwith.dto.member.MemberDto;
 import com.bandwith.dto.member.MemberProfileUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service("memberServiceBean")
@@ -32,6 +35,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto getMember(String username) {
         return MemberDto.of(memberDao.selectMember(username));
+    }
+
+    @Override
+    public List<MemberBasicDto> getMembers(String username) {     // search
+        List<Member> members = memberDao.selectUsersByUsername(username);
+        return MemberBasicDto.of(members);
     }
 
     @Override

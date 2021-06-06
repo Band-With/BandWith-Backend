@@ -133,20 +133,9 @@ BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<MemberBasicDto> searchUser(int member_id) {
-        List<Member> members = bandDao.searchUser(member_id);
-        List<MemberBasicDto> memberdtos = new ArrayList<MemberBasicDto>();
-        for(int i=0; i<members.size(); i++){
-            MemberBasicDto memberBasicDto = MemberBasicDto.of(members.get(i));
-            memberdtos.add(memberBasicDto);
-        }
-
-        return memberdtos;
-    }
-
-    @Override
-    public void invite(int member_id, int band_id) {
-        bandDao.invite(member_id, band_id);
+    public void invite(String bandName, int memberId) {
+        Band band = bandDao.selectBandByName(bandName);
+        bandDao.invite(band.getBand_id(), memberId);
     }
 
     public void leaveBand(String bandName, String username){

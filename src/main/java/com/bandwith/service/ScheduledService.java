@@ -69,7 +69,6 @@ public class ScheduledService {
                 bandResult.add(list.get(i));
             }
         }
-        System.out.println(bandResult);
         return bandResult;
     }
 
