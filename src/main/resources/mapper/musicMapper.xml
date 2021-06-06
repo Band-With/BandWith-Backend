@@ -10,13 +10,6 @@
         WHERE music.MUSIC_ID = #{music_id}
     </select>
 
-    <select id="getMusicById" resultType="com.bandwith.domain.Music">
-        SELECT *
-        FROM music
-        WHERE music.music_id = #{musicId}
-    </select>
-
-
     <!--  SEARCH  -->
     <select id="selectMusicByTitle" resultType="com.bandwith.domain.Music">
         SELECT *
@@ -68,5 +61,9 @@
         WHERE music.MUSIC_ID = #{filter}
     </select>
 
-
+    <select id="selectMusicByBandMusicId" resultType="com.bandwith.domain.Music">
+        SELECT m.*
+        FROM music m
+        WHERE m.music_id = (SELECT bm.music_id FROM band_music bm WHERE bm.band_music_id = #{bandMusicId})
+    </select>
 </mapper>

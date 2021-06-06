@@ -12,4 +12,5 @@ public interface BandService {
     BandDetailDto getBand(String bandname);
     List<MemberBasicDto> searchUser(int member_id);
     void invite(int member_id, int band_id);
+    void leaveBand(String bandName, String username);
 }

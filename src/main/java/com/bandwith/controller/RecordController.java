@@ -23,7 +23,7 @@ import java.io.*;
 import java.util.List;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class RecordController {
 

@@ -10,7 +10,7 @@
     </insert>
 
     <select id="login" resultType="com.bandwith.domain.Member">
-        SELECT * from member WHERE USERNAME = #{username} AND PWD = #{pwd}
+        SELECT * from member WHERE USERNAME = #{username}
     </select>
 
     <select id="countFollower" resultType="int">
@@ -29,6 +29,13 @@
         WHERE b.BOOKMARK_ID = #{bookmark_id}
     </select>
 
+    <select id="selectByRecordId" resultType="com.bandwith.domain.Member">
+        SELECT m.*
+        FROM member m
+        WHERE m.member_id = (
+            SELECT r.member_id FROM record r WHERE r.record_id = #{recordId}
+        )
+    </select>
 
     <select id="selectWithBandMusic" resultType="com.bandwith.domain.Member">
         SELECT m.*
@@ -56,5 +63,9 @@
     <select id="getMemberId" resultType="int">
         SELECT member_id FROM member
         WHERE username = #{username}
+    </select>
+
+    <select id="memberList" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member
     </select>
 </mapper>

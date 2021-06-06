@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -16,13 +17,16 @@ import java.util.Random;
 @Service("memberServiceBean")
 public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
-    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao) {
+    public MemberServiceImpl(@Qualifier("memberDaoBean") MemberDao memberDao,
+                             PasswordEncoder passwordEncoder) {
         this.memberDao = memberDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void signUp(MemberDto newMember) {
@@ -35,12 +39,12 @@ public class MemberServiceImpl implements MemberService {
         Member loginMember = memberDao.login(member);
 
         MemberDto loginMemberDto = null;
-        if(loginMember != null)
+        if(loginMember != null && passwordEncoder.matches(member.getPwd(), loginMember.getPwd()))
             loginMemberDto = MemberDto.of(loginMember);
         return loginMemberDto;
     }
 
-    public void sendMail(String email, HttpSession session){
+    public String sendMail(String email){
         Random random=new Random();  //난수 생성을 위한 랜덤 클래스
         String key="";  //인증번호
 
@@ -57,12 +61,10 @@ public class MemberServiceImpl implements MemberService {
         message.setText("인증 번호 : "+key);
 
         mailSender.send(message);
-        session.setAttribute(email, key);
+        return key;
     }
 
     public Boolean checkCode(String mail, String code, HttpSession session){
-        System.out.println(session.getAttribute(mail));
-        System.out.println("??");
         if(session.getAttribute(mail).equals(code)) {
             session.removeAttribute(mail);
             return true;

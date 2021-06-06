@@ -2,8 +2,10 @@ package com.bandwith.dao;
 
 import com.bandwith.domain.BandMusic;
 import com.bandwith.domain.Member;
-import com.bandwith.domain.Music;
-import com.bandwith.dto.band.BandMusicInsertDto;
+import com.bandwith.domain.RecordBandMusic;
+import com.bandwith.dto.bandMusic.BandMusicUpdateDto;
+import com.bandwith.dto.bandMusic.BandMusicInsertDto;
+import com.bandwith.dto.bandMusic.RecordBandMusicDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,17 +22,39 @@ public class BandMusicDaoImpl implements BandMusicDao {
     }
 
     @Override
-    public int insertBandMusic(BandMusicInsertDto bandMusicInsertDto) {
-        return sqlSession.insert("BandMusicMapper.insertBandMusic", bandMusicInsertDto);
-    }
-
     public BandMusic select(int bandMusicId){
         return sqlSession.selectOne("BandMusicMapper.select", bandMusicId);
     }
 
     @Override
-    public Music getMusic(int music_id) {
-        return sqlSession.selectOne("BandMusicMapper.getMusic", music_id);
+    public List<Integer> selectRecordBandMusic(int bandMusicId) {
+        return sqlSession.selectList("BandMusicMapper.selectRecordBandMusic", bandMusicId);
+    }
+
+//    @Override
+//    public Music getMusic(int music_id) {
+//        return sqlSession.selectOne("BandMusicMapper.getMusic", music_id);
+//    }
+
+
+    @Override
+    public int insertBandMusic(BandMusicInsertDto bandMusicInsertDto) {
+        return sqlSession.insert("BandMusicMapper.insertBandMusic", bandMusicInsertDto);
+    }
+
+    @Override
+    public int insertRecordBandMusic(RecordBandMusicDto recordBandMusicDto) {
+        return sqlSession.insert("BandMusicMapper.insertRecordBandMusic", recordBandMusicDto);
+    }
+
+    @Override
+    public void updateComplete(BandMusicUpdateDto bandMusicUpdateDto) {
+        sqlSession.update("BandMusicMapper.updateComplete", bandMusicUpdateDto);
+    }
+
+    @Override
+    public void deleteBandMusic(int bandMusicId) {
+        sqlSession.delete("BandMusicMapper.deleteBandMusic", bandMusicId);
     }
 
     @Override

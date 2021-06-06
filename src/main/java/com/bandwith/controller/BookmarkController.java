@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class BookmarkController {
 
