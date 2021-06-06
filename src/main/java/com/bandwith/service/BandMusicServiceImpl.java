@@ -72,6 +72,44 @@ public class BandMusicServiceImpl implements BandMusicService {
         return BandMusicDetailDto.of(bandMusic, likes, comments, music, members);
     }
 
+    public List<BandMusicDetailDto> searchBandMusic(String bandMusicTitle, String filter, String subject) throws Exception {
+        List<BandMusic> bandMusicList;
+
+        if (subject.equals("music")) {
+            if (filter.equals("related"))
+                bandMusicList = bandMusicDao.searchBandMusicTitle(bandMusicTitle);
+            else if (filter.equals("like"))
+                bandMusicList = bandMusicDao.searchBandMusicLike(bandMusicTitle);
+            else
+                throw new Exception();
+        } else if (subject.equals("band")) {
+            if (filter.equals("related"))
+                bandMusicList = bandMusicDao.searchBandMusicBandTitle(bandMusicTitle);
+            else if (filter.equals("like"))
+                bandMusicList = bandMusicDao.searchBandMusicBandLike(bandMusicTitle);
+            else
+                throw new Exception();
+        } else
+            throw new Exception();
+
+        List<BandMusicDetailDto> bandMusicDetailDtoList = new ArrayList<>();
+
+        for (BandMusic bandMusic : bandMusicList) {
+            int bandMusicId = bandMusic.getBandMusicId();
+
+            List<Member> members = memberDao.selectMemberBandMusic(bandMusicId);
+            int musicId = bandMusic.getMusicId();
+            Music music = musicDao.selectMusic(musicId);
+
+            int likes = likeDao.bandMusicLike(bandMusicId);
+            int comments = commentDao.bandMusicComments(bandMusicId);
+
+            bandMusicDetailDtoList.add(BandMusicDetailDto.of(bandMusic, likes, comments, music, members));
+        }
+
+        return bandMusicDetailDtoList;
+    }
+
     @Override
     public List<String> getRecordUrls(int bandMusicId) throws Exception {
         List<Integer> recordIdList = bandMusicDao.selectRecordBandMusic(bandMusicId);

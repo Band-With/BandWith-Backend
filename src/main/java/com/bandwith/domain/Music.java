@@ -9,9 +9,9 @@ public class Music {
     private String title;
     private String singer=null;
     private String composer=null;
-    private byte[] profile_img=null;
+    private String profile_img=null;
 
-    public Music(int music_id, String title, String singer, String composer, byte[] profile_img) {
+    public Music(int music_id, String title, String singer, String composer, String profile_img) {
         this.music_id = music_id;
         this.title = title;
         this.singer = singer;
@@ -59,11 +59,11 @@ public class Music {
         this.composer = composer;
     }
 
-    public byte[] getProfile_img() {
+    public String getProfile_img() {
         return profile_img;
     }
 
-    public void setProfile_img(byte[] profile_img) {
+    public void setProfile_img(String profile_img) {
         this.profile_img = profile_img;
     }
 }

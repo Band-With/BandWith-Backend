@@ -19,4 +19,8 @@ public interface BandMusicDao {
     void updateComplete(BandMusicUpdateDto bandMusicUpdateDto);
     void deleteBandMusic(int bandMusicId);
     List<Member> recordMember(int band_music_id);
+    List<BandMusic> searchBandMusicTitle(String title);
+    List<BandMusic> searchBandMusicLike(String title);
+    List<BandMusic> searchBandMusicBandTitle(String title);
+    List<BandMusic> searchBandMusicBandLike(String title);
 }
