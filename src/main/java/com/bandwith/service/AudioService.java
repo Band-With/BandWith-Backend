@@ -80,8 +80,8 @@ public class AudioService {
     // 잡음 제거
     public static void denoiser(String path, String fileName) throws IOException, InterruptedException {
         String[] args = new String[6];
-        args[0] = "python3";
-        args[1] = "/var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/com/wavelet-denoiser/src/denoiser-argument.py";    // 수행할 코드의 위치
+        args[0] = "python";
+        args[1] = "C:/band-with/wavelet-denoiser/src/denoiser-argument.py";    // 수행할 코드의 위치
         args[2] = "-i";
         args[3] = path + fileName;                  // input file
         args[4] = "-o";
@@ -95,17 +95,17 @@ public class AudioService {
         ProcessBuilder pb = new ProcessBuilder(args[0], args[1], args[2], args[3], args[4], args[5]);
         Process p = pb.start();
 
-//        // 파이썬에서 출력된 내용 출력
-//        char[] readBuffer = new char[1000];
-//        InputStreamReader isr = new InputStreamReader(p.getInputStream());
-//        BufferedReader br = new BufferedReader(isr);
-//
-//        while (true) {
-//            int n = br.read(readBuffer);
-//            if (n <= 0)
-//                break;
-//            System.out.print(new String(readBuffer, 0, n));
-//        }
+        // 파이썬에서 출력된 내용 출력
+        char[] readBuffer = new char[1000];
+        InputStreamReader isr = new InputStreamReader(p.getInputStream());
+        BufferedReader br = new BufferedReader(isr);
+
+        while (true) {
+            int n = br.read(readBuffer);
+            if (n <= 0)
+                break;
+            System.out.print(new String(readBuffer, 0, n));
+        }
 
         p.waitFor();
         p.destroy();

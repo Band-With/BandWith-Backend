@@ -34,15 +34,20 @@ public class BookmarkController {
     }
 
     @PostMapping("/members/{username}/bookmarks")
-    public ResponseEntity uploadBookmark(@RequestPart(value="json") String filterJSON,
-                                       @RequestPart(value="fileList")  MultipartFile[] fileList) {
-        System.out.println("www");
-
+    public ResponseEntity uploadBookmark(@RequestBody String filterJSON,
+                                         @PathVariable String username) {
         try {
-            File convFile = new File( fileList[0].getOriginalFilename());
-            fileList[0].transferTo(convFile);
-            System.out.println(convFile);
+            ObjectMapper mapper = new ObjectMapper();
+            BookmarkInsertDto bookmarkInsertDto = mapper.readValue(filterJSON, BookmarkInsertDto.class);
 
+            byte[] bookmark = AudioService.mixAudioFiles(Arrays.asList(bookmarkInsertDto.getRecordUrls()));
+
+            String uploadPath = "bookmarks/";
+            String key = s3Service.uploadFile(uploadPath, bookmarkInsertDto.getTitle(), bookmark)[2];
+            String url = s3Service.getFileURL(key);
+
+            bookmarkInsertDto.setFileUrl(url);
+            bookmarkService.insertBookmark(bookmarkInsertDto);
 
             return ResponseEntity.ok("insert complete");
         } catch (Exception e) {

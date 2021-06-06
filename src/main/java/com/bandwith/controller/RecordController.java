@@ -6,6 +6,7 @@ import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.dto.record.RecordNameDto;
 import com.bandwith.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -179,11 +180,13 @@ public class RecordController {
     public ResponseEntity denoiseFile(@RequestPart("file") MultipartFile file) {
 
         String path = "c:/band-with/";
-        String fileName = file.getOriginalFilename().replace('/', '-');
+        String fileName = file.getOriginalFilename().replace('/', '-') + ".wav";
 
         // 받은 파일 다운로드
         try {
-            AudioService.downloadFile(path, file);
+//            AudioService.downloadFile(path, file);
+            byte [] byteArr=file.getBytes();
+            FileUtils.writeByteArrayToFile(new File(path + fileName), byteArr);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("file save error");
