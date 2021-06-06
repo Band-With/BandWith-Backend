@@ -1,6 +1,7 @@
 package com.bandwith.controller;
 
 import com.bandwith.dto.bookmark.BookmarkInsertDto;
+import com.bandwith.dto.record.RecordInsertDto;
 import com.bandwith.service.AudioService;
 import com.bandwith.service.BookmarkService;
 import com.bandwith.service.S3Service;
@@ -12,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 
 
 @CrossOrigin(origins = "*", allowCredentials = "true")
@@ -31,20 +34,15 @@ public class BookmarkController {
     }
 
     @PostMapping("/members/{username}/bookmarks")
-    public ResponseEntity uploadBookmark(@RequestBody String filterJSON,
-                                         @PathVariable String username) {
+    public ResponseEntity uploadBookmark(@RequestPart(value="json") String filterJSON,
+                                       @RequestPart(value="fileList")  MultipartFile[] fileList) {
+        System.out.println("www");
+
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            BookmarkInsertDto bookmarkInsertDto = mapper.readValue(filterJSON, BookmarkInsertDto.class);
+            File convFile = new File( fileList[0].getOriginalFilename());
+            fileList[0].transferTo(convFile);
+            System.out.println(convFile);
 
-            byte[] bookmark = AudioService.mixAudioFiles(Arrays.asList(bookmarkInsertDto.getRecordUrls()));
-
-            String uploadPath = "bookmarks/";
-            String key = s3Service.uploadFile(uploadPath, bookmarkInsertDto.getTitle(), bookmark)[2];
-            String url = s3Service.getFileURL(key);
-
-            bookmarkInsertDto.setFileUrl(url);
-            bookmarkService.insertBookmark(bookmarkInsertDto);
 
             return ResponseEntity.ok("insert complete");
         } catch (Exception e) {
@@ -52,6 +50,7 @@ public class BookmarkController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 
     @DeleteMapping("/bookmarks/{bookmarkId}")
     public ResponseEntity deleteBookmark(@PathVariable int bookmarkId) {
