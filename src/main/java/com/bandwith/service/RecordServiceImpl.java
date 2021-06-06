@@ -48,13 +48,11 @@ public class RecordServiceImpl implements RecordService {
         recordDto.setMemberId(member.getMember_id());
 
         recordDao.insertRecord(recordDto);
-        System.out.println("upload record service");
     }
 
     @Override
     public void deleteRecord(int recordId) {
         recordDao.deleteRecord(recordId);
-        System.out.println("delete record service");
     }
 
     @Override

@@ -23,9 +23,7 @@ public class HomeController {
 
     @PatchMapping("/monthly-member")
     public void mothlyMember(){
-        System.out.println("hi bitches");
         homeService.testScheduler();
-
     }
 
 }

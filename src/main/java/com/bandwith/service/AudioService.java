@@ -88,7 +88,7 @@ public class AudioService {
         args[5] = path + "denoise-" + fileName;     // output file
 
         buildProcess(args);
-        System.out.println("finish denoise");
+        System.out.println("Denoise Completed");
     }
 
     private static void buildProcess(String[] args) throws IOException, InterruptedException {

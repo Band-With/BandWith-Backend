@@ -97,13 +97,13 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public void deleteFile(String path) throws AmazonServiceException {
         s3Client.deleteObject(bucket, path);
-        System.out.println("delete s3 service: " + path);
     }
 
     // 파일 URL
     @Override
     public String getFileURL(String path) throws AmazonServiceException {
-        return s3Client.generatePresignedUrl(new GeneratePresignedUrlRequest(bucket, path)).toString();
+//        String preSignedUrl = s3Client.generatePresignedUrl(new GeneratePresignedUrlRequest(bucket, path)).toString();
+        return s3Client.getUrl(bucket, path).toString();
     }
 
     // 폴더 생성

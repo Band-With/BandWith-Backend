@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface HomeService {
-    List<MemberDto> mothlyMembers();
-    List<MemberDto> updatemonth();
+    List<MemberDto> monthlyMembers();
+    List<MemberDto> updateMonth();
     void testScheduler();
 }

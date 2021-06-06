@@ -1,6 +1,5 @@
 package com.bandwith.controller;
 
-import com.bandwith.dto.CommentPageDto;
 import com.bandwith.dto.SearchRecordDto;
 import com.bandwith.dto.like.LikeOnRecordDto;
 import com.bandwith.dto.record.RecordInsertDto;
@@ -43,21 +42,23 @@ public class RecordController {
         this.likeService = likeService;
     }
 
+    @PostMapping(path = "reocrds/{recordId}")
+    public ResponseEntity getRecord(@RequestParam String key) {
+        String url = s3Service.getFileURL(key);
+        return ResponseEntity.status(HttpStatus.OK).body(url);
+    }
+
     // 사용자 녹음 파일 저장
     @PostMapping(path = "members/{memberId}/recording")
     public ResponseEntity recordUpload(@RequestPart(value="json") String filterJSON,
                                        @RequestPart(value="file") MultipartFile file,
                                        @PathVariable String memberId) {
         try {
-            System.out.println("1");
             // S3에 저장
-            System.out.println("jhk");
             String uploadPath = "records/";
             String[] fileInfo = s3Service.uploadFile(uploadPath, file); // fileInfo = {uuid, fileName, key}
             String url = s3Service.getFileURL(fileInfo[2]);
-            System.out.println(url);
 
-            System.out.println("2");
             // DB에 저장
             ObjectMapper mapper = new ObjectMapper();
             RecordInsertDto recordInsertDto = mapper.readValue(filterJSON, RecordInsertDto.class);
@@ -66,7 +67,6 @@ public class RecordController {
             recordInsertDto.setFileUrl(url);
             recordService.insertRecord(recordInsertDto);
 
-            System.out.println("3");
             return ResponseEntity.status(HttpStatus.OK).body("insert complete");
 
         } catch (Exception e) {
