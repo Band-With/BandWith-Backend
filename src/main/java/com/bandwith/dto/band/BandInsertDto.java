@@ -44,7 +44,10 @@ public class BandInsertDto {
     }
 
     public void setImg(String img) {
-        this.img = img.getBytes(StandardCharsets.UTF_8);;
+        if (img != null)
+            this.img = img.getBytes(StandardCharsets.UTF_8);
+        else
+            this.img = null;
     }
 
     public String getUsername() {

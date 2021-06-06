@@ -21,6 +21,14 @@
         SELECT count(*) from follow WHERE FOLLOWER_ID = ( SELECT MEMBER_ID from member WHERE USERNAME = #{username} )
     </select>
 
+    <select id="select" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member WHERE member_id = #{member_id}
+    </select>
+
+    <select id="selectMember" resultType="com.bandwith.domain.Member">
+        SELECT * FROM member WHERE username = #{username}
+    </select>
+
     <select id="selectWithBookmark" resultType="com.bandwith.domain.Member">
         SELECT m.*
         FROM bookmark b
@@ -50,10 +58,6 @@
         SELECT * FROM member WHERE member.username = #{username}
     </select>
 
-    <select id="select" resultType="com.bandwith.domain.Member">
-        SELECT * FROM member WHERE member_id = #{member_id}
-    </select>
-
     <delete id="deleteMember">
         DELETE
         FROM member
@@ -68,4 +72,12 @@
     <select id="memberList" resultType="com.bandwith.domain.Member">
         SELECT * FROM member
     </select>
+
+    <update id="updateProfile">
+        UPDATE member SET name=#{name}, profile_img=#{profileImg} WHERE member_id=#{memberId}
+    </update>
+
+    <update id="updatePw">
+        UPDATE member SET pwd=#{pwd} WHERE member_id=#{memberId}
+    </update>
 </mapper>

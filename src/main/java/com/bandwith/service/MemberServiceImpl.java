@@ -3,6 +3,7 @@ package com.bandwith.service;
 import com.bandwith.dao.MemberDao;
 import com.bandwith.domain.Member;
 import com.bandwith.dto.member.MemberDto;
+import com.bandwith.dto.member.MemberProfileUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Random;
 
 @Service("memberServiceBean")
@@ -29,11 +29,18 @@ public class MemberServiceImpl implements MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
+    public MemberDto getMember(String username) {
+        return MemberDto.of(memberDao.selectMember(username));
+    }
+
+    @Override
     public void signUp(MemberDto newMember) {
         Member member = Member.of(newMember);
         memberDao.insertMember(member);
     }
 
+    @Override
     public MemberDto signIn(MemberDto memberDto){
         Member member = Member.of(memberDto);
         Member loginMember = memberDao.login(member);
@@ -44,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
         return loginMemberDto;
     }
 
+    @Override
     public String sendMail(String email){
         Random random=new Random();  //난수 생성을 위한 랜덤 클래스
         String key="";  //인증번호
@@ -64,6 +72,7 @@ public class MemberServiceImpl implements MemberService {
         return key;
     }
 
+    @Override
     public Boolean checkCode(String mail, String code, HttpSession session){
         if(session.getAttribute(mail).equals(code)) {
             session.removeAttribute(mail);
@@ -71,4 +80,16 @@ public class MemberServiceImpl implements MemberService {
         }
         return false;
     }
+
+    @Override
+    public void modifyProfile(MemberProfileUpdateDto memberProfileUpdateDto) {
+        memberDao.updateProfile(memberProfileUpdateDto);
+    }
+
+    @Override
+    public void modifyPw(int memberId, String pwd) {
+        memberDao.updatePw(memberId, pwd);
+    }
+
+
 }
