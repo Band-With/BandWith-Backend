@@ -33,7 +33,7 @@ public class BandMusicController {
     }
 
     // 밴드 합주곡 가져오기
-    @GetMapping("/{band_music_id}")
+    @GetMapping("/bands/{bandname}/bandmusics/{band_music_id}")
     public ResponseEntity<BandMusicDetailDto> getBandMusic(@PathVariable("band_music_id") int bandMusicId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusic(bandMusicId));
@@ -44,7 +44,7 @@ public class BandMusicController {
     }
 
     // 밴드 합주곡 처음 등록
-    @PostMapping("")
+    @PostMapping("/bands/{bandname}/bandmusics")
     public ResponseEntity insertBandMusic(@RequestBody String filterJSON) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -59,14 +59,14 @@ public class BandMusicController {
         }
     }
 
-    @GetMapping("/{bandMusicId}/records")
+    @GetMapping("/bands/{bandname}/bandmusics/{bandMusicId}/records")
     public ResponseEntity<MixDetailDto> getBandMusicRecords(@PathVariable("bandname") String bandName,
                                                          @PathVariable int bandMusicId){
         return ResponseEntity.status(HttpStatus.OK).body(bandMusicService.getBandMusicRecords(bandName, bandMusicId));
     }
 
     // 밴드 합주곡에 대해 각자의 녹음 등록
-    @PostMapping("/{bandMusicId}/records")
+    @PostMapping("/bands/{bandname}/bandmusics/{bandMusicId}/records")
     public ResponseEntity addBandMusicRecord(@PathVariable int bandMusicId, @RequestBody JSONObject filterJSON) {
         try {
             int recordId = (int)filterJSON.get("recordId");
@@ -79,7 +79,7 @@ public class BandMusicController {
     }
 
     // 밴드 합주곡에 대해 등록된 녹음 합쳐서 저장
-    @PostMapping("/{bandMusicId}")
+    @PostMapping("/bands/{bandname}/bandmusics/{bandMusicId}")
     public ResponseEntity completeBandMusic(@PathVariable int bandMusicId) {
         try {
             byte[] bandMusic = AudioService.mixAudioFiles(bandMusicService.getRecordUrls(bandMusicId));
@@ -100,7 +100,7 @@ public class BandMusicController {
 
 
     // 밴드 합주곡 삭제
-    @DeleteMapping("/{bandMusicId}")
+    @DeleteMapping("/bands/{bandname}/bandmusics/{bandMusicId}")
     public ResponseEntity deleteBandMusic(@PathVariable int bandMusicId) {
         try {
             bandMusicService.deleteBandMusic(bandMusicId);
